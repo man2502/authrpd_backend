@@ -1,0 +1,17 @@
+node_modules/
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+*.log
+logs/
+.DS_Store
+keys/rsa/*
+!keys/rsa/.gitkeep
+coverage/
+.nyc_output/
+yarn.lock
+yarn-error.log
+yarn-debug.log*
+.vscode/

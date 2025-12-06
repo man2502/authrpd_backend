@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: authrpd_postgres
+    environment:
+      POSTGRES_DB: authrpd
+      POSTGRES_USER: authrpd_user
+      POSTGRES_PASSWORD: secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U authrpd_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: authrpd_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  authrpd_api:
+    build: .
+    container_name: authrpd_api
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      CURRENT_ENV: production
+      HOST: 0.0.0.0
+      PORT: 3000
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: authrpd
+      DB_USER: authrpd_user
+      DB_PASSWORD: secret
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ""
+      RSA_KEYS_DIR: /app/keys/rsa
+      AUDIENCE: RPD
+      ISSUER: AUTHRPD
+      ACCESS_TTL_SECONDS: 1200
+      REFRESH_TTL_DAYS: 60
+      # Security - CORS Configuration
+      CORS_ORIGINS: ${CORS_ORIGINS:-https://example.com,https://admin.example.com}
+      CORS_ALLOW_CREDENTIALS: ${CORS_ALLOW_CREDENTIALS:-true}
+      # Security - Rate Limiting
+      RATE_LIMIT_WINDOW_MS: ${RATE_LIMIT_WINDOW_MS:-900000}
+      RATE_LIMIT_MAX: ${RATE_LIMIT_MAX:-100}
+      AUTH_RATE_LIMIT_MAX: ${AUTH_RATE_LIMIT_MAX:-20}
+      # Security - Request Body Size Limits
+      BODY_JSON_LIMIT: ${BODY_JSON_LIMIT:-10mb}
+      BODY_URLENC_LIMIT: ${BODY_URLENC_LIMIT:-10mb}
+      # Security - HSTS
+      HSTS_MAX_AGE: ${HSTS_MAX_AGE:-31536000}
+      # Security - Trust Proxy (set to true if behind nginx/load balancer)
+      TRUST_PROXY: ${TRUST_PROXY:-true}
+      # Logging Configuration
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      SERVICE_NAME: ${SERVICE_NAME:-authrpd}
+      GRAYLOG_ENABLED: ${GRAYLOG_ENABLED:-false}
+      GRAYLOG_HOST: ${GRAYLOG_HOST:-}
+      GRAYLOG_PORT: ${GRAYLOG_PORT:-12201}
+      GRAYLOG_PROTOCOL: ${GRAYLOG_PROTOCOL:-udp}
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./keys:/app/keys
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+

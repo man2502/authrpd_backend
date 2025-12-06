@@ -1,0 +1,897 @@
+Техническое задание (ТЗ)
+Система AuthRPD (Central Auth + Master Catalog)
+1. Назначение
+
+AuthRPD — центральная система аутентификации/авторизации и источник истины для базовых справочников казначейской платформы. Система обслуживает:
+
+сотрудников казначейства/органов (members),
+
+пользователей бюджетных организаций (clients),
+
+роли/права,
+
+master-справочники,
+
+правила динамических форм (fields/documents по классификаторам),
+
+выпуск токенов и публикацию JWKS для региональных RPD.
+
+2. Контекст
+
+В инфраструктуре 6 регионов и 1 столица. На каждый регион и столицу разворачивается RPD.
+AuthRPD:
+
+выпускает access_token и refresh_token,
+
+публикует /.well-known/jwks.json,
+
+поставляет справочники в RPD (pull-режим по версиям).
+
+3. Цели и критерии успеха
+3.1. Функциональные цели
+
+Единый вход для members и clients.
+
+Централизованная модель RBAC.
+
+Хранение и управление master-каталогами.
+
+Ежемесячная ротация RSA ключей.
+
+Выдача JWKS для верификации токенов в RPD.
+
+Поддержка языков tm и ru с формированием ответа в виде title.
+
+3.2. Нефункциональные цели
+
+Высокая надежность и аудитируемость.
+
+Низкое время ответа на login/refresh.
+
+Возможность расширения справочников и ролей.
+
+4. Технологический стек
+
+Node.js (LTS)
+
+Express.js
+
+Sequelize ORM
+
+PostgreSQL
+
+Redis (ioredis)
+
+Joi для валидации
+
+Docker / docker-compose
+
+Локализация: ваш localize() helper
+
+Логирование: winston или аналог
+
+5. Архитектура
+5.1. Стиль
+
+Modular Monolith на Express.
+
+5.2. Структура модулей
+
+auth
+
+users (members/clients)
+
+rbac
+
+catalogs
+
+sync
+
+security (keys, jwks, refresh)
+
+audit
+
+5.3. Рекомендуемая структура проекта
+src/
+  server.js
+  app.js
+  config/
+    env.js
+    db.js
+    redis.js
+  modules/
+    auth/
+      auth.routes.js
+      auth.controller.js
+      auth.service.js
+      auth.schemas.js
+    users/
+      members/
+      clients/
+    rbac/
+    catalogs/
+    sync/
+    security/
+      keys/
+        key.manager.js
+        jwks.service.js
+      tokens/
+        token.service.js
+        refresh.repository.js
+    audit/
+  middlewares/
+    error.handler.js
+    schema.validator.js
+    auth.guard.js
+    rate.limit.js
+  helpers/
+    api.error.js
+    response.helper.js
+    localize.helper.js
+    cache.helper.js
+    paginate.helper.js
+  models/
+  migrations/
+  seeders/
+  jobs/
+  utils/
+keys/   (вне src)
+  rsa/
+    2025-12/
+      private.pem
+      public.pem
+
+6. Модель данных
+6.1. Users
+6.1.1. members
+
+Поля:
+
+id
+
+username (UNIQUE)
+
+password_hash
+
+fullname
+
+position
+
+phone
+
+email
+
+role_id
+
+department_id
+
+organization_id
+
+region_id
+
+is_active (default true)
+
+last_login_at
+
+createdAt, updatedAt, deletedAt (paranoid)
+
+Индексы:
+
+UNIQUE(username)
+
+INDEX(role_id)
+
+INDEX(department_id)
+
+INDEX(organization_id)
+
+INDEX(region_id)
+
+6.1.2. clients
+
+Поля:
+
+id
+
+username (вариант: UNIQUE глобально или UNIQUE(organization_id, username))
+
+password_hash
+
+fullname
+
+phone (желательно UNIQUE, если используется как логин)
+
+phone_verified
+
+email
+
+email_verified
+
+is_blocked
+
+is_active
+
+organization_id
+
+ministry_id
+
+region_id
+
+last_login_at
+
+timestamps + paranoid
+
+Индексы:
+
+UNIQUE(username) или UNIQUE(organization_id, username)
+
+UNIQUE(phone) (если телефон = логин)
+
+INDEX(organization_id, ministry_id, region_id)
+
+INDEX(is_blocked)
+
+6.2. RBAC
+6.2.1. roles
+
+id
+
+title_tm
+
+title_ru
+
+name (UNIQUE)
+
+paranoid
+
+6.2.2. permissions
+
+id
+
+name (UNIQUE)
+
+paranoid
+
+6.2.3. role_permission
+
+id
+
+role_id
+
+permission_id
+
+UNIQUE(role_id, permission_id)
+
+6.3. Departments
+
+id
+
+title_tm, title_ru
+
+organization_id
+
+parent_id
+
+paranoid
+
+Индексы:
+
+INDEX(organization_id)
+
+INDEX(parent_id)
+
+6.4. Master Catalogs
+
+(Как у тебя, но фиксируем важные ограничения и флаги активности)
+
+region (code PK, title_tm, title_ru, prefix_tm, prefix_ru, suffix_tm, suffix_ru, parent_id, is_active)
+
+ministry (code PK, title_tm, title_ru, is_active)
+
+organizations (code PK, title_tm, title_ru, region_id, ministry_id, parent_id, financing_type, tax_code, is_active)
+
+receiver_organizations (taxcode PK, name_tm, name_ru, type, is_active)
+
+Классификаторы: economic/functional/purpose/income
+
+banks
+
+bank_accounts
+
+fields
+
+documents
+
+classifier_fields
+
+classifier_documents
+
+Ограничения:
+
+UNIQUE(economic_classifier_id, field_id)
+
+UNIQUE(economic_classifier_id, document_id)
+
+6.5. Версии справочников
+
+catalog_versions
+
+id
+
+catalog_name (UNIQUE)
+
+version (int)
+
+updated_at
+
+Правило:
+
+при каждом изменении записи в каталоге
+инкрементировать соответствующую версию.
+
+6.6. Refresh Tokens
+
+refresh_tokens
+
+id
+
+user_type enum('MEMBER','CLIENT')
+
+user_id
+
+token_hash
+
+device_id (nullable)
+
+ip
+
+user_agent
+
+expires_at
+
+revoked_at
+
+created_at
+
+6.7. Аудит
+
+auth_audit_log
+
+id
+
+actor_type
+
+actor_id
+
+action
+
+target_type
+
+target_id
+
+meta JSONB
+
+created_at
+
+Обязательные события:
+
+LOGIN_SUCCESS / LOGIN_FAIL
+
+REFRESH_SUCCESS / REFRESH_FAIL
+
+ROLE_CHANGED
+
+PERMISSION_CHANGED
+
+CATALOG_UPDATED
+
+USER_BLOCKED / USER_UNBLOCKED
+
+7. Локализация
+7.1. Правило ответа
+
+Если сущность содержит пары:
+
+title_tm, title_ru
+то API возвращает:
+
+title в зависимости от параметра lang.
+
+Пример:
+Запрос
+GET /catalogs/regions?lang=ru
+
+Ответ
+
+{
+  "success": true,
+  "data": [
+    { "code": "A", "title": "Ахал" }
+  ]
+}
+
+7.2. Язык по умолчанию
+
+если lang не задан → tm или системный дефолт.
+
+8. Security и токены
+8.1. Access Token
+
+Алгоритм: RS256
+
+kid в header: формат YYYY-MM
+
+aud в payload
+
+iss в payload (например AUTHRPD)
+
+sub = {user_type}:{user_id}
+
+Короткий TTL: 10–30 минут
+
+Пример header
+
+{
+  "alg": "RS256",
+  "typ": "JWT",
+  "kid": "2025-12"
+}
+
+
+Пример payload
+
+{
+  "iss": "AUTHRPD",
+  "sub": "MEMBER:1201",
+  "aud": "RPD",
+  "iat": 1733030000,
+  "exp": 1733031800,
+  "jti": "uuid"
+}
+
+8.2. Refresh Token
+
+Случайная строка 32–64 байта
+
+Хранить только hash
+
+TTL: 30–90 дней
+
+Возможность отзывать
+
+9. Управление ключами (обязательное требование)
+9.1. Политика ротации
+
+Ключи генерируются раз в месяц.
+
+Идентификатор ключа:
+
+kid = YYYY-MM (например 2025-12).
+
+Хранение в FS:
+
+keys/rsa/{kid}/private.pem
+
+keys/rsa/{kid}/public.pem
+
+Если папка/файлы есть → пропуск генерации.
+
+9.2. Требования безопасности хранения
+
+Права доступа на директорию ключей:
+
+только пользователь сервиса.
+
+В production желательно:
+
+шифрование диска или секрет-хранилище
+(но по ТЗ допустим FS).
+
+9.3. Реализация генератора ключей (JS пример)
+
+src/modules/security/keys/key.manager.js
+
+const fs = require('fs');
+const path = require('path');
+const { generateKeyPairSync } = require('crypto');
+
+function getKid(date = new Date()) {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  return `${y}-${m}`;
+}
+
+function ensureMonthlyKeyPair(baseDir) {
+  const kid = getKid();
+  const dir = path.join(baseDir, kid);
+  const privPath = path.join(dir, 'private.pem');
+  const pubPath = path.join(dir, 'public.pem');
+
+  if (fs.existsSync(privPath) && fs.existsSync(pubPath)) {
+    return { kid, privateKeyPath: privPath, publicKeyPath: pubPath, skipped: true };
+  }
+
+  fs.mkdirSync(dir, { recursive: true });
+
+  const { privateKey, publicKey } = generateKeyPairSync('rsa', {
+    modulusLength: 2048, // можно 3072 при требованиях безопасности
+    publicKeyEncoding: { type: 'spki', format: 'pem' },
+    privateKeyEncoding: { type: 'pkcs8', format: 'pem' }
+  });
+
+  fs.writeFileSync(privPath, privateKey, { mode: 0o600 });
+  fs.writeFileSync(pubPath, publicKey, { mode: 0o644 });
+
+  return { kid, privateKeyPath: privPath, publicKeyPath: pubPath, skipped: false };
+}
+
+function loadKeyPair(baseDir, kid) {
+  const dir = path.join(baseDir, kid);
+  const privPath = path.join(dir, 'private.pem');
+  const pubPath = path.join(dir, 'public.pem');
+
+  if (!fs.existsSync(privPath) || !fs.existsSync(pubPath)) {
+    throw new Error(`Key files not found for kid=${kid}`);
+  }
+
+  return {
+    privateKey: fs.readFileSync(privPath, 'utf8'),
+    publicKey: fs.readFileSync(pubPath, 'utf8')
+  };
+}
+
+module.exports = { getKid, ensureMonthlyKeyPair, loadKeyPair };
+
+9.4. Где вызывать генерацию
+
+При старте сервиса:
+
+ensureMonthlyKeyPair(process.env.RSA_KEYS_DIR)
+
+И дополнительно:
+
+cron-job 1 раз в сутки (на всякий случай).
+
+10. JWKS
+10.1. Endpoint
+
+GET /.well-known/jwks.json
+
+10.2. Поведение
+
+Возвращает набор публичных ключей:
+
+минимум текущий месяц
+
+и предыдущие 1–2 месяца для плавной ротации.
+
+10.3. Пример логики формирования
+
+Сканировать keys/rsa/*/public.pem
+
+Преобразовать PEM → JWK
+
+Отдать массив keys.
+
+11. Синхронизация справочников в RPD
+11.1. Режим
+
+Pull со стороны RPD.
+
+11.2. Endpoints
+
+GET /catalogs/versions
+
+GET /catalogs/:name?version=X
+
+11.3. Пример
+
+Ответ versions
+
+{
+  "success": true,
+  "data": [
+    { "catalog_name": "regions", "version": 12, "updated_at": "2025-12-01T10:00:00Z" },
+    { "catalog_name": "organizations", "version": 20, "updated_at": "2025-12-02T11:00:00Z" }
+  ]
+}
+
+12. API AuthRPD
+12.1. Auth
+
+POST /auth/member/login
+
+POST /auth/client/login
+
+POST /auth/refresh
+
+POST /auth/logout
+
+GET /auth/me
+
+Пример login
+
+{
+  "username": "user1",
+  "password": "secret"
+}
+
+
+Ответ
+
+{
+  "success": true,
+  "data": {
+    "access_token": "....",
+    "refresh_token": "....",
+    "user": {
+      "id": 5,
+      "fullname": "Name",
+      "role": "ADMIN",
+      "region_id": "A"
+    }
+  }
+}
+
+12.2. RBAC
+
+GET /admin/roles
+
+POST /admin/roles
+
+PUT /admin/roles/:id
+
+GET /admin/permissions
+
+POST /admin/roles/:id/permissions
+
+12.3. Каталоги (CRUD под SUPERADMIN/ADMIN)
+
+GET /catalogs/regions
+
+POST /catalogs/regions
+
+аналогично для остальных
+
+13. Валидация и ошибки
+
+Формат ошибок фиксируется твоим стандартом:
+
+{
+  "success": false,
+  "data": {
+    "error_code": 422,
+    "error_msg": "Validation error",
+    "field": "username"
+  }
+}
+
+14. Кэширование
+14.1. Что кэшировать
+
+roles, permissions, role_permission
+
+catalogs (особенно тяжелые)
+
+jwks.json
+
+14.2. TTL
+
+Каталоги: 1–6 часов
+
+JWKS: 1 час
+
+Fallback как у тебя: при ошибке Redis — брать из БД/FS.
+
+15. Логи
+
+Требования:
+
+Корреляционный id на запрос (x-request-id)
+
+Уровни: info/warn/error
+
+Скрытие чувствительных данных:
+
+паролей, refresh токенов, приватных ключей
+
+16. Docker
+16.1. Сервисы
+
+authrpd_api
+
+postgres
+
+redis
+
+16.2. Volume для ключей
+
+Обязательное:
+
+монтировать директорию ключей:
+
+./keys:/app/keys
+
+17. Тестирование
+
+Минимальный набор:
+
+Unit:
+
+token.service
+
+localize.helper
+
+cache.helper
+
+key.manager
+
+Integration:
+
+login/refresh
+
+jwks endpoint
+
+catalogs versioning
+
+18. Acceptance Criteria
+
+AuthRPD запускается в Docker и работает с Postgres + Redis.
+
+Login для member и client возвращает корректные access/refresh.
+
+Access token имеет:
+
+kid=YYYY-MM в header
+
+aud в payload
+
+корректный iss/sub/exp.
+
+При старте:
+
+если ключи за текущий месяц существуют → не перегенерируются.
+
+/.well-known/jwks.json отдаёт публичные ключи, включая текущий.
+
+GET /catalogs/versions работает.
+
+GET /catalogs/:name?version=X позволяет RPD обновлять справочники.
+
+Локализация:
+
+любые title_tm/title_ru отдаются как title.
+
+Набор промтов для ИИ (готовые шаблоны)
+
+Ниже промты, которые ты можешь копировать в ChatGPT/другие модели для ускорения разработки. Они заточены под твой стиль API/ошибок и JS-only.
+
+1) Генерация модуля Auth (Express + Sequelize)
+
+Промт
+
+Ты senior Node.js разработчик. Сгенерируй модуль auth на Express (только JavaScript).
+Используй архитектуру controller/service/routes/schemas.
+Формат ответов:
+success: { "success": true, "data": ... }
+error: { "success": false, "data": { "error_code", "error_msg", "field?" } }
+Валидация Joi через middleware schemaValidator.
+Реализуй endpoints:
+
+POST /auth/member/login
+
+POST /auth/client/login
+
+POST /auth/refresh
+
+POST /auth/logout
+Добавь примеры схем валидации.
+
+2) RBAC CRUD + кеширование
+
+Промт
+
+Сгенерируй модуль rbac (JS) для Express + Sequelize.
+Таблицы: roles, permissions, role_permission.
+Добавь сервис кеширования Redis (ioredis) для получения прав по role_id.
+Реализуй функции:
+
+getRolePermissions(roleId) с cacheData(key, fn, ttl)
+
+invalidateRoleCache(roleId) после изменений.
+Добавь маршруты админки.
+
+3) Локализация ответов
+
+Промт
+
+Напиши улучшенную функцию localize(data, lang) на JS, рекурсивно заменяющую пары title_tm/title_ru, name_tm/name_ru, prefix_tm/prefix_ru, suffix_tm/suffix_ru на одно поле без суффикса.
+Сохрани остальные поля.
+Добавь 3 примера вход/выход.
+
+4) Генерация ежемесячных RSA ключей
+
+Промт
+
+Напиши модуль Node.js (JS) key.manager.js, который:
+
+формирует kid в формате YYYY-MM,
+
+генерирует RSA key pair через crypto.generateKeyPairSync,
+
+сохраняет в FS в /keys/rsa/{kid}/private.pem и public.pem,
+
+если оба файла существуют — возвращает skipped=true и ничего не делает.
+Добавь пример использования при старте приложения.
+
+5) JWKS endpoint
+
+Промт
+
+Сгенерируй сервис jwks.service.js на JS, который читает public.pem из /keys/rsa/* и собирает JWKS JSON.
+Реализуй endpoint GET /.well-known/jwks.json.
+Используй кеш Redis 1 час.
+Добавь обработку ошибок.
+
+6) Версионирование каталогов
+
+Промт
+
+Предложи реализацию версионирования справочников в AuthRPD (JS + Sequelize + Postgres).
+Таблица: catalog_versions(catalog_name, version, updated_at).
+Нужны функции:
+
+bumpCatalogVersion(name)
+
+getCatalogVersions()
+
+getCatalogDataByVersion(name, version)
+Добавь пример миграций и сервисов.
+
+Мини-пример конфигурации ENV
+CURRENT_ENV=production
+
+HOST=0.0.0.0
+PORT=3000
+
+DB_HOST=postgres
+DB_PORT=5432
+DB_NAME=authrpd
+DB_USER=authrpd_user
+DB_PASSWORD=secret
+
+REDIS_HOST=redis
+REDIS_PORT=6379
+REDIS_PASSWORD=
+
+RSA_KEYS_DIR=/app/keys/rsa
+
+AUDIENCE=RPD
+ISSUER=AUTHRPD
+
+ACCESS_TTL_SECONDS=1200
+REFRESH_TTL_DAYS=60
+
+Рекомендации “без боли” (важные)
+
+JS-only — ок, но держи строгую дисциплину:
+
+единые DTO схемы Joi
+
+сервисный слой без логики в контроллерах
+
+Не логируй:
+
+пароли
+
+refresh tokens
+
+private keys
+
+Добавь rate-limits на:
+
+login
+
+refresh
+
+Audit log обязателен — это дешево внедрить сейчас и дорого потом.

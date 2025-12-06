@@ -1,0 +1,98 @@
+version: '3.8'
+
+# Development docker-compose configuration
+# Usage: docker-compose -f docker-compose.dev.yml up
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: authrpd_postgres_dev
+    environment:
+      POSTGRES_DB: authrpd_dev
+      POSTGRES_USER: authrpd_user
+      POSTGRES_PASSWORD: dev_password_123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U authrpd_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: authrpd_redis_dev
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data_dev:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  authrpd_api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: authrpd_api_dev
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      NODE_ENV: development
+      CURRENT_ENV: development
+      HOST: 0.0.0.0
+      PORT: 3000
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: authrpd_dev
+      DB_USER: authrpd_user
+      DB_PASSWORD: dev_password_123
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ""
+      RSA_KEYS_DIR: /app/keys/rsa
+      AUDIENCE: RPD
+      ISSUER: AUTHRPD
+      ACCESS_TTL_SECONDS: 1200
+      REFRESH_TTL_DAYS: 60
+      # Security - CORS Configuration
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000,http://localhost:3001,http://127.0.0.1:3000}
+      CORS_ALLOW_CREDENTIALS: ${CORS_ALLOW_CREDENTIALS:-true}
+      # Security - Rate Limiting
+      RATE_LIMIT_WINDOW_MS: ${RATE_LIMIT_WINDOW_MS:-900000}
+      RATE_LIMIT_MAX: ${RATE_LIMIT_MAX:-100}
+      AUTH_RATE_LIMIT_MAX: ${AUTH_RATE_LIMIT_MAX:-20}
+      # Security - Request Body Size Limits
+      BODY_JSON_LIMIT: ${BODY_JSON_LIMIT:-10mb}
+      BODY_URLENC_LIMIT: ${BODY_URLENC_LIMIT:-10mb}
+      # Security - HSTS
+      HSTS_MAX_AGE: ${HSTS_MAX_AGE:-31536000}
+      # Security - Trust Proxy (usually false in development)
+      TRUST_PROXY: ${TRUST_PROXY:-false}
+      # Logging Configuration
+      LOG_LEVEL: ${LOG_LEVEL:-debug}
+      SERVICE_NAME: ${SERVICE_NAME:-authrpd}
+      GRAYLOG_ENABLED: ${GRAYLOG_ENABLED:-false}
+      GRAYLOG_HOST: ${GRAYLOG_HOST:-localhost}
+      GRAYLOG_PORT: ${GRAYLOG_PORT:-12201}
+      GRAYLOG_PROTOCOL: ${GRAYLOG_PROTOCOL:-udp}
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./keys:/app/keys
+      - ./src:/app/src
+      - ./package.json:/app/package.json
+    restart: unless-stopped
+    command: npm run dev
+
+volumes:
+  postgres_data_dev:
+  redis_data_dev:
+

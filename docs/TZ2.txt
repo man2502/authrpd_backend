@@ -1,0 +1,742 @@
+Техническое задание (v2)
+AuthRPD — Central Auth + Master Catalog + RBAC + Sync
+0) Изменения в этой версии ТЗ (по твоим пунктам)
+
+Стиль имён колонок и атрибутов моделей:
+В БД и в Sequelize-моделях используем snake_case, например:
+is_active, title_tm, title_ru, phone_verified, created_at.
+Не используем isActive, titleTm.
+
+Каталоги расширены и обязательны CRUD + Sync:
+
+classifier_economic
+
+classifier_purpose
+
+classifier_functional
+
+classifier_income
+
+banks
+
+bank_accounts
+Для каждого — админские CRUD-эндпоинты, и все они участвуют в синхронизации с RPD.
+
+Эндпоинт “получить permissions по role” — добавлен как best practice.
+
+Тестовые данные (seed/import) — для каждой таблицы.
+
+Дружелюбные комментарии в коде — обязательный стандарт.
+
+Joi-валидация для максимально возможного числа входов
+включая /:id, /:code, query и body.
+Для ID/кодов — реюзабельные валидаторы.
+
+1) Назначение системы
+
+AuthRPD — центральный контур казначейской платформы, который:
+
+Выпускает access_token и refresh_token для:
+
+сотрудников системы (members),
+
+пользователей бюджетных организаций (clients).
+
+Управляет RBAC:
+
+роли, права, связи роль-право.
+
+Является master-источником справочников:
+
+регионы, министерства, организации, получатели,
+
+классификаторы расходов/доходов,
+
+банки и банковские счета,
+
+динамические требования к полям/документам.
+
+Обеспечивает синхронизацию каталогов в региональные RPD.
+
+2) Технологический стек
+
+Node.js (LTS)
+
+Express.js
+
+Sequelize (JS-only)
+
+PostgreSQL
+
+Redis (ioredis)
+
+Joi
+
+Docker / docker-compose
+
+3) Архитектура
+3.1. Стиль проекта
+
+Modular monolith на Express.
+
+3.2. Структура модулей
+
+auth
+
+users
+
+members
+
+clients
+
+rbac
+
+catalogs
+
+sync
+
+security
+
+keys
+
+tokens
+
+jwks
+
+audit
+
+3.3. Структура папок (рекомендовано)
+src/
+  app.js
+  server.js
+  config/
+  middlewares/
+  helpers/
+  modules/
+    auth/
+    users/
+    rbac/
+    catalogs/
+    sync/
+    security/
+    audit/
+  models/
+  migrations/
+  seeders/
+keys/
+  rsa/
+    2025-12/
+      private.pem
+      public.pem
+
+4) Стандарты именования (обязательные)
+4.1. В БД
+
+Таблицы: snake_case
+
+Колонки: snake_case
+
+4.2. В Sequelize моделях
+
+Требование: атрибуты модели тоже в snake_case.
+
+Рекомендуемая глобальная настройка Sequelize:
+
+define: {
+  underscored: true,
+  freezeTableName: true,
+  timestamps: true,
+  paranoid: true
+}
+
+
+Имена полей в модели определяются явно:
+
+is_active: { type: DataTypes.BOOLEAN, defaultValue: true }
+title_tm: { type: DataTypes.STRING }
+
+5) Формат API-ответов и ошибок
+5.1. Успех
+{ "success": true, "data": {} }
+
+5.2. Ошибка
+{
+  "success": false,
+  "data": {
+    "error_code": 422,
+    "error_msg": "Validation error",
+    "field": "field_name"
+  }
+}
+
+6) Модель данных
+
+Ниже — ключевые таблицы.
+Все поля — snake_case.
+
+6.1. Users
+6.1.1. members
+
+id
+
+username UNIQUE
+
+password_hash
+
+fullname
+
+position
+
+phone
+
+email
+
+role_id
+
+department_id
+
+organization_id
+
+region_id
+
+is_active default true
+
+last_login_at
+
+timestamps + paranoid
+
+Индексы:
+
+UNIQUE(username)
+
+INDEX(role_id)
+
+INDEX(department_id)
+
+INDEX(organization_id)
+
+INDEX(region_id)
+
+6.1.2. clients
+
+id
+
+username (UNIQUE глобально либо UNIQUE(organization_id, username))
+
+password_hash
+
+fullname
+
+phone
+
+phone_verified
+
+email
+
+email_verified
+
+is_blocked
+
+is_active
+
+organization_id
+
+ministry_id
+
+region_id
+
+last_login_at
+
+timestamps + paranoid
+
+Индексы:
+
+UNIQUE(username) или UNIQUE(organization_id, username)
+
+UNIQUE(phone) если телефон = логин
+
+INDEX(organization_id, ministry_id, region_id)
+
+INDEX(is_blocked)
+
+6.2. RBAC
+roles
+
+id
+
+title_tm
+
+title_ru
+
+name UNIQUE
+
+is_active
+
+permissions
+
+id
+
+name UNIQUE
+
+is_active
+
+role_permission
+
+id
+
+role_id
+
+permission_id
+
+UNIQUE(role_id, permission_id)
+
+6.3. Departments
+
+id
+
+title_tm
+
+title_ru
+
+organization_id
+
+parent_id
+
+is_active
+
+6.4. Catalogs (Master)
+
+Обязательные справочники:
+
+region
+
+ministry
+
+organizations
+
+receiver_organizations
+
+classifier_economic
+
+classifier_functional
+
+classifier_purpose
+
+classifier_income
+
+banks
+
+bank_accounts
+
+fields
+
+documents
+
+classifier_fields
+
+classifier_documents
+
+Общие поля:
+
+title_tm
+
+title_ru
+
+is_active
+
+Важно
+Все эти каталоги:
+
+имеют CRUD в AuthRPD,
+
+участвуют в версии/синхронизации с RPD.
+
+6.5. Версии каталогов
+
+catalog_versions
+
+catalog_name UNIQUE
+
+version int
+
+updated_at
+
+Правило:
+
+любое изменение записи каталога → version++.
+
+6.6. Refresh tokens
+
+refresh_tokens
+
+user_type enum('MEMBER','CLIENT')
+
+user_id
+
+token_hash
+
+device_id
+
+ip
+
+user_agent
+
+expires_at
+
+revoked_at
+
+6.7. Audit
+
+auth_audit_log
+
+actor_type
+
+actor_id
+
+action
+
+target_type
+
+target_id
+
+meta JSONB
+
+created_at
+
+7) Безопасность и ключи
+7.1. Access token
+
+RS256
+
+kid в header
+
+aud в payload
+
+iss в payload
+
+TTL 10–30 минут
+
+7.2. Требование по генерации ключей (обязательное)
+
+Генерация RSA key pair через Node.js crypto.
+
+Ежемесячно.
+
+kid = 'YYYY-MM' (например 2025-12).
+
+Хранение:
+
+/keys/rsa/{kid}/private.pem
+
+/keys/rsa/{kid}/public.pem
+
+При старте сервиса:
+
+если оба файла существуют → генерацию пропустить.
+
+8) JWKS
+Endpoint
+
+GET /.well-known/jwks.json
+
+Поведение:
+
+отдаёт входящий набор публичных ключей.
+
+минимум: текущий и предыдущий месяц.
+
+9) CRUD API
+9.1. Auth
+
+POST /auth/member/login
+
+POST /auth/client/login
+
+POST /auth/refresh
+
+POST /auth/logout
+
+GET /auth/me
+
+9.2. RBAC
+
+GET /admin/roles
+
+POST /admin/roles
+
+PUT /admin/roles/:id
+
+GET /admin/permissions
+
+POST /admin/permissions
+
+POST /admin/roles/:id/permissions
+
+9.3. Best practice эндпоинт: permissions по role
+
+GET /rbac/roles/:id/permissions
+
+Зачем нужен
+Удобно для:
+
+UI-админки,
+
+кэширования,
+
+диагностики безопасности.
+
+9.4. Catalogs CRUD (обязательный)
+
+Для каждого из перечисленных каталогов:
+
+GET /catalogs/{name}
+
+POST /catalogs/{name}
+
+PUT /catalogs/{name}/:id или /:code
+
+DELETE /catalogs/{name}/:id (soft delete или is_active=false)
+
+Примеры names:
+
+regions
+
+classifier_economic
+
+banks
+
+bank_accounts
+
+10) Синхронизация с RPD
+10.1. Режим
+
+Pull со стороны RPD.
+
+10.2. Endpoints
+
+GET /catalogs/versions
+
+GET /catalogs/:name?version=X
+
+10.3. Объекты синхронизации
+
+Все master-каталоги, включая:
+
+classifier_economic,
+
+classifier_purpose,
+
+classifier_functional,
+
+classifier_income,
+
+banks,
+
+bank_accounts.
+
+11) Joi-валидация (обязательный стандарт)
+11.1. Общее правило
+
+Валидация применяется к:
+
+body
+
+params
+
+query
+
+11.2. Реюзабельные валидаторы
+
+Пример требований:
+
+validateIdParam
+Для роутов вида /.../:id.
+
+validateCodeParam
+Для справочников, где code — PK.
+
+validatePaginationQuery.
+
+Пример использования
+
+GET /catalogs/regions/:code
+
+PUT /catalogs/banks/:id
+
+DELETE /admin/roles/:id
+
+12) Комментарии в коде (обязательное требование)
+12.1. Требования
+
+Каждый контроллер, сервис, репозиторий содержит:
+
+“что делает модуль”
+
+входы/выходы
+
+правила доступа
+
+Сложная бизнес-логика:
+
+поясняется inline-комментариями.
+
+Для ключевых функций:
+
+JSDoc-описание.
+
+Цель: чтобы новый разработчик понимал модуль за 5–10 минут чтения.
+
+13) Тестовые данные (seed/import)
+
+Требование:
+
+В seeders/ создать набор данных для каждой таблицы.
+
+Данные должны позволять:
+
+войти под несколькими ролями,
+
+протестировать CRUD всех справочников,
+
+проверить classifier_fields/documents.
+
+Ниже примерные минимальные наборы.
+
+13.1. regions
+[
+  { code: "A", title_tm: "Ahal", title_ru: "Ахал", prefix_tm: "A", prefix_ru: "А", suffix_tm: "", suffix_ru: "", is_active: true },
+  { code: "B", title_tm: "Balkan", title_ru: "Балкан", prefix_tm: "B", prefix_ru: "Б", suffix_tm: "", suffix_ru: "", is_active: true }
+]
+
+13.2. ministry
+[
+  { code: "M01", title_tm: "Saglygy goraýyş", title_ru: "Здравоохранение", is_active: true },
+  { code: "M02", title_tm: "Bilim", title_ru: "Образование", is_active: true }
+]
+
+13.3. organizations
+[
+  { code: "ORG001", title_tm: "Ahal hassahanasy", title_ru: "Ахалская больница", region_id: "A", ministry_id: "M01", financing_type: "LOCAL", tax_code: "123456789", is_active: true },
+  { code: "ORG002", title_tm: "Balkan mekdebi", title_ru: "Балканская школа", region_id: "B", ministry_id: "M02", financing_type: "CENTRAL", tax_code: "987654321", is_active: true }
+]
+
+13.4. classifier_economic / functional / purpose / income
+
+По 2–3 записи на каждый:
+
+[
+  { code: "E1123", title_tm: "Enjam satyn almak", title_ru: "Покупка оборудования", is_active: true },
+  { code: "E1155", title_tm: "Hyzmat tölegi", title_ru: "Оплата услуг", is_active: true }
+]
+
+13.5. banks
+[
+  { id: 1, title_tm: "Döwlet banky", title_ru: "Госбанк", code_mfo: "390", code_bab: "01", region_id: "A", is_active: true }
+]
+
+13.6. bank_accounts
+[
+  { id: 1, name: "Main budget account", account_number: "1230000000001", bank_id: 1, expense_type: "BUDGET", organization_id: "ORG001", is_active: true }
+]
+
+13.7. roles / permissions / role_permission
+roles: [
+  { id: 1, name: "SUPERADMIN", title_tm: "Superadmin", title_ru: "Суперадмин", is_active: true },
+  { id: 2, name: "ADMIN", title_tm: "Admin", title_ru: "Админ", is_active: true }
+]
+
+permissions: [
+  { id: 1, name: "CATALOG_READ", is_active: true },
+  { id: 2, name: "CATALOG_WRITE", is_active: true },
+  { id: 3, name: "RBAC_MANAGE", is_active: true }
+]
+
+role_permission: [
+  { role_id: 1, permission_id: 1 },
+  { role_id: 1, permission_id: 2 },
+  { role_id: 1, permission_id: 3 }
+]
+
+13.8. members / clients
+
+Создать минимум:
+
+1 SUPERADMIN
+
+1 ADMIN
+
+1 тестовый CLIENT
+
+14) Docker
+14.1. Требование
+
+AuthRPD API, PostgreSQL и Redis запускаются через docker-compose.
+
+14.2. Volume
+
+Директория ключей монтируется как volume:
+
+./keys:/app/keys.
+
+15) Acceptance Criteria (обновлённые)
+
+Все таблицы и модели используют snake_case.
+
+CRUD реализован для:
+
+регионов, министерств, организаций,
+
+всех классификаторов,
+
+banks и bank_accounts,
+
+fields/documents и связей с классификаторами.
+
+Есть эндпоинт:
+
+GET /rbac/roles/:id/permissions.
+
+Реализована Joi-валидация:
+
+body/params/query,
+
+включая /:id через реюзабельные валидаторы.
+
+Присутствуют seeders для каждой таблицы.
+
+При старте:
+
+ключи kid=YYYY-MM создаются через crypto,
+
+если в FS уже есть — генерация пропускается.
+
+/.well-known/jwks.json доступен и кэшируется.
+
+GET /catalogs/versions + GET /catalogs/:name?version=X работают,
+и включают новые каталоги.
+
+16) Короткий “чеклист качества реализации”
+
+JS-only, но:
+
+строгая модульность,
+
+без бизнес-логики в контроллерах.
+
+Везде комменты:
+
+что делает модуль,
+
+примеры вход/выход.
+
+Кэш:
+
+каталоги и RBAC.
+
+Логи:
+
+без секретов.
+
+Аудит:
+
+логировать изменения RBAC и каталогов.

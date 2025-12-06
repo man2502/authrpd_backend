@@ -1,0 +1,25 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Устанавливаем переменные окружения для development
+ENV NODE_ENV=development
+ENV CURRENT_ENV=development
+
+# Устанавливаем nodemon глобально для hot-reload
+RUN npm install -g nodemon
+
+COPY package*.json ./
+
+# Устанавливаем все зависимости (включая devDependencies)
+RUN npm install
+
+COPY . .
+
+RUN mkdir -p /app/keys/rsa
+
+EXPOSE 3000
+
+# Используем nodemon для автоматической перезагрузки
+CMD ["npm", "run", "dev"]
+
