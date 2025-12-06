@@ -78,6 +78,9 @@ services:
       GRAYLOG_HOST: ${GRAYLOG_HOST:-}
       GRAYLOG_PORT: ${GRAYLOG_PORT:-12201}
       GRAYLOG_PROTOCOL: ${GRAYLOG_PROTOCOL:-udp}
+      # Swagger Documentation
+      SWAGGER_ENABLED: ${SWAGGER_ENABLED:-false}
+      API_BASE_URL: ${API_BASE_URL:-https://api.authrpd.gov}
     ports:
       - "3000:3000"
     volumes:

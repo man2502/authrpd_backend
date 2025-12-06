@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
     'AuthAuditLog',
     {
       id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT, // Changed to BIGINT to match BIGSERIAL in migration
         primaryKey: true,
         autoIncrement: true,
       },
@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
       },
       actor_id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT, // Changed to BIGINT to match migration
         allowNull: true,
       },
       action: {
@@ -42,17 +42,16 @@ module.exports = (sequelize, DataTypes) => {
       created_at: {
         type: DataTypes.DATE,
         allowNull: false,
+        defaultValue: DataTypes.NOW, // Use DataTypes.NOW for Sequelize default
       },
     },
     {
       tableName: 'auth_audit_log',
       timestamps: false,
-      indexes: [
-        { fields: ['actor_type', 'actor_id'] },
-        { fields: ['action'] },
-        { fields: ['target_type', 'target_id'] },
-        { fields: ['created_at'] },
-      ],
+      // Note: Indexes are managed by migration for partitioned tables
+      // Indexes are created per partition in the migration script
+      // Do not define indexes here to avoid conflicts with existing indexes
+      indexes: [],
     }
   );
 

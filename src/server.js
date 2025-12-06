@@ -32,9 +32,22 @@ async function startServer() {
     });
 
     // Синхронизируем модели (в production используйте миграции)
+    // Note: auth_audit_log is a partitioned table - indexes are managed by migration
     if (config.env === 'development') {
-      await sequelize.sync({ alter: false });
-      logger.info('Database models synchronized');
+      try {
+        await sequelize.sync({ alter: false });
+        logger.info('Database models synchronized');
+      } catch (error) {
+        // Ignore index creation errors for partitioned tables
+        // Indexes are managed by migrations, not by Sequelize sync
+        if (error.message && error.message.includes('already exists')) {
+          logger.warn('Some indexes already exist (likely from partitioned table migration), continuing...', {
+            error: error.message,
+          });
+        } else {
+          throw error;
+        }
+      }
     }
 
     // Проверяем подключение к Redis

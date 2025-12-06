@@ -20,6 +20,9 @@ const rbacRoutes = require('./modules/rbac/rbac.routes');
 const catalogRoutes = require('./modules/catalogs/catalog.routes');
 const syncRoutes = require('./modules/sync/sync.routes');
 
+// Swagger documentation (must be imported before routes)
+const initializeSwagger = require('./docs/swagger.init');
+
 const app = express();
 
 /**
@@ -110,6 +113,11 @@ app.use(globalLimiter);
 // Logs all HTTP requests with correlation ID
 app.use(requestLoggerMiddleware);
 
+// 8. Swagger Documentation (before routes, after security middleware)
+// Swagger UI and OpenAPI JSON endpoints
+// Disabled in production by default (set SWAGGER_ENABLED=true to enable)
+initializeSwagger(app);
+
 // Health check endpoint (bypasses some middleware for fast response)
 app.get('/health', (req, res) => {
   res.json({ 
@@ -119,6 +127,57 @@ app.get('/health', (req, res) => {
   });
 });
 
+/**
+ * @swagger
+ * /.well-known/jwks.json:
+ *   get:
+ *     tags: [Security]
+ *     summary: JSON Web Key Set (JWKS)
+ *     description: |
+ *       Public endpoint that provides JSON Web Key Set for JWT token verification.
+ *       
+ *       **How it works:**
+ *       - Returns public keys used to verify JWT tokens signed with RS256
+ *       - Keys are rotated monthly with format kid=YYYY-MM
+ *       - Clients use these keys to verify token signatures
+ *       - No authentication required (public endpoint)
+ *     security: []
+ *     responses:
+ *       200:
+ *         description: JWKS successfully retrieved
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 keys:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       kty:
+ *                         type: string
+ *                         example: RSA
+ *                       kid:
+ *                         type: string
+ *                         example: 2024-01
+ *                       use:
+ *                         type: string
+ *                         example: sig
+ *                       n:
+ *                         type: string
+ *                         description: RSA modulus
+ *                       e:
+ *                         type: string
+ *                         description: RSA exponent
+ *             example:
+ *               keys:
+ *                 - kty: RSA
+ *                   kid: 2024-01
+ *                   use: sig
+ *                   n: "0vx7agoebGcQSuuPiLJXZptN9nndrQmb..."
+ *                   e: AQAB
+ */
 // JWKS endpoint (public, no authentication required)
 app.get('/.well-known/jwks.json', async (req, res, next) => {
   try {
@@ -130,7 +189,7 @@ app.get('/.well-known/jwks.json', async (req, res, next) => {
   }
 });
 
-// API Routes with Authentication Rate Limiting
+// 9. API Routes with Authentication Rate Limiting
 // Auth routes have stricter rate limiting to prevent brute-force attacks
 app.use('/auth', authLimiter, authRoutes);
 app.use('/admin', rbacRoutes);
@@ -138,7 +197,7 @@ app.use('/rbac', rbacRoutes); // RBAC routes also available at /rbac
 app.use('/catalogs', catalogRoutes);
 app.use('/catalogs', syncRoutes); // Sync routes also use /catalogs prefix
 
-// 404 Handler
+// 10. 404 Handler
 // Returns standardized error response for unknown routes
 app.use((req, res) => {
   res.status(404).json({
@@ -150,7 +209,7 @@ app.use((req, res) => {
   });
 });
 
-// Error Handler (must be last)
+// 11. Error Handler (must be last)
 // Centralized error handling with security-aware logging
 app.use(errorHandler);
 

@@ -3,6 +3,34 @@ const router = express.Router();
 const catalogController = require('./catalog.controller');
 const { authGuard } = require('../../middlewares/auth.guard');
 
+/**
+ * @swagger
+ * /catalogs/versions:
+ *   get:
+ *     tags: [Catalogs]
+ *     summary: Get catalog versions
+ *     description: |
+ *       Retrieve version information for all catalogs.
+ *       This endpoint is public and does not require authentication.
+ *       Used by regional RPD systems to check for catalog updates.
+ *     security: []
+ *     responses:
+ *       200:
+ *         description: Catalog versions retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/SuccessResponse'
+ *             example:
+ *               success: true
+ *               data:
+ *                 - name: regions
+ *                   version: 1
+ *                   updated_at: "2024-01-15T10:30:00Z"
+ *                 - name: ministries
+ *                   version: 2
+ *                   updated_at: "2024-01-16T14:20:00Z"
+ */
 // Public endpoints for sync
 router.get('/versions', catalogController.getVersions);
 

@@ -9,7 +9,8 @@ const sequelize = new Sequelize(
     host: config.db.host,
     port: config.db.port,
     dialect: 'postgres',
-    logging: config.env === 'development' ? console.log : false,
+    // logging: config.env === 'development' ? console.log : false,
+    logging: false,
     define: {
       underscored: true,
       freezeTableName: true,
