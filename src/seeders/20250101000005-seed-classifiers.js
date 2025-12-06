@@ -1,53 +1,118 @@
 'use strict';
 
+const {
+  ClassifierEconomic,
+  ClassifierPurpose,
+  ClassifierFunctional,
+  ClassifierIncome,
+} = require('../models');
+
 /**
  * Seeder для классификаторов
  * Создает тестовые данные для всех классификаторов согласно ТЗ
+ * 
+ * Note: Использует Sequelize модели, поэтому используем camelCase для полей
+ * Sequelize автоматически преобразует в snake_case для БД благодаря underscored: true
  */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    // Classifier Economic - используем ON CONFLICT для идемпотентности
-    await queryInterface.sequelize.query(`
-      INSERT INTO classifier_economic (code, title_tm, title_ru, is_active, created_at, updated_at)
-      VALUES
-        ('E1123', 'Enjam satyn almak', 'Покупка оборудования', true, NOW(), NOW()),
-        ('E1155', 'Hyzmat tölegi', 'Оплата услуг', true, NOW(), NOW())
-      ON CONFLICT (code) DO NOTHING;
-    `);
+    // Classifier Economic - используем findOrCreate для идемпотентности
+    const economicClassifiers = [
+      {
+        code: 'E1123',
+        title_tm: 'Enjam satyn almak',
+        title_ru: 'Покупка оборудования',
+        is_active: true,
+      },
+      {
+        code: 'E1155',
+        title_tm: 'Hyzmat tölegi',
+        title_ru: 'Оплата услуг',
+        is_active: true,
+      },
+    ];
+
+    for (const classifier of economicClassifiers) {
+      await ClassifierEconomic.findOrCreate({
+        where: { code: classifier.code },
+        defaults: classifier,
+      });
+    }
 
     // Classifier Purpose
-    await queryInterface.sequelize.query(`
-      INSERT INTO classifier_purpose (code, title_tm, title_ru, is_active, created_at, updated_at)
-      VALUES
-        ('P001', 'Bilim maksatnamasy', 'Образовательная программа', true, NOW(), NOW()),
-        ('P002', 'Saglygy goraýyş maksatnamasy', 'Программа здравоохранения', true, NOW(), NOW())
-      ON CONFLICT (code) DO NOTHING;
-    `);
+    const purposeClassifiers = [
+      {
+        code: 'P001',
+        title_tm: 'Bilim maksatnamasy',
+        title_ru: 'Образовательная программа',
+        is_active: true,
+      },
+      {
+        code: 'P002',
+        title_tm: 'Saglygy goraýyş maksatnamasy',
+        title_ru: 'Программа здравоохранения',
+        is_active: true,
+      },
+    ];
+
+    for (const classifier of purposeClassifiers) {
+      await ClassifierPurpose.findOrCreate({
+        where: { code: classifier.code },
+        defaults: classifier,
+      });
+    }
 
     // Classifier Functional
-    await queryInterface.sequelize.query(`
-      INSERT INTO classifier_functional (code, title_tm, title_ru, is_active, created_at, updated_at)
-      VALUES
-        ('F001', 'Bilim funksiýasy', 'Функция образования', true, NOW(), NOW()),
-        ('F002', 'Saglygy goraýyş funksiýasy', 'Функция здравоохранения', true, NOW(), NOW())
-      ON CONFLICT (code) DO NOTHING;
-    `);
+    const functionalClassifiers = [
+      {
+        code: 'F001',
+        title_tm: 'Bilim funksiýasy',
+        title_ru: 'Функция образования',
+        is_active: true,
+      },
+      {
+        code: 'F002',
+        title_tm: 'Saglygy goraýyş funksiýasy',
+        title_ru: 'Функция здравоохранения',
+        is_active: true,
+      },
+    ];
+
+    for (const classifier of functionalClassifiers) {
+      await ClassifierFunctional.findOrCreate({
+        where: { code: classifier.code },
+        defaults: classifier,
+      });
+    }
 
     // Classifier Income
-    await queryInterface.sequelize.query(`
-      INSERT INTO classifier_income (code, title_tm, title_ru, is_active, created_at, updated_at)
-      VALUES
-        ('I001', 'Büdjet girdejileri', 'Бюджетные доходы', true, NOW(), NOW()),
-        ('I002', 'Büdjetden daşary girdejiler', 'Внебюджетные доходы', true, NOW(), NOW())
-      ON CONFLICT (code) DO NOTHING;
-    `);
+    const incomeClassifiers = [
+      {
+        code: 'I001',
+        title_tm: 'Büdjet girdejileri',
+        title_ru: 'Бюджетные доходы',
+        is_active: true,
+      },
+      {
+        code: 'I002',
+        title_tm: 'Büdjetden daşary girdejiler',
+        title_ru: 'Внебюджетные доходы',
+        is_active: true,
+      },
+    ];
+
+    for (const classifier of incomeClassifiers) {
+      await ClassifierIncome.findOrCreate({
+        where: { code: classifier.code },
+        defaults: classifier,
+      });
+    }
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('classifier_economic', null, {});
-    await queryInterface.bulkDelete('classifier_purpose', null, {});
-    await queryInterface.bulkDelete('classifier_functional', null, {});
-    await queryInterface.bulkDelete('classifier_income', null, {});
+    await ClassifierEconomic.destroy({ where: {}, truncate: true, cascade: true });
+    await ClassifierPurpose.destroy({ where: {}, truncate: true, cascade: true });
+    await ClassifierFunctional.destroy({ where: {}, truncate: true, cascade: true });
+    await ClassifierIncome.destroy({ where: {}, truncate: true, cascade: true });
   },
 };
-

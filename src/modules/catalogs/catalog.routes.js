@@ -26,10 +26,10 @@ const { authGuard } = require('../../middlewares/auth.guard');
  *               data:
  *                 - name: regions
  *                   version: 1
- *                   updated_at: "2024-01-15T10:30:00Z"
+ *                   updatedAt: "2024-01-15T10:30:00Z"
  *                 - name: ministries
  *                   version: 2
- *                   updated_at: "2024-01-16T14:20:00Z"
+ *                   updatedAt: "2024-01-16T14:20:00Z"
  */
 // Public endpoints for sync
 router.get('/versions', catalogController.getVersions);

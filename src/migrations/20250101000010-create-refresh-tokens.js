@@ -40,10 +40,11 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: true,
       },
-      created_at: {
+      createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        // Sequelize will map to created_at column in DB thanks to underscored: true
       },
     });
 

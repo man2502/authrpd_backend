@@ -25,17 +25,20 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         defaultValue: true,
       },
-      created_at: {
+      createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
+        // Sequelize will map to created_at column in DB thanks to underscored: true
       },
-      updated_at: {
+      updatedAt: {
         type: Sequelize.DATE,
         allowNull: false,
+        // Sequelize will map to updated_at column in DB thanks to underscored: true
       },
-      deleted_at: {
+      deletedAt: {
         type: Sequelize.DATE,
         allowNull: true,
+        // Sequelize will map to deleted_at column in DB thanks to underscored: true
       },
     });
   },

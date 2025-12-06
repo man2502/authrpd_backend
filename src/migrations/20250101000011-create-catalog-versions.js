@@ -18,10 +18,11 @@ module.exports = {
         defaultValue: 1,
         allowNull: false,
       },
-      updated_at: {
+      updatedAt: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        // Sequelize will map to updated_at column in DB thanks to underscored: true
       },
     });
   },

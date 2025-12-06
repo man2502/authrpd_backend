@@ -29,6 +29,12 @@ module.exports = {
     port: process.env.DB_PORT || 5432,
     dialect: 'postgres',
     schema: 'public', // Explicitly set schema to public
+    define: {
+      underscored: true, // Automatically convert camelCase to snake_case for DB columns
+      freezeTableName: true,
+      timestamps: true,
+      paranoid: true,
+    },
   },
   production: {
     username: process.env.DB_USER,
@@ -38,6 +44,12 @@ module.exports = {
     port: process.env.DB_PORT,
     dialect: 'postgres',
     schema: 'public', // Explicitly set schema to public
+    define: {
+      underscored: true, // Automatically convert camelCase to snake_case for DB columns
+      freezeTableName: true,
+      timestamps: true,
+      paranoid: true,
+    },
   },
 };
 

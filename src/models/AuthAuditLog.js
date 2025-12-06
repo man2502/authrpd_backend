@@ -39,15 +39,17 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: true,
       },
-      created_at: {
+      createdAt: {
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: DataTypes.NOW, // Use DataTypes.NOW for Sequelize default
+        field: 'createdAt', // Map to "createdAt" (camelCase with quotes) column in database
       },
     },
     {
       tableName: 'auth_audit_log',
       timestamps: false,
+      underscored: false, // Disable underscored for this model since we use "createdAt" (camelCase with quotes) in DB
       // Note: Indexes are managed by migration for partitioned tables
       // Indexes are created per partition in the migration script
       // Do not define indexes here to avoid conflicts with existing indexes

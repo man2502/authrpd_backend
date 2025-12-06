@@ -17,9 +17,10 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 1,
         allowNull: false,
       },
-      updated_at: {
+      updatedAt: {
         type: DataTypes.DATE,
         allowNull: false,
+        field: 'updated_at', // Map to snake_case column in database
       },
     },
     {

@@ -7,7 +7,8 @@ const path = require('path');
  * Migration: Partition auth_audit_log table by year
  * 
  * This migration converts the existing auth_audit_log table to a partitioned table
- * using RANGE partitioning by created_at (yearly partitions).
+ * using RANGE partitioning by createdAt (yearly partitions).
+ * Note: In SQL queries, we use createdAt (snake_case) as that's the actual column name in DB.
  * 
  * Strategy:
  * 1. If table exists, we need to migrate data (for production)
@@ -116,6 +117,7 @@ module.exports = {
       
       // Create the partitioned parent table in the public schema
       // Explicitly specify schema to ensure it's created in the correct database
+      // Note: Using "createdAt" with quotes to preserve camelCase in PostgreSQL
       await queryInterface.sequelize.query(`
         CREATE TABLE public.auth_audit_log (
           id BIGSERIAL NOT NULL,
@@ -127,9 +129,9 @@ module.exports = {
           meta JSONB,
           ip VARCHAR(255),
           user_agent TEXT,
-          created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-          CONSTRAINT auth_audit_log_pkey PRIMARY KEY (id, created_at)
-        ) PARTITION BY RANGE (created_at);
+          "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+          CONSTRAINT auth_audit_log_pkey PRIMARY KEY (id, "createdAt")
+        ) PARTITION BY RANGE ("createdAt");
       `);
       
       // Add comments
@@ -144,7 +146,7 @@ module.exports = {
         COMMENT ON COLUMN auth_audit_log.meta IS 'Additional metadata in JSON format';
         COMMENT ON COLUMN auth_audit_log.ip IS 'IP address of the request';
         COMMENT ON COLUMN auth_audit_log.user_agent IS 'User agent string from the request';
-        COMMENT ON COLUMN auth_audit_log.created_at IS 'Timestamp when the audit log entry was created (used for partitioning)';
+        COMMENT ON COLUMN auth_audit_log."createdAt" IS 'Timestamp when the audit log entry was created (used for partitioning)';
       `);
       
       console.log('Partitioned table structure created');
@@ -253,8 +255,9 @@ module.exports = {
       const hasUserAgent = columnNames.includes('user_agent');
       
       // Build column list for INSERT
+      // Note: Old table uses created_at (snake_case), new table uses "createdAt" (camelCase with quotes)
       let selectColumns = 'actor_type, actor_id, action, target_type, target_id, meta, created_at';
-      let insertColumns = 'actor_type, actor_id, action, target_type, target_id, meta, created_at';
+      let insertColumns = 'actor_type, actor_id, action, target_type, target_id, meta, "createdAt"';
       
       if (hasIp) {
         selectColumns += ', ip';
@@ -272,6 +275,7 @@ module.exports = {
       
       // Migrate data year by year to ensure it goes to correct partitions
       // Get min and max years from data
+      // Note: Old table uses created_at (snake_case)
       const [yearRange] = await queryInterface.sequelize.query(`
         SELECT 
           EXTRACT(YEAR FROM MIN(created_at))::INT as min_year,

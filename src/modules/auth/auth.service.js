@@ -21,7 +21,7 @@ const logger = require('../../config/logger');
 async function loginMember(username, password, metadata = {}) {
   try {
     const member = await Member.findOne({
-      where: { username, isActive: true },
+      where: { username, is_active: true },
       include: ['role'],
     });
 
@@ -106,7 +106,7 @@ async function loginMember(username, password, metadata = {}) {
 async function loginClient(username, password, metadata = {}) {
   try {
     const client = await Client.findOne({
-      where: { username, isActive: true, isBlocked: false },
+      where: { username, is_active: true, isBlocked: false },
       include: ['organization', 'ministry', 'region'],
     });
 
@@ -195,7 +195,7 @@ async function refreshTokens(refreshToken, metadata = {}) {
           [sequelize.Sequelize.Op.gt]: new Date(),
         },
       },
-      order: [['created_at', 'DESC']],
+      order: [['createdAt', 'DESC']], // Sequelize will map to created_at column
       limit: 100, // Ограничиваем для производительности
     });
 

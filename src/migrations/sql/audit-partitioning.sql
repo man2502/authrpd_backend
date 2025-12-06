@@ -10,7 +10,8 @@
 -- - Better index maintenance (smaller indexes per partition)
 -- - Reduced table bloat
 --
--- Partition Strategy: RANGE partitioning by created_at (yearly)
+-- Partition Strategy: RANGE partitioning by createdAt (yearly)
+-- Note: In SQL, we use createdAt (snake_case) as that's the actual column name in PostgreSQL
 -- Partitions: auth_audit_log_2024, auth_audit_log_2025, etc.
 -- ============================================================================
 
@@ -36,11 +37,12 @@ CREATE TABLE IF NOT EXISTS public.auth_audit_log (
     meta JSONB,
     ip VARCHAR(255),
     user_agent TEXT,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     
     -- Primary key constraint (will be inherited by partitions)
-    CONSTRAINT auth_audit_log_pkey PRIMARY KEY (id, created_at)
-) PARTITION BY RANGE (created_at);
+    -- Note: Using "createdAt" with quotes to preserve camelCase in PostgreSQL
+    CONSTRAINT auth_audit_log_pkey PRIMARY KEY (id, "createdAt")
+) PARTITION BY RANGE ("createdAt");
 
 -- Add comment to table
 COMMENT ON TABLE public.auth_audit_log IS 'Parent table for yearly partitioned audit logs. All data is stored in year-based partitions.';
@@ -55,7 +57,7 @@ COMMENT ON COLUMN public.auth_audit_log.target_id IS 'ID of target entity (if ap
 COMMENT ON COLUMN public.auth_audit_log.meta IS 'Additional metadata in JSON format';
 COMMENT ON COLUMN public.auth_audit_log.ip IS 'IP address of the request';
 COMMENT ON COLUMN public.auth_audit_log.user_agent IS 'User agent string from the request';
-COMMENT ON COLUMN public.auth_audit_log.created_at IS 'Timestamp when the audit log entry was created (used for partitioning)';
+COMMENT ON COLUMN public.auth_audit_log."createdAt" IS 'Timestamp when the audit log entry was created (used for partitioning)';
 
 -- ============================================================================
 -- Step 3: Function to create a partition for a specific year
@@ -94,26 +96,27 @@ BEGIN
     -- Create partition only if it doesn't exist
     IF NOT partition_exists THEN
         -- Create the partition table
-        -- Note: We include created_at in PRIMARY KEY to match parent table constraint
+        -- Note: We include createdAt in PRIMARY KEY to match parent table constraint
         EXECUTE format('
             CREATE TABLE %I PARTITION OF public.auth_audit_log
             FOR VALUES FROM (%L) TO (%L)
         ', partition_name, start_date, end_date);
         
         -- Create indexes on the partition for optimal query performance
-        -- Index 1: created_at (for time-based queries)
+        -- Index 1: createdAt (for time-based queries)
+        -- Note: Using "createdAt" with quotes to preserve camelCase
         EXECUTE format('
-            CREATE INDEX %I ON %I (created_at)
-        ', partition_name || '_created_at_idx', partition_name);
+            CREATE INDEX %I ON %I ("createdAt")
+        ', partition_name || '_createdAt_idx', partition_name);
         
-        -- Index 2: actor_id + created_at (for actor-based queries with time filtering)
+        -- Index 2: actor_id + createdAt (for actor-based queries with time filtering)
         EXECUTE format('
-            CREATE INDEX %I ON %I (actor_id, created_at)
+            CREATE INDEX %I ON %I (actor_id, "createdAt")
         ', partition_name || '_actor_created_idx', partition_name);
         
-        -- Index 3: action + created_at (for action-based queries with time filtering)
+        -- Index 3: action + createdAt (for action-based queries with time filtering)
         EXECUTE format('
-            CREATE INDEX %I ON %I (action, created_at)
+            CREATE INDEX %I ON %I (action, "createdAt")
         ', partition_name || '_action_created_idx', partition_name);
         
         RAISE NOTICE 'Created partition % for year % (from % to %)', 

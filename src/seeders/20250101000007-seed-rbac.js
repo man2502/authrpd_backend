@@ -1,46 +1,106 @@
 'use strict';
 
+const { Role, Permission, RolePermission } = require('../models');
+
 /**
  * Seeder для RBAC (роли, права, связи)
  * Создает тестовые данные согласно ТЗ
+ * 
+ * Note: Использует Sequelize модели, поэтому используем camelCase для полей
+ * Sequelize автоматически преобразует в snake_case для БД благодаря underscored: true
  */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    // Roles - используем ON CONFLICT для идемпотентности
-    await queryInterface.sequelize.query(`
-      INSERT INTO roles (id, name, title_tm, title_ru, is_active, created_at, updated_at)
-      VALUES
-        (1, 'SUPERADMIN', 'Superadmin', 'Суперадмин', true, NOW(), NOW()),
-        (2, 'ADMIN', 'Admin', 'Админ', true, NOW(), NOW())
-      ON CONFLICT (id) DO NOTHING;
-    `);
+    // Roles - используем findOrCreate для идемпотентности
+    const [superAdminRole] = await Role.findOrCreate({
+      where: { id: 1 },
+      defaults: {
+        id: 1,
+        name: 'SUPERADMIN',
+        title_tm: 'Superadmin',
+        title_ru: 'Суперадмин',
+        is_active: true,
+      },
+    });
 
-    // Permissions - используем ON CONFLICT для идемпотентности
-    await queryInterface.sequelize.query(`
-      INSERT INTO permissions (id, name, is_active, created_at, updated_at)
-      VALUES
-        (1, 'CATALOG_READ', true, NOW(), NOW()),
-        (2, 'CATALOG_WRITE', true, NOW(), NOW()),
-        (3, 'RBAC_MANAGE', true, NOW(), NOW())
-      ON CONFLICT (id) DO NOTHING;
-    `);
+    const [adminRole] = await Role.findOrCreate({
+      where: { id: 2 },
+      defaults: {
+        id: 2,
+        name: 'ADMIN',
+        title_tm: 'Admin',
+        title_ru: 'Админ',
+        is_active: true,
+      },
+    });
 
-    // Role-Permission links - используем ON CONFLICT для идемпотентности
-    // Примечание: таблица role_permission не имеет timestamps (created_at/updated_at)
-    await queryInterface.sequelize.query(`
-      INSERT INTO role_permission (role_id, permission_id)
-      VALUES
-        (1, 1),
-        (1, 2),
-        (1, 3)
-      ON CONFLICT (role_id, permission_id) DO NOTHING;
-    `);
+    // Permissions - используем findOrCreate для идемпотентности
+    const [catalogRead] = await Permission.findOrCreate({
+      where: { id: 1 },
+      defaults: {
+        id: 1,
+        name: 'CATALOG_READ',
+        is_active: true,
+      },
+    });
+
+    const [catalogWrite] = await Permission.findOrCreate({
+      where: { id: 2 },
+      defaults: {
+        id: 2,
+        name: 'CATALOG_WRITE',
+        is_active: true,
+      },
+    });
+
+    const [rbacManage] = await Permission.findOrCreate({
+      where: { id: 3 },
+      defaults: {
+        id: 3,
+        name: 'RBAC_MANAGE',
+        is_active: true,
+      },
+    });
+
+    // Role-Permission links - используем findOrCreate для идемпотентности
+    // Примечание: таблица role_permission не имеет timestamps (createdAt/updatedAt)
+    await RolePermission.findOrCreate({
+      where: {
+        role_id: superAdminRole.id,
+        permission_id: catalogRead.id,
+      },
+      defaults: {
+        role_id: superAdminRole.id,
+        permission_id: catalogRead.id,
+      },
+    });
+
+    await RolePermission.findOrCreate({
+      where: {
+        role_id: superAdminRole.id,
+        permission_id: catalogWrite.id,
+      },
+      defaults: {
+        role_id: superAdminRole.id,
+        permission_id: catalogWrite.id,
+      },
+    });
+
+    await RolePermission.findOrCreate({
+      where: {
+        role_id: superAdminRole.id,
+        permission_id: rbacManage.id,
+      },
+      defaults: {
+        role_id: superAdminRole.id,
+        permission_id: rbacManage.id,
+      },
+    });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('role_permission', null, {});
-    await queryInterface.bulkDelete('permissions', null, {});
-    await queryInterface.bulkDelete('roles', null, {});
+    await RolePermission.destroy({ where: {}, truncate: true, cascade: true });
+    await Permission.destroy({ where: {}, truncate: true, cascade: true });
+    await Role.destroy({ where: {}, truncate: true, cascade: true });
   },
 };
-

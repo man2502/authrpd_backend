@@ -32,17 +32,18 @@ module.exports = {
         type: Sequelize.JSONB,
         allowNull: true,
       },
-      created_at: {
+      createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+        // Sequelize will map to created_at column in DB thanks to underscored: true
       },
     });
 
     await queryInterface.addIndex('auth_audit_log', ['actor_type', 'actor_id']);
     await queryInterface.addIndex('auth_audit_log', ['action']);
     await queryInterface.addIndex('auth_audit_log', ['target_type', 'target_id']);
-    await queryInterface.addIndex('auth_audit_log', ['created_at']);
+    await queryInterface.addIndex('auth_audit_log', ['createdAt']);
   },
 
   async down(queryInterface, Sequelize) {

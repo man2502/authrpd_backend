@@ -89,7 +89,7 @@ async function findAndVerifyRefreshToken(token, userType, userId) {
         [sequelize.Sequelize.Op.gt]: new Date(),
       },
     },
-    order: [['created_at', 'DESC']],
+    order: [['createdAt', 'DESC']], // Sequelize will map to created_at column
     limit: 10, // Проверяем последние 10 токенов
   });
 

@@ -1,23 +1,49 @@
 'use strict';
 
+const { Organization } = require('../models');
+
 /**
  * Seeder для организаций
  * Создает тестовые данные для таблицы organizations согласно ТЗ
+ * 
+ * Note: Использует Sequelize модели, поэтому используем camelCase для полей
+ * Sequelize автоматически преобразует в snake_case для БД благодаря underscored: true
  */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    // Используем ON CONFLICT для идемпотентности (PostgreSQL)
-    await queryInterface.sequelize.query(`
-      INSERT INTO organizations (code, title_tm, title_ru, region_id, ministry_id, financing_type, tax_code, is_active, created_at, updated_at)
-      VALUES
-        ('ORG001', 'Ahal hassahanasy', 'Ахалская больница', 'A', 'M01', 'LOCAL', '123456789', true, NOW(), NOW()),
-        ('ORG002', 'Balkan mekdebi', 'Балканская школа', 'B', 'M02', 'CENTRAL', '987654321', true, NOW(), NOW())
-      ON CONFLICT (code) DO NOTHING;
-    `);
+    // Используем findOrCreate для идемпотентности
+    const organizations = [
+      {
+        code: 'ORG001',
+        title_tm: 'Ahal hassahanasy',
+        title_ru: 'Ахалская больница',
+        region_id: 'A',
+        ministry_id: 'M01',
+        financing_type: 'LOCAL',
+        tax_code: '123456789',
+        is_active: true,
+      },
+      {
+        code: 'ORG002',
+        title_tm: 'Balkan mekdebi',
+        title_ru: 'Балканская школа',
+        region_id: 'B',
+        ministry_id: 'M02',
+        financing_type: 'CENTRAL',
+        tax_code: '987654321',
+        is_active: true,
+      },
+    ];
+
+    for (const orgData of organizations) {
+      await Organization.findOrCreate({
+        where: { code: orgData.code },
+        defaults: orgData,
+      });
+    }
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('organizations', null, {});
+    await Organization.destroy({ where: {}, truncate: true, cascade: true });
   },
 };
-
