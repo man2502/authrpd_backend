@@ -29,7 +29,7 @@ module.exports = {
         organization_id: 'ORG001',
         region_id: 'A',
         is_active: true,
-        // createdAt и updatedAt будут установлены автоматически благодаря timestamps: true
+        // created_at и updated_at будут установлены автоматически благодаря timestamps: true
       },
     });
 
@@ -65,7 +65,7 @@ module.exports = {
         organization_id: 'ORG001',
         ministry_id: 'M01',
         region_id: 'A',
-        // createdAt и updatedAt будут установлены автоматически благодаря timestamps: true
+        // created_at и updated_at будут установлены автоматически благодаря timestamps: true
       },
     });
   },

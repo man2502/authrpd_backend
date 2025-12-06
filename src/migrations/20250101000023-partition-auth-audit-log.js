@@ -7,21 +7,18 @@ const path = require('path');
  * Migration: Partition auth_audit_log table by year
  * 
  * This migration converts the existing auth_audit_log table to a partitioned table
- * using RANGE partitioning by createdAt (yearly partitions).
- * Note: In SQL queries, we use createdAt (snake_case) as that's the actual column name in DB.
+ * using RANGE partitioning by created_at (yearly partitions).
+ * Note: In SQL queries, we use created_at (snake_case) as that's the actual column name in DB.
  * 
- * Strategy:
- * 1. If table exists, we need to migrate data (for production)
- * 2. Create parent partitioned table
- * 3. Create SQL functions for partition management
- * 4. Create initial partitions (current year + next year)
+ * Optimized Strategy (no intermediate rename):
+ * 1. If table exists and is not partitioned, create new partitioned table with temp name (auth_audit_log_new)
+ * 2. Create SQL functions for partition management
+ * 3. Migrate data from original table to temp partitioned table
+ * 4. Drop original table
+ * 5. Rename temp table to original name
+ * 6. Create initial partitions (current year + next year)
  * 
- * Note: This migration assumes the table might already exist.
- * For production, you would need to:
- * - Backup existing data
- * - Create partitioned table
- * - Migrate data to appropriate partitions
- * - Drop old table
+ * This approach avoids the need to rename the original table to _old, making the migration cleaner.
  */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -79,48 +76,20 @@ module.exports = {
           console.log(`Found ${rowCount[0].count} rows to migrate.`);
         }
         
-        // Step 2: Get the actual constraint name (it might be different)
-        // Then drop it before renaming to avoid conflicts
-        try {
-          const [constraints] = await queryInterface.sequelize.query(`
-            SELECT constraint_name
-            FROM information_schema.table_constraints
-            WHERE table_schema = 'public'
-            AND table_name = 'auth_audit_log'
-            AND constraint_type = 'PRIMARY KEY';
-          `);
-          
-          if (constraints.length > 0) {
-            const constraintName = constraints[0].constraint_name;
-            await queryInterface.sequelize.query(`
-              ALTER TABLE public.auth_audit_log DROP CONSTRAINT ${constraintName};
-            `);
-            console.log(`Dropped primary key constraint: ${constraintName}`);
-          }
-        } catch (err) {
-          // Ignore if constraint doesn't exist
-          console.log('Note: Could not drop constraint (may not exist):', err.message);
-        }
-        
-        // Step 3: Rename existing table to temporary name (explicitly in public schema)
-        await queryInterface.sequelize.query(`
-          ALTER TABLE public.auth_audit_log RENAME TO auth_audit_log_old;
-        `);
-        console.log('Renamed existing table to auth_audit_log_old');
         needsDataMigration = true;
       }
     }
 
-    // If we renamed the table, create the partitioned table first
+    // If we need to migrate, create the partitioned table with a temporary name
     // (before executing SQL file which uses CREATE TABLE IF NOT EXISTS)
     if (needsDataMigration) {
-      console.log('Creating new partitioned table structure...');
+      console.log('Creating new partitioned table structure with temporary name...');
       
-      // Create the partitioned parent table in the public schema
+      // Create the partitioned parent table with temporary name in the public schema
       // Explicitly specify schema to ensure it's created in the correct database
-      // Note: Using "createdAt" with quotes to preserve camelCase in PostgreSQL
+      // Note: Using "created_at" with quotes to preserve snake_case in PostgreSQL
       await queryInterface.sequelize.query(`
-        CREATE TABLE public.auth_audit_log (
+        CREATE TABLE public.auth_audit_log_new (
           id BIGSERIAL NOT NULL,
           actor_type VARCHAR(255),
           actor_id BIGINT,
@@ -130,27 +99,27 @@ module.exports = {
           meta JSONB,
           ip VARCHAR(255),
           user_agent TEXT,
-          "createdAt" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-          CONSTRAINT auth_audit_log_pkey PRIMARY KEY (id, "createdAt")
-        ) PARTITION BY RANGE ("createdAt");
+          "created_at" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+          CONSTRAINT auth_audit_log_new_pkey PRIMARY KEY (id, "created_at")
+        ) PARTITION BY RANGE ("created_at");
       `);
       
       // Add comments
       await queryInterface.sequelize.query(`
-        COMMENT ON TABLE auth_audit_log IS 'Parent table for yearly partitioned audit logs. All data is stored in year-based partitions.';
-        COMMENT ON COLUMN auth_audit_log.id IS 'Unique identifier for audit log entry';
-        COMMENT ON COLUMN auth_audit_log.actor_type IS 'Type of actor (MEMBER, CLIENT, SYSTEM)';
-        COMMENT ON COLUMN auth_audit_log.actor_id IS 'ID of the actor performing the action';
-        COMMENT ON COLUMN auth_audit_log.action IS 'Action performed (LOGIN, LOGOUT, CREATE, UPDATE, DELETE, etc.)';
-        COMMENT ON COLUMN auth_audit_log.target_type IS 'Type of target entity (if applicable)';
-        COMMENT ON COLUMN auth_audit_log.target_id IS 'ID of target entity (if applicable)';
-        COMMENT ON COLUMN auth_audit_log.meta IS 'Additional metadata in JSON format';
-        COMMENT ON COLUMN auth_audit_log.ip IS 'IP address of the request';
-        COMMENT ON COLUMN auth_audit_log.user_agent IS 'User agent string from the request';
-        COMMENT ON COLUMN auth_audit_log."createdAt" IS 'Timestamp when the audit log entry was created (used for partitioning)';
+        COMMENT ON TABLE auth_audit_log_new IS 'Parent table for yearly partitioned audit logs. All data is stored in year-based partitions.';
+        COMMENT ON COLUMN auth_audit_log_new.id IS 'Unique identifier for audit log entry';
+        COMMENT ON COLUMN auth_audit_log_new.actor_type IS 'Type of actor (MEMBER, CLIENT, SYSTEM)';
+        COMMENT ON COLUMN auth_audit_log_new.actor_id IS 'ID of the actor performing the action';
+        COMMENT ON COLUMN auth_audit_log_new.action IS 'Action performed (LOGIN, LOGOUT, CREATE, UPDATE, DELETE, etc.)';
+        COMMENT ON COLUMN auth_audit_log_new.target_type IS 'Type of target entity (if applicable)';
+        COMMENT ON COLUMN auth_audit_log_new.target_id IS 'ID of target entity (if applicable)';
+        COMMENT ON COLUMN auth_audit_log_new.meta IS 'Additional metadata in JSON format';
+        COMMENT ON COLUMN auth_audit_log_new.ip IS 'IP address of the request';
+        COMMENT ON COLUMN auth_audit_log_new.user_agent IS 'User agent string from the request';
+        COMMENT ON COLUMN auth_audit_log_new."created_at" IS 'Timestamp when the audit log entry was created (used for partitioning)';
       `);
       
-      console.log('Partitioned table structure created');
+      console.log('Partitioned table structure created with temporary name');
     }
 
     // Execute SQL file
@@ -159,7 +128,8 @@ module.exports = {
     
     // 1. Extract and execute CREATE TABLE IF NOT EXISTS (only if table doesn't exist or isn't partitioned)
     // Skip if table is already partitioned (no need to create it again)
-    if (!tableExists || (!isPartitioned && needsDataMigration)) {
+    // Also skip if we're migrating (we already created auth_audit_log_new)
+    if (!tableExists && !needsDataMigration) {
       const createTableRegex = /CREATE\s+TABLE\s+IF\s+NOT\s+EXISTS[^;]+;/gi;
       let createTableMatch;
       while ((createTableMatch = createTableRegex.exec(sql)) !== null) {
@@ -229,33 +199,16 @@ module.exports = {
       }
     }
 
-    // Ensure partitions exist for current year and next year
-    await queryInterface.sequelize.query('SELECT ensure_audit_partitions(1);');
-    
-    // If we migrated from an old table, migrate the data
-    // Only check for old table if we actually created it (needsDataMigration is true)
-    // If table is already partitioned, skip this entire block
+    // If we need to migrate data, do it now
     if (needsDataMigration) {
-      const [oldTableExists] = await queryInterface.sequelize.query(`
-        SELECT EXISTS (
-          SELECT FROM information_schema.tables 
-          WHERE table_schema = 'public' 
-          AND table_name = 'auth_audit_log_old'
-        );
-      `);
+      console.log('Migrating data from auth_audit_log to partitioned table...');
       
-      if (!oldTableExists[0].exists) {
-        console.log('No old table found, skipping data migration');
-        return; // Exit early if no old table exists
-      }
-      console.log('Migrating data from auth_audit_log_old to partitioned table...');
-      
-      // Check what columns exist in old table
+      // Check what columns exist in the original table
       const [oldColumns] = await queryInterface.sequelize.query(`
         SELECT column_name, data_type
         FROM information_schema.columns
         WHERE table_schema = 'public'
-        AND table_name = 'auth_audit_log_old'
+        AND table_name = 'auth_audit_log'
         ORDER BY ordinal_position;
       `);
       
@@ -265,23 +218,24 @@ module.exports = {
       
       // Detect the actual column name for timestamp (could be created_at, createdAt, or createdat)
       // PostgreSQL converts unquoted identifiers to lowercase, so we check all possibilities
+      // Note: This migration handles legacy tables that might have old camelCase column names
       let timestampColumnName = null;
       if (columnNames.includes('created_at')) {
         timestampColumnName = 'created_at';
       } else if (columnNames.includes('createdAt')) {
-        timestampColumnName = '"createdAt"'; // Use quotes if it's camelCase
+        timestampColumnName = '"createdAt"'; // Use quotes if it's camelCase (legacy)
       } else if (columnNames.includes('createdat')) {
         timestampColumnName = 'createdat';
       } else {
-        throw new Error('Could not find timestamp column in old table. Expected created_at, createdAt, or createdat');
+        throw new Error('Could not find timestamp column in table. Expected created_at, createdAt, or createdat');
       }
       
-      console.log(`Detected timestamp column in old table: ${timestampColumnName}`);
+      console.log(`Detected timestamp column: ${timestampColumnName}`);
       
       // Build column list for INSERT
-      // Note: Old table may use created_at, createdAt, or createdat; new table uses "createdAt" (camelCase with quotes)
+      // Note: Original table may use created_at, createdAt, or createdat (legacy); new table uses "created_at" (snake_case with quotes)
       let selectColumns = `actor_type, actor_id, action, target_type, target_id, meta, ${timestampColumnName}`;
-      let insertColumns = 'actor_type, actor_id, action, target_type, target_id, meta, "createdAt"';
+      let insertColumns = 'actor_type, actor_id, action, target_type, target_id, meta, "created_at"';
       
       if (hasIp) {
         selectColumns += ', ip';
@@ -299,12 +253,11 @@ module.exports = {
       
       // Migrate data year by year to ensure it goes to correct partitions
       // Get min and max years from data
-      // Note: Use the detected timestamp column name
       const [yearRange] = await queryInterface.sequelize.query(`
         SELECT 
           EXTRACT(YEAR FROM MIN(${timestampColumnName}))::INT as min_year,
           EXTRACT(YEAR FROM MAX(${timestampColumnName}))::INT as max_year
-        FROM public.auth_audit_log_old;
+        FROM public.auth_audit_log;
       `);
       
       if (yearRange[0].min_year && yearRange[0].max_year) {
@@ -312,11 +265,42 @@ module.exports = {
         const maxYear = parseInt(yearRange[0].max_year, 10);
         const currentYear = new Date().getFullYear();
         
-        // Ensure partitions exist for all years in data
+        // Create partitions for all years in data (manually for the temp table)
         for (let year = minYear; year <= Math.max(maxYear, currentYear + 1); year++) {
-          await queryInterface.sequelize.query(
-            `SELECT create_audit_partition_for_year(${year});`
-          );
+          const partitionName = `auth_audit_log_new_${year}`;
+          const startDate = `${year}-01-01 00:00:00+00`;
+          const endDate = `${year + 1}-01-01 00:00:00+00`;
+          
+          // Check if partition already exists
+          const [partitionExists] = await queryInterface.sequelize.query(`
+            SELECT EXISTS (
+              SELECT 1
+              FROM pg_class c
+              JOIN pg_namespace n ON n.oid = c.relnamespace
+              WHERE n.nspname = 'public'
+              AND c.relname = '${partitionName}'
+            );
+          `);
+          
+          if (!partitionExists[0].exists) {
+            await queryInterface.sequelize.query(`
+              CREATE TABLE public.${partitionName} PARTITION OF public.auth_audit_log_new
+              FOR VALUES FROM ('${startDate}'::timestamptz) TO ('${endDate}'::timestamptz);
+            `);
+            
+            // Create indexes on the partition
+            await queryInterface.sequelize.query(`
+              CREATE INDEX ${partitionName}_created_at_idx ON public.${partitionName} ("created_at");
+            `);
+            await queryInterface.sequelize.query(`
+              CREATE INDEX ${partitionName}_actor_created_idx ON public.${partitionName} (actor_id, "created_at");
+            `);
+            await queryInterface.sequelize.query(`
+              CREATE INDEX ${partitionName}_action_created_idx ON public.${partitionName} (action, "created_at");
+            `);
+            
+            console.log(`Created partition ${partitionName} for year ${year}`);
+          }
         }
         
         // Migrate data year by year
@@ -324,10 +308,10 @@ module.exports = {
           const startDate = `${year}-01-01 00:00:00+00`;
           const endDate = `${year + 1}-01-01 00:00:00+00`;
           
-          const [migrated] = await queryInterface.sequelize.query(`
-            INSERT INTO public.auth_audit_log (${insertColumns})
+          await queryInterface.sequelize.query(`
+            INSERT INTO public.auth_audit_log_new (${insertColumns})
             SELECT ${selectColumns}
-            FROM public.auth_audit_log_old
+            FROM public.auth_audit_log
             WHERE ${timestampColumnName} >= '${startDate}'::timestamptz
             AND ${timestampColumnName} < '${endDate}'::timestamptz;
           `);
@@ -337,30 +321,88 @@ module.exports = {
         
         // Verify migration
         const [oldCount] = await queryInterface.sequelize.query(`
-          SELECT COUNT(*) as count FROM public.auth_audit_log_old;
-        `);
-        const [newCount] = await queryInterface.sequelize.query(`
           SELECT COUNT(*) as count FROM public.auth_audit_log;
         `);
+        const [newCount] = await queryInterface.sequelize.query(`
+          SELECT COUNT(*) as count FROM public.auth_audit_log_new;
+        `);
         
-        console.log(`Migration complete: ${oldCount[0].count} rows in old table, ${newCount[0].count} rows in new table`);
+        console.log(`Migration complete: ${oldCount[0].count} rows in original table, ${newCount[0].count} rows in new table`);
         
         if (parseInt(oldCount[0].count, 10) === parseInt(newCount[0].count, 10)) {
           // Drop old table
-          await queryInterface.sequelize.query('DROP TABLE public.auth_audit_log_old;');
-          console.log('Dropped old table auth_audit_log_old');
+          await queryInterface.sequelize.query('DROP TABLE public.auth_audit_log CASCADE;');
+          console.log('Dropped original table auth_audit_log');
+          
+          // Rename new table to original name
+          await queryInterface.sequelize.query(`
+            ALTER TABLE public.auth_audit_log_new RENAME TO auth_audit_log;
+          `);
+          console.log('Renamed auth_audit_log_new to auth_audit_log');
+          
+          // Rename the primary key constraint
+          await queryInterface.sequelize.query(`
+            ALTER TABLE public.auth_audit_log RENAME CONSTRAINT auth_audit_log_new_pkey TO auth_audit_log_pkey;
+          `);
+          console.log('Renamed primary key constraint');
+          
+          // Rename partitions to match the new table name
+          const [partitions] = await queryInterface.sequelize.query(`
+            SELECT tablename
+            FROM pg_tables
+            WHERE schemaname = 'public'
+            AND tablename LIKE 'auth_audit_log_new_%'
+            ORDER BY tablename;
+          `);
+          
+          for (const partition of partitions) {
+            const oldName = partition.tablename;
+            const newName = oldName.replace('auth_audit_log_new_', 'auth_audit_log_');
+            
+            // Rename the partition table
+            await queryInterface.sequelize.query(`
+              ALTER TABLE public.${oldName} RENAME TO ${newName};
+            `);
+            console.log(`Renamed partition ${oldName} to ${newName}`);
+            
+            // Rename indexes for this partition (using old name before rename, new name after)
+            await queryInterface.sequelize.query(`
+              ALTER INDEX IF EXISTS public.${oldName}_created_at_idx RENAME TO ${newName}_created_at_idx;
+            `);
+            await queryInterface.sequelize.query(`
+              ALTER INDEX IF EXISTS public.${oldName}_actor_created_idx RENAME TO ${newName}_actor_created_idx;
+            `);
+            await queryInterface.sequelize.query(`
+              ALTER INDEX IF EXISTS public.${oldName}_action_created_idx RENAME TO ${newName}_action_created_idx;
+            `);
+          }
         } else {
-          console.warn('WARNING: Row counts do not match! Old table preserved for safety.');
-          console.warn('Please verify data manually before dropping auth_audit_log_old');
+          console.warn('WARNING: Row counts do not match! Original table preserved for safety.');
+          console.warn('Please verify data manually before dropping auth_audit_log');
         }
       } else {
-        // No data to migrate, just drop old table
-        await queryInterface.sequelize.query('DROP TABLE public.auth_audit_log_old;');
-        console.log('No data to migrate, dropped old table');
+        // No data to migrate, just drop old table and rename new one
+        await queryInterface.sequelize.query('DROP TABLE public.auth_audit_log CASCADE;');
+        console.log('No data to migrate, dropped original table');
+        
+        // Rename new table to original name
+        await queryInterface.sequelize.query(`
+          ALTER TABLE public.auth_audit_log_new RENAME TO auth_audit_log;
+        `);
+        console.log('Renamed auth_audit_log_new to auth_audit_log');
+        
+        // Rename the primary key constraint
+        await queryInterface.sequelize.query(`
+          ALTER TABLE public.auth_audit_log RENAME CONSTRAINT auth_audit_log_new_pkey TO auth_audit_log_pkey;
+        `);
+        console.log('Renamed primary key constraint');
       }
+      
+      // Ensure partitions exist for current year and next year on the final table
+      await queryInterface.sequelize.query('SELECT ensure_audit_partitions(1);');
     } else {
-      // Table is already partitioned, no data migration needed
-      console.log('Table is already partitioned, no data migration needed');
+      // Table is already partitioned or doesn't exist, ensure partitions exist
+      await queryInterface.sequelize.query('SELECT ensure_audit_partitions(1);');
     }
   },
 

@@ -24,12 +24,12 @@ const ApiError = require('../../helpers/api.error');
 async function bumpCatalogVersion(catalogName) {
   const [version, created] = await CatalogVersion.findOrCreate({
     where: { catalog_name: catalogName },
-    defaults: { version: 1, updatedAt: new Date() }, // Sequelize will map to updated_at column
+    defaults: { version: 1, updated_at: new Date() }, // Sequelize will map to updated_at column
   });
 
   if (!created) {
     version.version += 1;
-    version.updatedAt = new Date(); // Sequelize will map to updated_at column
+    version.updated_at = new Date(); // Sequelize will map to updated_at column
     await version.save();
   }
 

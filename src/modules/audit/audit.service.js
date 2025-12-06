@@ -28,7 +28,7 @@ async function logEvent(data) {
       meta: data.meta || null,
       ip: data.ip || null,
       user_agent: data.userAgent || null,
-      createdAt: new Date(), // Sequelize will map to created_at column
+      created_at: new Date(), // Sequelize will map to created_at column
     });
   } catch (error) {
     // Не прерываем выполнение при ошибке аудита

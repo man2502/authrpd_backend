@@ -48,6 +48,7 @@ const RefreshToken = sequelize.define(
     tableName: 'refresh_tokens',
     timestamps: true,
     updatedAt: false,
+    paranoid: false, // Disable paranoid mode - refresh_tokens table doesn't have deleted_at column
   }
 );
 
@@ -89,7 +90,7 @@ async function findAndVerifyRefreshToken(token, userType, userId) {
         [sequelize.Sequelize.Op.gt]: new Date(),
       },
     },
-    order: [['createdAt', 'DESC']], // Sequelize will map to created_at column
+    order: [['created_at', 'DESC']], // Sequelize will map to created_at column
     limit: 10, // Проверяем последние 10 токенов
   });
 

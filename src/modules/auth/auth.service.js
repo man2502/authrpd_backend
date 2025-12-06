@@ -195,7 +195,7 @@ async function refreshTokens(refreshToken, metadata = {}) {
           [sequelize.Sequelize.Op.gt]: new Date(),
         },
       },
-      order: [['createdAt', 'DESC']], // Sequelize will map to created_at column
+      order: [['created_at', 'DESC']], // Sequelize will map to created_at column
       limit: 100, // Ограничиваем для производительности
     });
 

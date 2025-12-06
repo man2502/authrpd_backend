@@ -73,20 +73,19 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: true,
       },
-      createdAt: {
+      created_at: {
         type: Sequelize.DATE,
         allowNull: false,
-        // Sequelize will map to created_at column in DB thanks to underscored: true
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
-      updatedAt: {
+      updated_at: {
         type: Sequelize.DATE,
         allowNull: false,
-        // Sequelize will map to updated_at column in DB thanks to underscored: true
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
       },
-      deletedAt: {
+      deleted_at: {
         type: Sequelize.DATE,
         allowNull: true,
-        // Sequelize will map to deleted_at column in DB thanks to underscored: true
       },
     });
 

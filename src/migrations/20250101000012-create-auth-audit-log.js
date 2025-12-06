@@ -32,7 +32,7 @@ module.exports = {
         type: Sequelize.JSONB,
         allowNull: true,
       },
-      createdAt: {
+      created_at: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
@@ -43,7 +43,7 @@ module.exports = {
     await queryInterface.addIndex('auth_audit_log', ['actor_type', 'actor_id']);
     await queryInterface.addIndex('auth_audit_log', ['action']);
     await queryInterface.addIndex('auth_audit_log', ['target_type', 'target_id']);
-    await queryInterface.addIndex('auth_audit_log', ['createdAt']);
+    await queryInterface.addIndex('auth_audit_log', ['created_at']);
   },
 
   async down(queryInterface, Sequelize) {

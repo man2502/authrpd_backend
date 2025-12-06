@@ -63,7 +63,7 @@ module.exports = {
     });
 
     // Role-Permission links - используем findOrCreate для идемпотентности
-    // Примечание: таблица role_permission не имеет timestamps (createdAt/updatedAt)
+    // Примечание: таблица role_permission не имеет timestamps (created_at/updated_at)
     await RolePermission.findOrCreate({
       where: {
         role_id: superAdminRole.id,
