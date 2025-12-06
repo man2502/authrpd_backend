@@ -62,8 +62,9 @@ module.exports = {
       isPartitioned = partitionCheck[0].exists;
 
       if (isPartitioned) {
-        // Table is already partitioned - skip migration, just ensure functions and partitions exist
+        // Table is already partitioned - skip migration completely, just ensure functions and partitions exist
         console.log('Table is already partitioned, skipping data migration. Ensuring functions and partitions exist...');
+        needsDataMigration = false; // Explicitly set to false to skip all migration logic
       } else {
         // Table exists but is not partitioned - migrate data
         console.log('Migrating existing auth_audit_log table to partitioned structure...');
@@ -157,7 +158,8 @@ module.exports = {
     // This avoids issues with dollar-quoted strings in functions
     
     // 1. Extract and execute CREATE TABLE IF NOT EXISTS (only if table doesn't exist or isn't partitioned)
-    if (!tableExists || !isPartitioned) {
+    // Skip if table is already partitioned (no need to create it again)
+    if (!tableExists || (!isPartitioned && needsDataMigration)) {
       const createTableRegex = /CREATE\s+TABLE\s+IF\s+NOT\s+EXISTS[^;]+;/gi;
       let createTableMatch;
       while ((createTableMatch = createTableRegex.exec(sql)) !== null) {
@@ -192,7 +194,8 @@ module.exports = {
     }
     
     // 3. Extract COMMENT statements (skip if table already exists and is partitioned)
-    if (!isPartitioned) {
+    // Only add comments if we're creating a new table or migrating
+    if (!isPartitioned && (needsDataMigration || !tableExists)) {
       const commentRegex = /COMMENT\s+ON\s+[^;]+;/gi;
       let commentMatch;
       while ((commentMatch = commentRegex.exec(sql)) !== null) {
@@ -230,15 +233,21 @@ module.exports = {
     await queryInterface.sequelize.query('SELECT ensure_audit_partitions(1);');
     
     // If we migrated from an old table, migrate the data
-    const [oldTableExists] = await queryInterface.sequelize.query(`
-      SELECT EXISTS (
-        SELECT FROM information_schema.tables 
-        WHERE table_schema = 'public' 
-        AND table_name = 'auth_audit_log_old'
-      );
-    `);
-    
-    if (oldTableExists[0].exists) {
+    // Only check for old table if we actually created it (needsDataMigration is true)
+    // If table is already partitioned, skip this entire block
+    if (needsDataMigration) {
+      const [oldTableExists] = await queryInterface.sequelize.query(`
+        SELECT EXISTS (
+          SELECT FROM information_schema.tables 
+          WHERE table_schema = 'public' 
+          AND table_name = 'auth_audit_log_old'
+        );
+      `);
+      
+      if (!oldTableExists[0].exists) {
+        console.log('No old table found, skipping data migration');
+        return; // Exit early if no old table exists
+      }
       console.log('Migrating data from auth_audit_log_old to partitioned table...');
       
       // Check what columns exist in old table
@@ -254,9 +263,24 @@ module.exports = {
       const hasIp = columnNames.includes('ip');
       const hasUserAgent = columnNames.includes('user_agent');
       
+      // Detect the actual column name for timestamp (could be created_at, createdAt, or createdat)
+      // PostgreSQL converts unquoted identifiers to lowercase, so we check all possibilities
+      let timestampColumnName = null;
+      if (columnNames.includes('created_at')) {
+        timestampColumnName = 'created_at';
+      } else if (columnNames.includes('createdAt')) {
+        timestampColumnName = '"createdAt"'; // Use quotes if it's camelCase
+      } else if (columnNames.includes('createdat')) {
+        timestampColumnName = 'createdat';
+      } else {
+        throw new Error('Could not find timestamp column in old table. Expected created_at, createdAt, or createdat');
+      }
+      
+      console.log(`Detected timestamp column in old table: ${timestampColumnName}`);
+      
       // Build column list for INSERT
-      // Note: Old table uses created_at (snake_case), new table uses "createdAt" (camelCase with quotes)
-      let selectColumns = 'actor_type, actor_id, action, target_type, target_id, meta, created_at';
+      // Note: Old table may use created_at, createdAt, or createdat; new table uses "createdAt" (camelCase with quotes)
+      let selectColumns = `actor_type, actor_id, action, target_type, target_id, meta, ${timestampColumnName}`;
       let insertColumns = 'actor_type, actor_id, action, target_type, target_id, meta, "createdAt"';
       
       if (hasIp) {
@@ -275,11 +299,11 @@ module.exports = {
       
       // Migrate data year by year to ensure it goes to correct partitions
       // Get min and max years from data
-      // Note: Old table uses created_at (snake_case)
+      // Note: Use the detected timestamp column name
       const [yearRange] = await queryInterface.sequelize.query(`
         SELECT 
-          EXTRACT(YEAR FROM MIN(created_at))::INT as min_year,
-          EXTRACT(YEAR FROM MAX(created_at))::INT as max_year
+          EXTRACT(YEAR FROM MIN(${timestampColumnName}))::INT as min_year,
+          EXTRACT(YEAR FROM MAX(${timestampColumnName}))::INT as max_year
         FROM public.auth_audit_log_old;
       `);
       
@@ -304,8 +328,8 @@ module.exports = {
             INSERT INTO public.auth_audit_log (${insertColumns})
             SELECT ${selectColumns}
             FROM public.auth_audit_log_old
-            WHERE created_at >= '${startDate}'::timestamptz
-            AND created_at < '${endDate}'::timestamptz;
+            WHERE ${timestampColumnName} >= '${startDate}'::timestamptz
+            AND ${timestampColumnName} < '${endDate}'::timestamptz;
           `);
           
           console.log(`Migrated data for year ${year}`);
@@ -334,6 +358,9 @@ module.exports = {
         await queryInterface.sequelize.query('DROP TABLE public.auth_audit_log_old;');
         console.log('No data to migrate, dropped old table');
       }
+    } else {
+      // Table is already partitioned, no data migration needed
+      console.log('Table is already partitioned, no data migration needed');
     }
   },
 

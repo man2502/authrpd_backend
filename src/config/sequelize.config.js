@@ -30,7 +30,7 @@ module.exports = {
     dialect: 'postgres',
     schema: 'public', // Explicitly set schema to public
     define: {
-      underscored: true, // Automatically convert camelCase to snake_case for DB columns
+      // underscored: true, // Automatically convert camelCase to snake_case for DB columns
       freezeTableName: true,
       timestamps: true,
       paranoid: true,
@@ -45,7 +45,7 @@ module.exports = {
     dialect: 'postgres',
     schema: 'public', // Explicitly set schema to public
     define: {
-      underscored: true, // Automatically convert camelCase to snake_case for DB columns
+      // underscored: true, // Automatically convert camelCase to snake_case for DB columns
       freezeTableName: true,
       timestamps: true,
       paranoid: true,
