@@ -106,7 +106,7 @@ async function loginMember(username, password, metadata = {}) {
 async function loginClient(username, password, metadata = {}) {
   try {
     const client = await Client.findOne({
-      where: { username, is_active: true, isBlocked: false },
+      where: { username, is_active: true, is_blocked: false },
       include: ['organization', 'ministry', 'region'],
     });
 
