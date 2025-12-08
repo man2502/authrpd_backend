@@ -6,6 +6,42 @@ const { validate_id_param } = require('../../helpers/validators');
 const require_permissions = require('../../middlewares/require_permissions');
 
 // RBAC admin routes - require RBAC_MANAGE permission
+/**
+ * @swagger
+ * /admin/roles:
+ *   get:
+ *     tags: [RBAC]
+ *     summary: List roles
+ *     security: [ { bearerAuth: [] } ]
+ *   post:
+ *     tags: [RBAC]
+ *     summary: Create role
+ *     security: [ { bearerAuth: [] } ]
+ * /admin/roles/{id}:
+ *   put:
+ *     tags: [RBAC]
+ *     summary: Update role
+ *     security: [ { bearerAuth: [] } ]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: integer }
+ * /admin/roles/{id}/permissions:
+ *   get:
+ *     tags: [RBAC]
+ *     summary: Get permissions for a role
+ *     security: [ { bearerAuth: [] } ]
+ *   post:
+ *     tags: [RBAC]
+ *     summary: Assign permissions to role
+ *     security: [ { bearerAuth: [] } ]
+ * /admin/permissions:
+ *   get:
+ *     tags: [RBAC]
+ *     summary: List permissions
+ *     security: [ { bearerAuth: [] } ]
+ */
 router.get('/roles', authGuard, require_permissions('RBAC_MANAGE'), rbacController.getRoles);
 router.post('/roles', authGuard, require_permissions('RBAC_MANAGE'), rbacController.createRole);
 router.put('/roles/:id', authGuard, validate_id_param(), require_permissions('RBAC_MANAGE'), rbacController.updateRole);

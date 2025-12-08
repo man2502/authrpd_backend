@@ -42,64 +42,308 @@ router.get('/versions', catalogController.getVersions);
 // - CATALOG_WRITE: Write access to catalogs (create, update, delete)
 // - CATALOG_READ: Read access to catalogs (list, view)
 
+/**
+ * @swagger
+ * /catalogs/regions:
+ *   get:
+ *     tags: [Catalogs]
+ *     summary: List regions
+ *     security: [ { bearerAuth: [] } ]
+ *     parameters:
+ *       - in: query
+ *         name: lang
+ *         schema: { type: string, enum: [tm, ru], default: tm }
+ *     responses:
+ *       200: { description: Regions retrieved }
+ *   post:
+ *     tags: [Catalogs]
+ *     summary: Create region
+ *     security: [ { bearerAuth: [] } ]
+ *     responses:
+ *       201: { description: Region created }
+ * /catalogs/regions/{code}:
+ *   put:
+ *     tags: [Catalogs]
+ *     summary: Update region
+ *     security: [ { bearerAuth: [] } ]
+ *     parameters:
+ *       - in: path
+ *         name: code
+ *         required: true
+ *         schema: { type: string }
+ *   delete:
+ *     tags: [Catalogs]
+ *     summary: Delete region (soft)
+ *     security: [ { bearerAuth: [] } ]
+ */
 router.get('/regions', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getRegions);
 router.post('/regions', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createRegion);
 router.put('/regions/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.updateRegion);
 router.delete('/regions/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteRegion);
 
+/**
+ * @swagger
+ * /catalogs/ministries:
+ *   get:
+ *     tags: [Catalogs]
+ *     summary: List ministries
+ *     security: [ { bearerAuth: [] } ]
+ *   post:
+ *     tags: [Catalogs]
+ *     summary: Create ministry
+ *     security: [ { bearerAuth: [] } ]
+ * /catalogs/ministries/{code}:
+ *   put:
+ *     tags: [Catalogs]
+ *     summary: Update ministry
+ *     security: [ { bearerAuth: [] } ]
+ *   delete:
+ *     tags: [Catalogs]
+ *     summary: Delete ministry (soft)
+ *     security: [ { bearerAuth: [] } ]
+ */
 // Catalog CRUD - protected by CATALOG_READ / CATALOG_WRITE
 router.get('/ministries', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getMinistries);
 router.post('/ministries', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createMinistry);
 router.put('/ministries/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.updateMinistry);
 router.delete('/ministries/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteMinistry);
 
+/**
+ * @swagger
+ * /catalogs/organizations:
+ *   get:
+ *     tags: [Catalogs]
+ *     summary: List organizations
+ *     security: [ { bearerAuth: [] } ]
+ *   post:
+ *     tags: [Catalogs]
+ *     summary: Create organization
+ *     security: [ { bearerAuth: [] } ]
+ * /catalogs/organizations/{code}:
+ *   put:
+ *     tags: [Catalogs]
+ *     summary: Update organization
+ *     security: [ { bearerAuth: [] } ]
+ *   delete:
+ *     tags: [Catalogs]
+ *     summary: Delete organization (soft)
+ *     security: [ { bearerAuth: [] } ]
+ */
 router.get('/organizations', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getOrganizations);
 router.post('/organizations', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createOrganization);
 router.put('/organizations/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.updateOrganization);
 router.delete('/organizations/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteOrganization);
 
+/**
+ * @swagger
+ * /catalogs/classifier_economic:
+ *   get:
+ *     tags: [Catalogs]
+ *     summary: List economic classifiers
+ *     security: [ { bearerAuth: [] } ]
+ *   post:
+ *     tags: [Catalogs]
+ *     summary: Create economic classifier
+ *     security: [ { bearerAuth: [] } ]
+ * /catalogs/classifier_economic/{code}:
+ *   put:
+ *     tags: [Catalogs]
+ *     summary: Update economic classifier
+ *     security: [ { bearerAuth: [] } ]
+ *   delete:
+ *     tags: [Catalogs]
+ *     summary: Delete economic classifier (soft)
+ *     security: [ { bearerAuth: [] } ]
+ */
 // Classifier Economic
 router.get('/classifier_economic', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getClassifierEconomic);
 router.post('/classifier_economic', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createClassifierEconomic);
 router.put('/classifier_economic/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.updateClassifierEconomic);
 router.delete('/classifier_economic/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteClassifierEconomic);
 
+/**
+ * @swagger
+ * /catalogs/classifier_purpose:
+ *   get:
+ *     tags: [Catalogs]
+ *     summary: List purpose classifiers
+ *     security: [ { bearerAuth: [] } ]
+ *   post:
+ *     tags: [Catalogs]
+ *     summary: Create purpose classifier
+ *     security: [ { bearerAuth: [] } ]
+ * /catalogs/classifier_purpose/{code}:
+ *   put:
+ *     tags: [Catalogs]
+ *     summary: Update purpose classifier
+ *     security: [ { bearerAuth: [] } ]
+ *   delete:
+ *     tags: [Catalogs]
+ *     summary: Delete purpose classifier (soft)
+ *     security: [ { bearerAuth: [] } ]
+ */
 // Classifier Purpose
 router.get('/classifier_purpose', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getClassifierPurpose);
 router.post('/classifier_purpose', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createClassifierPurpose);
 router.put('/classifier_purpose/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.updateClassifierPurpose);
 router.delete('/classifier_purpose/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteClassifierPurpose);
 
+/**
+ * @swagger
+ * /catalogs/classifier_functional:
+ *   get:
+ *     tags: [Catalogs]
+ *     summary: List functional classifiers
+ *     security: [ { bearerAuth: [] } ]
+ *   post:
+ *     tags: [Catalogs]
+ *     summary: Create functional classifier
+ *     security: [ { bearerAuth: [] } ]
+ * /catalogs/classifier_functional/{code}:
+ *   put:
+ *     tags: [Catalogs]
+ *     summary: Update functional classifier
+ *     security: [ { bearerAuth: [] } ]
+ *   delete:
+ *     tags: [Catalogs]
+ *     summary: Delete functional classifier (soft)
+ *     security: [ { bearerAuth: [] } ]
+ */
 // Classifier Functional
 router.get('/classifier_functional', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getClassifierFunctional);
 router.post('/classifier_functional', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createClassifierFunctional);
 router.put('/classifier_functional/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.updateClassifierFunctional);
 router.delete('/classifier_functional/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteClassifierFunctional);
 
+/**
+ * @swagger
+ * /catalogs/classifier_income:
+ *   get:
+ *     tags: [Catalogs]
+ *     summary: List income classifiers
+ *     security: [ { bearerAuth: [] } ]
+ *   post:
+ *     tags: [Catalogs]
+ *     summary: Create income classifier
+ *     security: [ { bearerAuth: [] } ]
+ * /catalogs/classifier_income/{code}:
+ *   put:
+ *     tags: [Catalogs]
+ *     summary: Update income classifier
+ *     security: [ { bearerAuth: [] } ]
+ *   delete:
+ *     tags: [Catalogs]
+ *     summary: Delete income classifier (soft)
+ *     security: [ { bearerAuth: [] } ]
+ */
 // Classifier Income
 router.get('/classifier_income', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getClassifierIncome);
 router.post('/classifier_income', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createClassifierIncome);
 router.put('/classifier_income/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.updateClassifierIncome);
 router.delete('/classifier_income/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteClassifierIncome);
 
+/**
+ * @swagger
+ * /catalogs/banks:
+ *   get:
+ *     tags: [Catalogs]
+ *     summary: List banks
+ *     security: [ { bearerAuth: [] } ]
+ *   post:
+ *     tags: [Catalogs]
+ *     summary: Create bank
+ *     security: [ { bearerAuth: [] } ]
+ * /catalogs/banks/{id}:
+ *   put:
+ *     tags: [Catalogs]
+ *     summary: Update bank
+ *     security: [ { bearerAuth: [] } ]
+ *   delete:
+ *     tags: [Catalogs]
+ *     summary: Delete bank (soft)
+ *     security: [ { bearerAuth: [] } ]
+ */
 // Banks
 router.get('/banks', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getBanks);
 router.post('/banks', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createBank);
 router.put('/banks/:id', authGuard, validate_id_param(), require_permissions('CATALOG_WRITE'), catalogController.updateBank);
 router.delete('/banks/:id', authGuard, validate_id_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteBank);
 
+/**
+ * @swagger
+ * /catalogs/bank_accounts:
+ *   get:
+ *     tags: [Catalogs]
+ *     summary: List bank accounts
+ *     security: [ { bearerAuth: [] } ]
+ *   post:
+ *     tags: [Catalogs]
+ *     summary: Create bank account
+ *     security: [ { bearerAuth: [] } ]
+ * /catalogs/bank_accounts/{id}:
+ *   put:
+ *     tags: [Catalogs]
+ *     summary: Update bank account
+ *     security: [ { bearerAuth: [] } ]
+ *   delete:
+ *     tags: [Catalogs]
+ *     summary: Delete bank account (soft)
+ *     security: [ { bearerAuth: [] } ]
+ */
 // Bank Accounts
 router.get('/bank_accounts', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getBankAccounts);
 router.post('/bank_accounts', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createBankAccount);
 router.put('/bank_accounts/:id', authGuard, validate_id_param(), require_permissions('CATALOG_WRITE'), catalogController.updateBankAccount);
 router.delete('/bank_accounts/:id', authGuard, validate_id_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteBankAccount);
 
+/**
+ * @swagger
+ * /catalogs/fields:
+ *   get:
+ *     tags: [Catalogs]
+ *     summary: List fields
+ *     security: [ { bearerAuth: [] } ]
+ *   post:
+ *     tags: [Catalogs]
+ *     summary: Create field
+ *     security: [ { bearerAuth: [] } ]
+ * /catalogs/fields/{id}:
+ *   put:
+ *     tags: [Catalogs]
+ *     summary: Update field
+ *     security: [ { bearerAuth: [] } ]
+ *   delete:
+ *     tags: [Catalogs]
+ *     summary: Delete field (soft)
+ *     security: [ { bearerAuth: [] } ]
+ */
 // Fields
 router.get('/fields', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getFields);
 router.post('/fields', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createField);
 router.put('/fields/:id', authGuard, validate_id_param(), require_permissions('CATALOG_WRITE'), catalogController.updateField);
 router.delete('/fields/:id', authGuard, validate_id_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteField);
 
+/**
+ * @swagger
+ * /catalogs/documents:
+ *   get:
+ *     tags: [Catalogs]
+ *     summary: List documents
+ *     security: [ { bearerAuth: [] } ]
+ *   post:
+ *     tags: [Catalogs]
+ *     summary: Create document
+ *     security: [ { bearerAuth: [] } ]
+ * /catalogs/documents/{id}:
+ *   put:
+ *     tags: [Catalogs]
+ *     summary: Update document
+ *     security: [ { bearerAuth: [] } ]
+ *   delete:
+ *     tags: [Catalogs]
+ *     summary: Delete document (soft)
+ *     security: [ { bearerAuth: [] } ]
+ */
 // Documents
 router.get('/documents', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getDocuments);
 router.post('/documents', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createDocument);
