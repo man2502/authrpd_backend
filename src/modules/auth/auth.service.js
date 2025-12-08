@@ -7,6 +7,7 @@ const {
   revokeRefreshToken,
   revokeAllUserTokens,
 } = require('../security/tokens/refresh.repository');
+const { get_user_permissions } = require('../rbac/services/permission.service');
 const { logEvent, auditActions } = require('../audit/audit.service');
 const ApiError = require('../../helpers/api.error');
 const logger = require('../../config/logger');
@@ -76,6 +77,8 @@ async function loginMember(username, password, metadata = {}) {
       role: member.role?.name,
     });
 
+    const permissions = await get_user_permissions(member.id);
+
     return {
       access_token: accessToken,
       refresh_token: refreshToken,
@@ -85,6 +88,7 @@ async function loginMember(username, password, metadata = {}) {
         fullname: member.fullname,
         role: member.role?.name,
         region_id: member.region_id,
+        permissions,
       },
     };
   } catch (error) {
@@ -301,6 +305,7 @@ async function getCurrentUser(userType, userId) {
     if (!member) {
       throw new ApiError(404, 'User not found');
     }
+    const permissions = await get_user_permissions(userId);
     return {
       id: member.id,
       username: member.username,
@@ -308,6 +313,7 @@ async function getCurrentUser(userType, userId) {
       position: member.position,
       role: member.role?.name,
       region_id: member.region_id,
+      permissions,
     };
   } else if (userType === 'CLIENT') {
     const client = await Client.findByPk(userId, {
