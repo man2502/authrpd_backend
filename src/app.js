@@ -195,7 +195,7 @@ app.use('/auth', authLimiter, authRoutes);
 app.use('/admin', rbacRoutes);
 app.use('/rbac', rbacRoutes); // RBAC routes also available at /rbac
 app.use('/catalogs', catalogRoutes);
-app.use('/catalogs', syncRoutes); // Sync routes also use /catalogs prefix
+app.use('/catalog-sync', syncRoutes); // Sync routes also use /catalogs prefix
 
 // 10. 404 Handler
 // Returns standardized error response for unknown routes

@@ -40,6 +40,15 @@ async function updateRegion(req, res, next) {
   }
 }
 
+async function deleteRegion(req, res, next) {
+  try {
+    await catalogService.deleteRegion(req.params.code);
+    res.json(successResponse({ message: 'Deleted successfully' }));
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function getMinistries(req, res, next) {
   try {
     const lang = req.query.lang || 'tm';
@@ -69,6 +78,15 @@ async function updateMinistry(req, res, next) {
   }
 }
 
+async function deleteMinistry(req, res, next) {
+  try {
+    await catalogService.deleteMinistry(req.params.code);
+    res.json(successResponse({ message: 'Deleted successfully' }));
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function getOrganizations(req, res, next) {
   try {
     const lang = req.query.lang || 'tm';
@@ -93,6 +111,15 @@ async function updateOrganization(req, res, next) {
   try {
     const organization = await catalogService.updateOrganization(req.params.code, req.body);
     res.json(successResponse(organization));
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function deleteOrganization(req, res, next) {
+  try {
+    await catalogService.deleteOrganization(req.params.code);
+    res.json(successResponse({ message: 'Deleted successfully' }));
   } catch (error) {
     next(error);
   }
@@ -415,12 +442,15 @@ module.exports = {
   getRegions,
   createRegion,
   updateRegion,
+  deleteRegion,
   getMinistries,
   createMinistry,
   updateMinistry,
+  deleteMinistry,
   getOrganizations,
   createOrganization,
   updateOrganization,
+  deleteOrganization,
   getClassifierEconomic,
   createClassifierEconomic,
   updateClassifierEconomic,

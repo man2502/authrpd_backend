@@ -13,7 +13,7 @@ const {
   Document,
   CatalogVersion,
 } = require('../../models');
-const { cacheData, invalidateCache } = require('../../helpers/cache.helper');
+const { cacheData, invalidateCache, invalidateCachePattern } = require('../../helpers/cache.helper');
 const { logEvent, auditActions } = require('../audit/audit.service');
 const ApiError = require('../../helpers/api.error');
 
@@ -33,8 +33,9 @@ async function bumpCatalogVersion(catalogName) {
     await version.save();
   }
 
-  // Инвалидируем кэш каталога
-  await invalidateCache(`catalog:${catalogName}:*`);
+  // Инвалидируем кэш каталога (все локализации) и общий список версий
+  await invalidateCachePattern(`catalog:${catalogName}:*`);
+  await invalidateCache('catalog:versions:all');
 }
 
 /**
@@ -95,6 +96,22 @@ async function updateRegion(code, data) {
   return region;
 }
 
+async function deleteRegion(code) {
+  const region = await Region.findByPk(code);
+  if (!region) {
+    throw new ApiError(404, 'Region not found');
+  }
+  await region.update({ is_active: false });
+  await bumpCatalogVersion('regions');
+  await logEvent({
+    action: auditActions.CATALOG_UPDATED,
+    targetType: 'REGION',
+    targetId: code,
+    meta: { action: 'deleted' },
+  });
+  return region;
+}
+
 // Ministries
 async function getMinistries(lang = 'tm') {
   return await cacheData(
@@ -137,6 +154,22 @@ async function updateMinistry(code, data) {
   return ministry;
 }
 
+async function deleteMinistry(code) {
+  const ministry = await Ministry.findByPk(code);
+  if (!ministry) {
+    throw new ApiError(404, 'Ministry not found');
+  }
+  await ministry.update({ is_active: false });
+  await bumpCatalogVersion('ministries');
+  await logEvent({
+    action: auditActions.CATALOG_UPDATED,
+    targetType: 'MINISTRY',
+    targetId: code,
+    meta: { action: 'deleted' },
+  });
+  return ministry;
+}
+
 // Organizations
 async function getOrganizations(lang = 'tm') {
   return await cacheData(
@@ -175,6 +208,22 @@ async function updateOrganization(code, data) {
     targetType: 'ORGANIZATION',
     targetId: code,
     meta: { action: 'updated' },
+  });
+  return organization;
+}
+
+async function deleteOrganization(code) {
+  const organization = await Organization.findByPk(code);
+  if (!organization) {
+    throw new ApiError(404, 'Organization not found');
+  }
+  await organization.update({ is_active: false });
+  await bumpCatalogVersion('organizations');
+  await logEvent({
+    action: auditActions.CATALOG_UPDATED,
+    targetType: 'ORGANIZATION',
+    targetId: code,
+    meta: { action: 'deleted' },
   });
   return organization;
 }
@@ -649,12 +698,15 @@ module.exports = {
   getRegions,
   createRegion,
   updateRegion,
+  deleteRegion,
   getMinistries,
   createMinistry,
   updateMinistry,
+  deleteMinistry,
   getOrganizations,
   createOrganization,
   updateOrganization,
+  deleteOrganization,
   getClassifierEconomic,
   createClassifierEconomic,
   updateClassifierEconomic,

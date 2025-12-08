@@ -45,15 +45,18 @@ router.get('/versions', catalogController.getVersions);
 router.get('/regions', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getRegions);
 router.post('/regions', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createRegion);
 router.put('/regions/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.updateRegion);
+router.delete('/regions/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteRegion);
 
 // Catalog CRUD - protected by CATALOG_READ / CATALOG_WRITE
 router.get('/ministries', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getMinistries);
 router.post('/ministries', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createMinistry);
 router.put('/ministries/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.updateMinistry);
+router.delete('/ministries/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteMinistry);
 
 router.get('/organizations', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getOrganizations);
 router.post('/organizations', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createOrganization);
 router.put('/organizations/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.updateOrganization);
+router.delete('/organizations/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteOrganization);
 
 // Classifier Economic
 router.get('/classifier_economic', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getClassifierEconomic);
