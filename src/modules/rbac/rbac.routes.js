@@ -5,9 +5,10 @@ const { authGuard } = require('../../middlewares/auth.guard');
 const { validate_id_param } = require('../../helpers/validators');
 const require_permissions = require('../../middlewares/require_permissions');
 
-router.get('/roles', authGuard, rbacController.getRoles);
-router.post('/roles', authGuard, rbacController.createRole);
-router.put('/roles/:id', authGuard, validate_id_param(), rbacController.updateRole);
+// RBAC admin routes - require RBAC_MANAGE permission
+router.get('/roles', authGuard, require_permissions('RBAC_MANAGE'), rbacController.getRoles);
+router.post('/roles', authGuard, require_permissions('RBAC_MANAGE'), rbacController.createRole);
+router.put('/roles/:id', authGuard, validate_id_param(), require_permissions('RBAC_MANAGE'), rbacController.updateRole);
 /**
  * @swagger
  * /rbac/roles/{id}/permissions:
@@ -60,9 +61,9 @@ router.put('/roles/:id', authGuard, validate_id_param(), rbacController.updateRo
  *                 error_code: 404
  *                 error_msg: Role not found
  */
-router.get('/roles/:id/permissions', authGuard, validate_id_param(), rbacController.getRolePermissions); // Best practice endpoint
-router.get('/permissions', authGuard, rbacController.getPermissions);
-router.post('/roles/:id/permissions', authGuard, validate_id_param(), rbacController.assignPermissions);
+router.get('/roles/:id/permissions', authGuard, validate_id_param(), require_permissions('RBAC_MANAGE'), rbacController.getRolePermissions); // Best practice endpoint
+router.get('/permissions', authGuard, require_permissions('RBAC_READ'), rbacController.getPermissions);
+router.post('/roles/:id/permissions', authGuard, validate_id_param(), require_permissions('RBAC_MANAGE'), rbacController.assignPermissions);
 
 module.exports = router;
 
