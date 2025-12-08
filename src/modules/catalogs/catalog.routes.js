@@ -72,6 +72,14 @@ router.get('/versions', catalogController.getVersions);
  *       - in: query
  *         name: lang
  *         schema: { type: string, enum: [tm, ru], default: tm }
+ *       - in: query
+ *         name: localized
+ *         schema:
+ *           type: boolean
+ *           default: true
+ *         description: |
+ *           true (default) returns single localized title field;
+ *           false returns both title_tm and title_ru for admin editing.
  *     responses:
  *       200: { description: Regions retrieved }
  *   post:
@@ -107,6 +115,16 @@ router.delete('/regions/:code', authGuard, validate_code_param(), require_permis
  *     tags: [Catalogs]
  *     summary: List ministries
  *     security: [ { bearerAuth: [] } ]
+ *     parameters:
+ *       - in: query
+ *         name: lang
+ *         schema: { type: string, enum: [tm, ru], default: tm }
+ *       - in: query
+ *         name: localized
+ *         schema:
+ *           type: boolean
+ *           default: true
+ *         description: true returns single localized title; false returns title_tm/title_ru
  *   post:
  *     tags: [Catalogs]
  *     summary: Create ministry
@@ -134,6 +152,16 @@ router.delete('/ministries/:code', authGuard, validate_code_param(), require_per
  *     tags: [Catalogs]
  *     summary: List organizations
  *     security: [ { bearerAuth: [] } ]
+ *     parameters:
+ *       - in: query
+ *         name: lang
+ *         schema: { type: string, enum: [tm, ru], default: tm }
+ *       - in: query
+ *         name: localized
+ *         schema:
+ *           type: boolean
+ *           default: true
+ *         description: true returns single localized title; false returns title_tm/title_ru
  *   post:
  *     tags: [Catalogs]
  *     summary: Create organization
@@ -160,6 +188,16 @@ router.delete('/organizations/:code', authGuard, validate_code_param(), require_
  *     tags: [Catalogs]
  *     summary: List economic classifiers
  *     security: [ { bearerAuth: [] } ]
+ *     parameters:
+ *       - in: query
+ *         name: lang
+ *         schema: { type: string, enum: [tm, ru], default: tm }
+ *       - in: query
+ *         name: localized
+ *         schema:
+ *           type: boolean
+ *           default: true
+ *         description: true returns single localized title; false returns title_tm/title_ru
  *   post:
  *     tags: [Catalogs]
  *     summary: Create economic classifier
@@ -187,6 +225,16 @@ router.delete('/classifier_economic/:code', authGuard, validate_code_param(), re
  *     tags: [Catalogs]
  *     summary: List purpose classifiers
  *     security: [ { bearerAuth: [] } ]
+ *     parameters:
+ *       - in: query
+ *         name: lang
+ *         schema: { type: string, enum: [tm, ru], default: tm }
+ *       - in: query
+ *         name: localized
+ *         schema:
+ *           type: boolean
+ *           default: true
+ *         description: true returns single localized title; false returns title_tm/title_ru
  *   post:
  *     tags: [Catalogs]
  *     summary: Create purpose classifier
@@ -214,6 +262,16 @@ router.delete('/classifier_purpose/:code', authGuard, validate_code_param(), req
  *     tags: [Catalogs]
  *     summary: List functional classifiers
  *     security: [ { bearerAuth: [] } ]
+ *     parameters:
+ *       - in: query
+ *         name: lang
+ *         schema: { type: string, enum: [tm, ru], default: tm }
+ *       - in: query
+ *         name: localized
+ *         schema:
+ *           type: boolean
+ *           default: true
+ *         description: true returns single localized title; false returns title_tm/title_ru
  *   post:
  *     tags: [Catalogs]
  *     summary: Create functional classifier
@@ -241,6 +299,16 @@ router.delete('/classifier_functional/:code', authGuard, validate_code_param(), 
  *     tags: [Catalogs]
  *     summary: List income classifiers
  *     security: [ { bearerAuth: [] } ]
+ *     parameters:
+ *       - in: query
+ *         name: lang
+ *         schema: { type: string, enum: [tm, ru], default: tm }
+ *       - in: query
+ *         name: localized
+ *         schema:
+ *           type: boolean
+ *           default: true
+ *         description: true returns single localized title; false returns title_tm/title_ru
  *   post:
  *     tags: [Catalogs]
  *     summary: Create income classifier
@@ -268,6 +336,16 @@ router.delete('/classifier_income/:code', authGuard, validate_code_param(), requ
  *     tags: [Catalogs]
  *     summary: List banks
  *     security: [ { bearerAuth: [] } ]
+ *     parameters:
+ *       - in: query
+ *         name: lang
+ *         schema: { type: string, enum: [tm, ru], default: tm }
+ *       - in: query
+ *         name: localized
+ *         schema:
+ *           type: boolean
+ *           default: true
+ *         description: true returns single localized title; false returns title_tm/title_ru
  *   post:
  *     tags: [Catalogs]
  *     summary: Create bank
@@ -295,6 +373,16 @@ router.delete('/banks/:id', authGuard, validate_id_param(), require_permissions(
  *     tags: [Catalogs]
  *     summary: List bank accounts
  *     security: [ { bearerAuth: [] } ]
+ *     parameters:
+ *       - in: query
+ *         name: lang
+ *         schema: { type: string, enum: [tm, ru], default: tm }
+ *       - in: query
+ *         name: localized
+ *         schema:
+ *           type: boolean
+ *           default: true
+ *         description: true returns single localized title; false returns title_tm/title_ru
  *   post:
  *     tags: [Catalogs]
  *     summary: Create bank account
@@ -322,6 +410,16 @@ router.delete('/bank_accounts/:id', authGuard, validate_id_param(), require_perm
  *     tags: [Catalogs]
  *     summary: List fields
  *     security: [ { bearerAuth: [] } ]
+ *     parameters:
+ *       - in: query
+ *         name: lang
+ *         schema: { type: string, enum: [tm, ru], default: tm }
+ *       - in: query
+ *         name: localized
+ *         schema:
+ *           type: boolean
+ *           default: true
+ *         description: true returns single localized title; false returns title_tm/title_ru
  *   post:
  *     tags: [Catalogs]
  *     summary: Create field
@@ -349,6 +447,16 @@ router.delete('/fields/:id', authGuard, validate_id_param(), require_permissions
  *     tags: [Catalogs]
  *     summary: List documents
  *     security: [ { bearerAuth: [] } ]
+ *     parameters:
+ *       - in: query
+ *         name: lang
+ *         schema: { type: string, enum: [tm, ru], default: tm }
+ *       - in: query
+ *         name: localized
+ *         schema:
+ *           type: boolean
+ *           default: true
+ *         description: true returns single localized title; false returns title_tm/title_ru
  *   post:
  *     tags: [Catalogs]
  *     summary: Create document

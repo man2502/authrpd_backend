@@ -87,13 +87,21 @@ const paginationValidator = Joi.object({
 /**
  * Lang Validator Schema
  *
- * Validates language selection for localized endpoints.
+ * Validates language selection and localization preference for catalog endpoints.
+ * 
+ * Parameters:
+ * - lang: Language code ('tm' or 'ru'), defaults to 'tm'
+ * - localized: Boolean flag to control localization (true = single title field, false = both title_tm and title_ru)
  */
 const langQueryValidator = Joi.object({
   lang: Joi.string().valid('tm', 'ru').default('tm')
     .messages({
       'any.only': 'lang must be either tm or ru',
       'string.base': 'lang must be a string',
+    }),
+  localized: Joi.boolean().default(true)
+    .messages({
+      'boolean.base': 'localized must be a boolean',
     }),
 });
 
