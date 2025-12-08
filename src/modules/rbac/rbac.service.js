@@ -1,7 +1,22 @@
-const { Role, Permission, RolePermission } = require('../../models');
+const { Role, Permission, RolePermission, Member } = require('../../models');
 const { cacheData, invalidateCache } = require('../../helpers/cache.helper');
 const { logEvent, auditActions } = require('../audit/audit.service');
 const ApiError = require('../../helpers/api.error');
+
+/**
+ * Инвалидирует кэш разрешений всех пользователей с указанной ролью
+ * @param {number} roleId
+ */
+async function clearUserPermissionCacheForRole(roleId) {
+  const members = await Member.findAll({
+    where: { role_id: roleId },
+    attributes: ['id'],
+  });
+
+  for (const member of members) {
+    await invalidateCache(`user_permissions:${member.id}`);
+  }
+}
 
 /**
  * Получает права роли с кэшированием
@@ -85,6 +100,7 @@ async function updateRole(id, data) {
   });
 
   await invalidateCache(`role:permissions:${id}`);
+  await clearUserPermissionCacheForRole(id);
   await logEvent({
     action: auditActions.ROLE_CHANGED,
     targetType: 'ROLE',
@@ -126,6 +142,7 @@ async function assignPermissionsToRole(roleId, permissionIds) {
   }
 
   await invalidateCache(`role:permissions:${roleId}`);
+  await clearUserPermissionCacheForRole(roleId);
   await logEvent({
     action: auditActions.PERMISSION_CHANGED,
     targetType: 'ROLE',

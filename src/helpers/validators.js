@@ -85,6 +85,38 @@ const paginationValidator = Joi.object({
 });
 
 /**
+ * Lang Validator Schema
+ *
+ * Validates language selection for localized endpoints.
+ */
+const langQueryValidator = Joi.object({
+  lang: Joi.string().valid('tm', 'ru').default('tm')
+    .messages({
+      'any.only': 'lang must be either tm or ru',
+      'string.base': 'lang must be a string',
+    }),
+});
+
+/**
+ * Sync Query Validator Schema
+ *
+ * Validates sync query parameters: optional version and lang.
+ */
+const syncQueryValidator = Joi.object({
+  version: Joi.number().integer().min(0).optional()
+    .messages({
+      'number.base': 'version must be a number',
+      'number.integer': 'version must be an integer',
+      'number.min': 'version must be 0 or greater',
+    }),
+  lang: Joi.string().valid('tm', 'ru').default('tm')
+    .messages({
+      'any.only': 'lang must be either tm or ru',
+      'string.base': 'lang must be a string',
+    }),
+});
+
+/**
  * Validates ID parameter in URL (e.g., /roles/:id)
  * 
  * Reusable middleware for validating route parameters that are IDs.
@@ -149,14 +181,32 @@ function validate_query(schema) {
   return queryValidator(schema);
 }
 
+/**
+ * Validates lang query parameter for localized endpoints
+ */
+function validate_lang_query() {
+  return queryValidator(langQueryValidator);
+}
+
+/**
+ * Validates sync query parameters (version + lang)
+ */
+function validate_sync_query() {
+  return queryValidator(syncQueryValidator);
+}
+
 module.exports = {
   // Joi schemas (for direct use in schemaValidator)
   idValidator,
   codeValidator,
   paginationValidator,
+  langQueryValidator,
+  syncQueryValidator,
   
   // Validation middleware functions
   validate_id_param,
   validate_code_param,
   validate_query,
+  validate_lang_query,
+  validate_sync_query,
 };

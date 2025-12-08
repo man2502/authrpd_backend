@@ -3,6 +3,7 @@ const router = express.Router();
 const catalogController = require('./catalog.controller');
 const { authGuard } = require('../../middlewares/auth.guard');
 const require_permissions = require('../../middlewares/require_permissions');
+const { validate_code_param, validate_id_param, validate_lang_query } = require('../../helpers/validators');
 
 /**
  * @swagger
@@ -41,66 +42,66 @@ router.get('/versions', catalogController.getVersions);
 // - CATALOG_WRITE: Write access to catalogs (create, update, delete)
 // - CATALOG_READ: Read access to catalogs (list, view)
 
-router.get('/regions', authGuard, require_permissions('CATALOG_READ'), catalogController.getRegions);
+router.get('/regions', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getRegions);
 router.post('/regions', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createRegion);
-router.put('/regions/:code', authGuard, require_permissions('CATALOG_WRITE'), catalogController.updateRegion);
+router.put('/regions/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.updateRegion);
 
 // Catalog CRUD - protected by CATALOG_READ / CATALOG_WRITE
-router.get('/ministries', authGuard, require_permissions('CATALOG_READ'), catalogController.getMinistries);
+router.get('/ministries', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getMinistries);
 router.post('/ministries', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createMinistry);
-router.put('/ministries/:code', authGuard, require_permissions('CATALOG_WRITE'), catalogController.updateMinistry);
+router.put('/ministries/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.updateMinistry);
 
-router.get('/organizations', authGuard, require_permissions('CATALOG_READ'), catalogController.getOrganizations);
+router.get('/organizations', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getOrganizations);
 router.post('/organizations', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createOrganization);
-router.put('/organizations/:code', authGuard, require_permissions('CATALOG_WRITE'), catalogController.updateOrganization);
+router.put('/organizations/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.updateOrganization);
 
 // Classifier Economic
-router.get('/classifier_economic', authGuard, require_permissions('CATALOG_READ'), catalogController.getClassifierEconomic);
+router.get('/classifier_economic', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getClassifierEconomic);
 router.post('/classifier_economic', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createClassifierEconomic);
-router.put('/classifier_economic/:code', authGuard, require_permissions('CATALOG_WRITE'), catalogController.updateClassifierEconomic);
-router.delete('/classifier_economic/:code', authGuard, require_permissions('CATALOG_WRITE'), catalogController.deleteClassifierEconomic);
+router.put('/classifier_economic/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.updateClassifierEconomic);
+router.delete('/classifier_economic/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteClassifierEconomic);
 
 // Classifier Purpose
-router.get('/classifier_purpose', authGuard, require_permissions('CATALOG_READ'), catalogController.getClassifierPurpose);
+router.get('/classifier_purpose', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getClassifierPurpose);
 router.post('/classifier_purpose', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createClassifierPurpose);
-router.put('/classifier_purpose/:code', authGuard, require_permissions('CATALOG_WRITE'), catalogController.updateClassifierPurpose);
-router.delete('/classifier_purpose/:code', authGuard, require_permissions('CATALOG_WRITE'), catalogController.deleteClassifierPurpose);
+router.put('/classifier_purpose/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.updateClassifierPurpose);
+router.delete('/classifier_purpose/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteClassifierPurpose);
 
 // Classifier Functional
-router.get('/classifier_functional', authGuard, require_permissions('CATALOG_READ'), catalogController.getClassifierFunctional);
+router.get('/classifier_functional', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getClassifierFunctional);
 router.post('/classifier_functional', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createClassifierFunctional);
-router.put('/classifier_functional/:code', authGuard, require_permissions('CATALOG_WRITE'), catalogController.updateClassifierFunctional);
-router.delete('/classifier_functional/:code', authGuard, require_permissions('CATALOG_WRITE'), catalogController.deleteClassifierFunctional);
+router.put('/classifier_functional/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.updateClassifierFunctional);
+router.delete('/classifier_functional/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteClassifierFunctional);
 
 // Classifier Income
-router.get('/classifier_income', authGuard, require_permissions('CATALOG_READ'), catalogController.getClassifierIncome);
+router.get('/classifier_income', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getClassifierIncome);
 router.post('/classifier_income', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createClassifierIncome);
-router.put('/classifier_income/:code', authGuard, require_permissions('CATALOG_WRITE'), catalogController.updateClassifierIncome);
-router.delete('/classifier_income/:code', authGuard, require_permissions('CATALOG_WRITE'), catalogController.deleteClassifierIncome);
+router.put('/classifier_income/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.updateClassifierIncome);
+router.delete('/classifier_income/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteClassifierIncome);
 
 // Banks
-router.get('/banks', authGuard, require_permissions('CATALOG_READ'), catalogController.getBanks);
+router.get('/banks', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getBanks);
 router.post('/banks', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createBank);
-router.put('/banks/:id', authGuard, require_permissions('CATALOG_WRITE'), catalogController.updateBank);
-router.delete('/banks/:id', authGuard, require_permissions('CATALOG_WRITE'), catalogController.deleteBank);
+router.put('/banks/:id', authGuard, validate_id_param(), require_permissions('CATALOG_WRITE'), catalogController.updateBank);
+router.delete('/banks/:id', authGuard, validate_id_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteBank);
 
 // Bank Accounts
-router.get('/bank_accounts', authGuard, require_permissions('CATALOG_READ'), catalogController.getBankAccounts);
+router.get('/bank_accounts', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getBankAccounts);
 router.post('/bank_accounts', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createBankAccount);
-router.put('/bank_accounts/:id', authGuard, require_permissions('CATALOG_WRITE'), catalogController.updateBankAccount);
-router.delete('/bank_accounts/:id', authGuard, require_permissions('CATALOG_WRITE'), catalogController.deleteBankAccount);
+router.put('/bank_accounts/:id', authGuard, validate_id_param(), require_permissions('CATALOG_WRITE'), catalogController.updateBankAccount);
+router.delete('/bank_accounts/:id', authGuard, validate_id_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteBankAccount);
 
 // Fields
-router.get('/fields', authGuard, require_permissions('CATALOG_READ'), catalogController.getFields);
+router.get('/fields', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getFields);
 router.post('/fields', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createField);
-router.put('/fields/:id', authGuard, require_permissions('CATALOG_WRITE'), catalogController.updateField);
-router.delete('/fields/:id', authGuard, require_permissions('CATALOG_WRITE'), catalogController.deleteField);
+router.put('/fields/:id', authGuard, validate_id_param(), require_permissions('CATALOG_WRITE'), catalogController.updateField);
+router.delete('/fields/:id', authGuard, validate_id_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteField);
 
 // Documents
-router.get('/documents', authGuard, require_permissions('CATALOG_READ'), catalogController.getDocuments);
+router.get('/documents', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getDocuments);
 router.post('/documents', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createDocument);
-router.put('/documents/:id', authGuard, require_permissions('CATALOG_WRITE'), catalogController.updateDocument);
-router.delete('/documents/:id', authGuard, require_permissions('CATALOG_WRITE'), catalogController.deleteDocument);
+router.put('/documents/:id', authGuard, validate_id_param(), require_permissions('CATALOG_WRITE'), catalogController.updateDocument);
+router.delete('/documents/:id', authGuard, validate_id_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteDocument);
 
 module.exports = router;
 

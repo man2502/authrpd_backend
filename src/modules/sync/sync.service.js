@@ -1,5 +1,13 @@
 const catalogService = require('../catalogs/catalog.service');
-const { Region, Ministry, Organization } = require('../../models');
+const {
+  ReceiverOrganization,
+  ClassifierField,
+  ClassifierDocument,
+  CatalogVersion,
+  Field,
+  Document,
+  ClassifierEconomic,
+} = require('../../models');
 const localize = require('../../helpers/localize.helper');
 
 /**
@@ -18,11 +26,28 @@ const localize = require('../../helpers/localize.helper');
  * @returns {Promise<Object>} - данные каталога
  */
 async function getCatalogDataByVersion(catalogName, version = null, lang = 'tm') {
+  const currentVersion = await CatalogVersion.findOne({ where: { catalog_name: catalogName } });
+
+  // Если клиент уже на актуальной версии — отдаём пустой ответ и помечаем up_to_date
+  if (version !== null && currentVersion && version >= currentVersion.version) {
+    return {
+      version: currentVersion.version,
+      up_to_date: true,
+      items: [],
+    };
+  }
+
   let data = [];
 
   switch (catalogName) {
     case 'regions':
       data = await catalogService.getRegions(lang);
+      break;
+    case 'receiver_organizations':
+      data = await ReceiverOrganization.findAll({
+        where: { is_active: true },
+        order: [['taxcode', 'ASC']],
+      });
       break;
     case 'ministries':
       data = await catalogService.getMinistries(lang);
@@ -48,6 +73,30 @@ async function getCatalogDataByVersion(catalogName, version = null, lang = 'tm')
     case 'bank_accounts':
       data = await catalogService.getBankAccounts(lang);
       break;
+    case 'fields':
+      data = await catalogService.getFields(lang);
+      break;
+    case 'documents':
+      data = await catalogService.getDocuments(lang);
+      break;
+    case 'classifier_fields':
+      data = await ClassifierField.findAll({
+        order: [['id', 'ASC']],
+        include: [
+          { model: ClassifierEconomic, as: 'classifier', required: false },
+          { model: Field, as: 'field', required: false },
+        ],
+      });
+      break;
+    case 'classifier_documents':
+      data = await ClassifierDocument.findAll({
+        order: [['id', 'ASC']],
+        include: [
+          { model: ClassifierEconomic, as: 'classifier', required: false },
+          { model: Document, as: 'document', required: false },
+        ],
+      });
+      break;
     default:
       throw new Error(`Unknown catalog: ${catalogName}`);
   }
@@ -55,7 +104,11 @@ async function getCatalogDataByVersion(catalogName, version = null, lang = 'tm')
   // Локализуем данные
   const localized = localize(data, lang);
 
-  return localized;
+  return {
+    version: currentVersion ? currentVersion.version : null,
+    up_to_date: false,
+    items: localized,
+  };
 }
 
 module.exports = {

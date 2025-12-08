@@ -59,7 +59,7 @@ async function getRegions(lang = 'tm') {
     `catalog:regions:${lang}`,
     async () => {
       return await Region.findAll({
-        where: { isActive: true },
+        where: { is_active: true },
         order: [['code', 'ASC']],
       });
     },
@@ -101,7 +101,7 @@ async function getMinistries(lang = 'tm') {
     `catalog:ministries:${lang}`,
     async () => {
       return await Ministry.findAll({
-        where: { isActive: true },
+        where: { is_active: true },
         order: [['code', 'ASC']],
       });
     },
@@ -143,7 +143,7 @@ async function getOrganizations(lang = 'tm') {
     `catalog:organizations:${lang}`,
     async () => {
       return await Organization.findAll({
-        where: { isActive: true },
+        where: { is_active: true },
         order: [['code', 'ASC']],
       });
     },
@@ -185,7 +185,7 @@ async function getClassifierEconomic(lang = 'tm') {
     `catalog:classifier_economic:${lang}`,
     async () => {
       return await ClassifierEconomic.findAll({
-        where: { isActive: true },
+        where: { is_active: true },
         order: [['code', 'ASC']],
       });
     },
@@ -243,7 +243,7 @@ async function getClassifierPurpose(lang = 'tm') {
     `catalog:classifier_purpose:${lang}`,
     async () => {
       return await ClassifierPurpose.findAll({
-        where: { isActive: true },
+        where: { is_active: true },
         order: [['code', 'ASC']],
       });
     },
@@ -301,7 +301,7 @@ async function getClassifierFunctional(lang = 'tm') {
     `catalog:classifier_functional:${lang}`,
     async () => {
       return await ClassifierFunctional.findAll({
-        where: { isActive: true },
+        where: { is_active: true },
         order: [['code', 'ASC']],
       });
     },
@@ -359,7 +359,7 @@ async function getClassifierIncome(lang = 'tm') {
     `catalog:classifier_income:${lang}`,
     async () => {
       return await ClassifierIncome.findAll({
-        where: { isActive: true },
+        where: { is_active: true },
         order: [['code', 'ASC']],
       });
     },
@@ -417,7 +417,7 @@ async function getBanks(lang = 'tm') {
     `catalog:banks:${lang}`,
     async () => {
       return await Bank.findAll({
-        where: { isActive: true },
+        where: { is_active: true },
         order: [['id', 'ASC']],
       });
     },
@@ -475,7 +475,7 @@ async function getBankAccounts(lang = 'tm') {
     `catalog:bank_accounts:${lang}`,
     async () => {
       return await BankAccount.findAll({
-        where: { isActive: true },
+        where: { is_active: true },
         order: [['id', 'ASC']],
       });
     },
@@ -533,7 +533,7 @@ async function getFields(lang = 'tm') {
     `catalog:fields:${lang}`,
     async () => {
       return await Field.findAll({
-        where: { isActive: true },
+        where: { is_active: true },
         order: [['id', 'ASC']],
       });
     },
@@ -591,7 +591,7 @@ async function getDocuments(lang = 'tm') {
     `catalog:documents:${lang}`,
     async () => {
       return await Document.findAll({
-        where: { isActive: true },
+        where: { is_active: true },
         order: [['id', 'ASC']],
       });
     },

@@ -130,7 +130,7 @@ async function loginClient(username, password, metadata = {}) {
     }
 
     // Обновляем last_login_at
-    await client.update({ lastLoginAt: new Date() });
+    await client.update({ last_login_at: new Date() });
 
     // Генерируем токены
     const accessToken = generateAccessToken('CLIENT', client.id, {
