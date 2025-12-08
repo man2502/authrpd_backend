@@ -1,5 +1,5 @@
 const rateLimit = require('express-rate-limit');
-const RedisStore = require('rate-limit-redis');
+const { RedisStore } = require('rate-limit-redis');
 const redis = require('../config/redis');
 const config = require('../config/env');
 const logger = require('../config/logger');
@@ -27,11 +27,11 @@ const logger = require('../config/logger');
 
 // Redis store configuration for distributed rate limiting
 // This ensures rate limits work across multiple server instances
-const createRedisStore = () => {
+const createRedisStore = (prefix = 'rl:') => {
   try {
     return new RedisStore({
       client: redis,
-      prefix: 'rl:', // Redis key prefix for rate limit data
+      prefix, // Redis key prefix for rate limit data
       // Send a ping to test the connection
       sendCommand: (...args) => redis.call(...args),
     });
@@ -42,8 +42,6 @@ const createRedisStore = () => {
     return undefined; // Fallback to in-memory store
   }
 };
-
-const redisStore = createRedisStore();
 
 /**
  * Global Rate Limiter
@@ -56,7 +54,7 @@ const redisStore = createRedisStore();
 const globalLimiter = rateLimit({
   windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000', 10), // 15 minutes default
   max: parseInt(process.env.RATE_LIMIT_MAX || '100', 10), // 100 requests per window
-  store: redisStore,
+  store: createRedisStore('rl:global:'),
   standardHeaders: true, // Return rate limit info in `RateLimit-*` headers
   legacyHeaders: false, // Disable `X-RateLimit-*` headers
   message: {
@@ -101,7 +99,7 @@ const globalLimiter = rateLimit({
 const authLimiter = rateLimit({
   windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000', 10), // 15 minutes
   max: parseInt(process.env.AUTH_RATE_LIMIT_MAX || '20', 10), // 20 requests per window
-  store: redisStore,
+  store: createRedisStore('rl:auth:'),
   standardHeaders: true,
   legacyHeaders: false,
   message: {
@@ -145,7 +143,7 @@ const authLimiter = rateLimit({
 const loginLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 5, // Maximum 5 login attempts per window
-  store: redisStore,
+  store: createRedisStore('rl:login:'),
   standardHeaders: true,
   legacyHeaders: false,
   message: {
@@ -190,7 +188,7 @@ const loginLimiter = rateLimit({
 const refreshLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 10, // Maximum 10 refresh attempts per window
-  store: redisStore,
+  store: createRedisStore('rl:refresh:'),
   standardHeaders: true,
   legacyHeaders: false,
   message: {
