@@ -203,6 +203,29 @@ function validate_sync_query() {
   return queryValidator(syncQueryValidator);
 }
 
+/**
+ * Sets default lang query parameter to 'tm' if not provided
+ * 
+ * Lightweight middleware that ensures req.query.lang is always set.
+ * Can be used before validation or in cases where validation isn't needed.
+ * 
+ * @returns {Function} Express middleware function
+ * 
+ * @example
+ * router.get('/catalogs/regions', 
+ *   defaultLang(),
+ *   controller.getRegions
+ * );
+ */
+function defaultLang() {
+  return (req, res, next) => {
+    if (!req.query.lang) {
+      req.query.lang = 'tm';
+    }
+    next();
+  };
+}
+
 module.exports = {
   // Joi schemas (for direct use in schemaValidator)
   idValidator,
@@ -217,4 +240,5 @@ module.exports = {
   validate_query,
   validate_lang_query,
   validate_sync_query,
+  defaultLang,
 };

@@ -5,11 +5,16 @@ const logger = require('./config/logger');
 // Security middleware
 const configureHelmet = require('./security/helmet.config');
 const configureCors = require('./security/cors.config');
+const cors = require('cors');
+
 const { globalLimiter, authLimiter } = require('./middlewares/rate.limit');
 
 // Request tracking and logging
 const requestIdMiddleware = require('./middlewares/request.id');
 const requestLoggerMiddleware = require('./middlewares/request.logger');
+
+// Query parameter defaults
+const { defaultLang } = require('./helpers/validators');
 
 // Error handling
 const errorHandler = require('./middlewares/error.handler');
@@ -63,13 +68,17 @@ const app = express();
  *    - Logs all HTTP requests
  *    - Should be after request ID is set
  * 
- * 8. Routes
+ * 8. Default Query Parameters
+ *    - Sets default lang='tm' for all routes if not provided
+ *    - Should be before routes to ensure defaults are available
+ * 
+ * 9. Routes
  *    - Application routes with specific rate limiters
  * 
- * 9. 404 Handler
- *    - Handles unknown routes
+ * 10. 404 Handler
+ *     - Handles unknown routes
  * 
- * 10. Error Handler
+ * 11. Error Handler
  *     - Must be last to catch all errors
  * 
  * ============================================================================
@@ -91,7 +100,8 @@ app.use(configureHelmet());
 
 // 4. CORS Configuration
 // Handles cross-origin requests with allowlist-based origins
-app.use(configureCors());
+// app.use(configureCors());
+app.use(cors());
 
 // 5. Body Parsers with Size Limits
 // Prevents DoS attacks via large request bodies
@@ -109,13 +119,17 @@ app.use(express.urlencoded({
 
 // 6. Global Rate Limiter
 // Protects all routes from abuse (applies to all routes below)
-app.use(globalLimiter);
+// app.use(globalLimiter);
 
 // 7. Request Logger Middleware
 // Logs all HTTP requests with correlation ID
 app.use(requestLoggerMiddleware);
 
-// 8. Swagger Documentation (before routes, after security middleware)
+// 8. Default Query Parameters Middleware
+// Sets default lang='tm' for all routes if not provided
+app.use(defaultLang());
+
+// 9. Swagger Documentation (before routes, after security middleware)
 // Swagger UI and OpenAPI JSON endpoints
 // Disabled in production by default (set SWAGGER_ENABLED=true to enable)
 initializeSwagger(app);
@@ -193,7 +207,7 @@ app.get('/.well-known/jwks.json', async (req, res, next) => {
 
 // 9. API Routes with Authentication Rate Limiting
 // Auth routes have stricter rate limiting to prevent brute-force attacks
-app.use('/auth', authLimiter, authRoutes);
+app.use('/auth', authRoutes);
 
 // RBAC routes - available at both /admin and /rbac for flexibility
 // Note: Routes are defined as /roles, /permissions, so they become:
@@ -212,7 +226,7 @@ app.use('/catalog-sync', syncRoutes);
 app.use('/', membersRoutes); // Routes defined as /admin/members
 app.use('/', clientsRoutes); // Routes defined as /admin/clients
 
-// 10. 404 Handler
+// 11. 404 Handler
 // Returns standardized error response for unknown routes
 app.use((req, res) => {
   res.status(404).json({
@@ -224,7 +238,7 @@ app.use((req, res) => {
   });
 });
 
-// 11. Error Handler (must be last)
+// 12. Error Handler (must be last)
 // Centralized error handling with security-aware logging
 app.use(errorHandler);
 

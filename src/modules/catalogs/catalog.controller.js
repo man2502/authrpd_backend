@@ -13,10 +13,10 @@ async function getVersions(req, res, next) {
 
 async function getRegions(req, res, next) {
   try {
-    const lang = req.query.lang || 'tm';
+    // lang is set by validate_lang_query() middleware (default: 'tm')
     const shouldLocalize = req.query.localized !== false; // Default true for backward compatibility
-    const regions = await catalogService.getRegions(lang);
-    const result = shouldLocalize ? localize(regions, lang) : regions;
+    const regions = await catalogService.getRegions(req.query.lang);
+    const result = shouldLocalize ? localize(regions, req.query.lang) : regions;
     res.json(successResponse(result));
   } catch (error) {
     next(error);
@@ -52,10 +52,10 @@ async function deleteRegion(req, res, next) {
 
 async function getMinistries(req, res, next) {
   try {
-    const lang = req.query.lang || 'tm';
+    // lang is set by validate_lang_query() middleware (default: 'tm')
     const shouldLocalize = req.query.localized !== false; // Default true for backward compatibility
-    const ministries = await catalogService.getMinistries(lang);
-    const result = shouldLocalize ? localize(ministries, lang) : ministries;
+    const ministries = await catalogService.getMinistries(req.query.lang);
+    const result = shouldLocalize ? localize(ministries, req.query.lang) : ministries;
     res.json(successResponse(result));
   } catch (error) {
     next(error);
@@ -91,10 +91,10 @@ async function deleteMinistry(req, res, next) {
 
 async function getOrganizations(req, res, next) {
   try {
-    const lang = req.query.lang || 'tm';
+    // lang is set by validate_lang_query() middleware (default: 'tm')
     const shouldLocalize = req.query.localized !== false; // Default true for backward compatibility
-    const organizations = await catalogService.getOrganizations(lang);
-    const result = shouldLocalize ? localize(organizations, lang) : organizations;
+    const organizations = await catalogService.getOrganizations(req.query.lang);
+    const result = shouldLocalize ? localize(organizations, req.query.lang) : organizations;
     res.json(successResponse(result));
   } catch (error) {
     next(error);
@@ -131,10 +131,10 @@ async function deleteOrganization(req, res, next) {
 // Classifier Economic
 async function getClassifierEconomic(req, res, next) {
   try {
-    const lang = req.query.lang || 'tm';
+    // lang is set by validate_lang_query() middleware (default: 'tm')
     const shouldLocalize = req.query.localized !== false; // Default true for backward compatibility
-    const items = await catalogService.getClassifierEconomic(lang);
-    const result = shouldLocalize ? localize(items, lang) : items;
+    const items = await catalogService.getClassifierEconomic(req.query.lang);
+    const result = shouldLocalize ? localize(items, req.query.lang) : items;
     res.json(successResponse(result));
   } catch (error) {
     next(error);
@@ -171,10 +171,10 @@ async function deleteClassifierEconomic(req, res, next) {
 // Classifier Purpose
 async function getClassifierPurpose(req, res, next) {
   try {
-    const lang = req.query.lang || 'tm';
+    // lang is set by validate_lang_query() middleware (default: 'tm')
     const shouldLocalize = req.query.localized !== false; // Default true for backward compatibility
-    const items = await catalogService.getClassifierPurpose(lang);
-    const result = shouldLocalize ? localize(items, lang) : items;
+    const items = await catalogService.getClassifierPurpose(req.query.lang);
+    const result = shouldLocalize ? localize(items, req.query.lang) : items;
     res.json(successResponse(result));
   } catch (error) {
     next(error);
@@ -211,10 +211,10 @@ async function deleteClassifierPurpose(req, res, next) {
 // Classifier Functional
 async function getClassifierFunctional(req, res, next) {
   try {
-    const lang = req.query.lang || 'tm';
+    // lang is set by validate_lang_query() middleware (default: 'tm')
     const shouldLocalize = req.query.localized !== false; // Default true for backward compatibility
-    const items = await catalogService.getClassifierFunctional(lang);
-    const result = shouldLocalize ? localize(items, lang) : items;
+    const items = await catalogService.getClassifierFunctional(req.query.lang);
+    const result = shouldLocalize ? localize(items, req.query.lang) : items;
     res.json(successResponse(result));
   } catch (error) {
     next(error);
@@ -251,10 +251,10 @@ async function deleteClassifierFunctional(req, res, next) {
 // Classifier Income
 async function getClassifierIncome(req, res, next) {
   try {
-    const lang = req.query.lang || 'tm';
+    // lang is set by validate_lang_query() middleware (default: 'tm')
     const shouldLocalize = req.query.localized !== false; // Default true for backward compatibility
-    const items = await catalogService.getClassifierIncome(lang);
-    const result = shouldLocalize ? localize(items, lang) : items;
+    const items = await catalogService.getClassifierIncome(req.query.lang);
+    const result = shouldLocalize ? localize(items, req.query.lang) : items;
     res.json(successResponse(result));
   } catch (error) {
     next(error);
@@ -291,10 +291,10 @@ async function deleteClassifierIncome(req, res, next) {
 // Banks
 async function getBanks(req, res, next) {
   try {
-    const lang = req.query.lang || 'tm';
+    // lang is set by validate_lang_query() middleware (default: 'tm')
     const shouldLocalize = req.query.localized !== false; // Default true for backward compatibility
-    const items = await catalogService.getBanks(lang);
-    const result = shouldLocalize ? localize(items, lang) : items;
+    const items = await catalogService.getBanks(req.query.lang);
+    const result = shouldLocalize ? localize(items, req.query.lang) : items;
     res.json(successResponse(result));
   } catch (error) {
     next(error);
@@ -331,10 +331,10 @@ async function deleteBank(req, res, next) {
 // Bank Accounts
 async function getBankAccounts(req, res, next) {
   try {
-    const lang = req.query.lang || 'tm';
+    // lang is set by validate_lang_query() middleware (default: 'tm')
     const shouldLocalize = req.query.localized !== false; // Default true for backward compatibility
-    const items = await catalogService.getBankAccounts(lang);
-    const result = shouldLocalize ? localize(items, lang) : items;
+    const items = await catalogService.getBankAccounts(req.query.lang);
+    const result = shouldLocalize ? localize(items, req.query.lang) : items;
     res.json(successResponse(result));
   } catch (error) {
     next(error);
@@ -371,10 +371,10 @@ async function deleteBankAccount(req, res, next) {
 // Fields
 async function getFields(req, res, next) {
   try {
-    const lang = req.query.lang || 'tm';
+    // lang is set by validate_lang_query() middleware (default: 'tm')
     const shouldLocalize = req.query.localized !== false; // Default true for backward compatibility
-    const items = await catalogService.getFields(lang);
-    const result = shouldLocalize ? localize(items, lang) : items;
+    const items = await catalogService.getFields(req.query.lang);
+    const result = shouldLocalize ? localize(items, req.query.lang) : items;
     res.json(successResponse(result));
   } catch (error) {
     next(error);
@@ -411,10 +411,10 @@ async function deleteField(req, res, next) {
 // Documents
 async function getDocuments(req, res, next) {
   try {
-    const lang = req.query.lang || 'tm';
+    // lang is set by validate_lang_query() middleware (default: 'tm')
     const shouldLocalize = req.query.localized !== false; // Default true for backward compatibility
-    const items = await catalogService.getDocuments(lang);
-    const result = shouldLocalize ? localize(items, lang) : items;
+    const items = await catalogService.getDocuments(req.query.lang);
+    const result = shouldLocalize ? localize(items, req.query.lang) : items;
     res.json(successResponse(result));
   } catch (error) {
     next(error);

@@ -38,7 +38,7 @@ const { authGuard } = require('../../middlewares/auth.guard');
  *       429:
  *         $ref: '#/components/responses/RateLimitError'
  */
-router.post('/member/login', loginLimiter, schemaValidator(loginSchema), authController.loginMember);
+router.post('/member/login', schemaValidator(loginSchema), authController.loginMember);
 
 /**
  * @swagger
@@ -72,7 +72,7 @@ router.post('/member/login', loginLimiter, schemaValidator(loginSchema), authCon
  *       429:
  *         $ref: '#/components/responses/RateLimitError'
  */
-router.post('/client/login', loginLimiter, schemaValidator(loginSchema), authController.loginClient);
+router.post('/client/login', schemaValidator(loginSchema), authController.loginClient);
 
 /**
  * @swagger
@@ -106,7 +106,7 @@ router.post('/client/login', loginLimiter, schemaValidator(loginSchema), authCon
  *       429:
  *         $ref: '#/components/responses/RateLimitError'
  */
-router.post('/refresh', refreshLimiter, schemaValidator(refreshSchema), authController.refresh);
+router.post('/refresh', schemaValidator(refreshSchema), authController.refresh);
 
 /**
  * @swagger
