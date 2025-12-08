@@ -1,5 +1,6 @@
 const winston = require('winston');
 const config = require('./env');
+const DailyRotateFile = require('winston-daily-rotate-file');
 
 /**
  * Production-ready Winston logger с поддержкой Graylog
@@ -183,10 +184,19 @@ function createFileTransports() {
     fs.mkdirSync(logsDir, { recursive: true });
   }
 
-  // Error log file
+  const rotateOpts = {
+    dirname: logsDir,
+    datePattern: 'YYYY-MM-DD',
+    maxSize: '30m',
+    maxFiles: '30d',
+    zippedArchive: false,
+  };
+
+  // Error log file (rotated)
   transports.push(
-    new winston.transports.File({
-      filename: path.join(logsDir, 'error.log'),
+    new DailyRotateFile({
+      ...rotateOpts,
+      filename: 'error-%DATE%.log',
       level: 'error',
       format: winston.format.combine(
         winston.format.timestamp(),
@@ -194,23 +204,20 @@ function createFileTransports() {
         sanitizeFormat(),
         winston.format.json()
       ),
-      maxsize: 5242880, // 5MB
-      maxFiles: 5,
     })
   );
 
-  // Combined log file
+  // Combined log file (rotated)
   transports.push(
-    new winston.transports.File({
-      filename: path.join(logsDir, 'combined.log'),
+    new DailyRotateFile({
+      ...rotateOpts,
+      filename: 'combined-%DATE%.log',
       format: winston.format.combine(
         winston.format.timestamp(),
         winston.format.errors({ stack: true }),
         sanitizeFormat(),
         winston.format.json()
       ),
-      maxsize: 5242880, // 5MB
-      maxFiles: 5,
     })
   );
 
