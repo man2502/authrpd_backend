@@ -45,8 +45,8 @@ async function loginMember(username, password, metadata = {}) {
       throw new ApiError(401, 'Invalid credentials');
     }
 
-    // Обновляем last_login_at
-    await member.update({ last_login_at: new Date() });
+    // Обновляем last_login_at (Sequelize with underscored:true converts lastLoginAt to last_login_at)
+    await member.update({ lastLoginAt: new Date() });
 
     // Генерируем токены
     const accessToken = generateAccessToken('MEMBER', member.id, {
@@ -133,8 +133,8 @@ async function loginClient(username, password, metadata = {}) {
       throw new ApiError(401, 'Invalid credentials');
     }
 
-    // Обновляем last_login_at
-    await client.update({ last_login_at: new Date() });
+    // Обновляем last_login_at (Sequelize with underscored:true converts lastLoginAt to last_login_at)
+    await client.update({ lastLoginAt: new Date() });
 
     // Генерируем токены
     const accessToken = generateAccessToken('CLIENT', client.id, {

@@ -4,6 +4,8 @@ const rbacController = require('./rbac.controller');
 const { authGuard } = require('../../middlewares/auth.guard');
 const { validate_id_param } = require('../../helpers/validators');
 const require_permissions = require('../../middlewares/require_permissions');
+const schemaValidator = require('../../middlewares/schema.validator');
+const { createRoleSchema, updateRoleSchema, assignPermissionsSchema } = require('./rbac.schemas');
 
 // RBAC admin routes - require RBAC_MANAGE permission
 /**
@@ -43,8 +45,8 @@ const require_permissions = require('../../middlewares/require_permissions');
  *     security: [ { bearerAuth: [] } ]
  */
 router.get('/roles', authGuard, require_permissions('RBAC_MANAGE'), rbacController.getRoles);
-router.post('/roles', authGuard, require_permissions('RBAC_MANAGE'), rbacController.createRole);
-router.put('/roles/:id', authGuard, validate_id_param(), require_permissions('RBAC_MANAGE'), rbacController.updateRole);
+router.post('/roles', authGuard, require_permissions('RBAC_MANAGE'), schemaValidator(createRoleSchema), rbacController.createRole);
+router.put('/roles/:id', authGuard, validate_id_param(), require_permissions('RBAC_MANAGE'), schemaValidator(updateRoleSchema), rbacController.updateRole);
 /**
  * @swagger
  * /rbac/roles/{id}/permissions:
@@ -99,7 +101,7 @@ router.put('/roles/:id', authGuard, validate_id_param(), require_permissions('RB
  */
 router.get('/roles/:id/permissions', authGuard, validate_id_param(), require_permissions('RBAC_MANAGE'), rbacController.getRolePermissions); // Best practice endpoint
 router.get('/permissions', authGuard, require_permissions('RBAC_READ'), rbacController.getPermissions);
-router.post('/roles/:id/permissions', authGuard, validate_id_param(), require_permissions('RBAC_MANAGE'), rbacController.assignPermissions);
+router.post('/roles/:id/permissions', authGuard, validate_id_param(), require_permissions('RBAC_MANAGE'), schemaValidator(assignPermissionsSchema), rbacController.assignPermissions);
 
 module.exports = router;
 

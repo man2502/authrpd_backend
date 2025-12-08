@@ -19,6 +19,8 @@ const authRoutes = require('./modules/auth/auth.routes');
 const rbacRoutes = require('./modules/rbac/rbac.routes');
 const catalogRoutes = require('./modules/catalogs/catalog.routes');
 const syncRoutes = require('./modules/sync/sync.routes');
+const membersRoutes = require('./modules/members/routes/members.routes');
+const clientsRoutes = require('./modules/clients/routes/clients.routes');
 
 // Swagger documentation (must be imported before routes)
 const initializeSwagger = require('./docs/swagger.init');
@@ -192,10 +194,23 @@ app.get('/.well-known/jwks.json', async (req, res, next) => {
 // 9. API Routes with Authentication Rate Limiting
 // Auth routes have stricter rate limiting to prevent brute-force attacks
 app.use('/auth', authLimiter, authRoutes);
+
+// RBAC routes - available at both /admin and /rbac for flexibility
+// Note: Routes are defined as /roles, /permissions, so they become:
+// - /admin/roles, /admin/permissions
+// - /rbac/roles, /rbac/permissions
 app.use('/admin', rbacRoutes);
-app.use('/rbac', rbacRoutes); // RBAC routes also available at /rbac
+app.use('/rbac', rbacRoutes);
+
+// Catalog routes
 app.use('/catalogs', catalogRoutes);
-app.use('/catalog-sync', syncRoutes); // Sync routes also use /catalogs prefix
+
+// Sync routes (public catalog sync endpoint)
+app.use('/catalog-sync', syncRoutes);
+
+// Admin routes for members and clients management
+app.use('/', membersRoutes); // Routes defined as /admin/members
+app.use('/', clientsRoutes); // Routes defined as /admin/clients
 
 // 10. 404 Handler
 // Returns standardized error response for unknown routes
