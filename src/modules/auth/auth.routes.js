@@ -107,7 +107,101 @@ router.post('/client/login', loginLimiter, schemaValidator(loginSchema), authCon
  *         $ref: '#/components/responses/RateLimitError'
  */
 router.post('/refresh', refreshLimiter, schemaValidator(refreshSchema), authController.refresh);
+
+/**
+ * @swagger
+ * /auth/logout:
+ *   post:
+ *     tags: [Auth]
+ *     summary: Logout user
+ *     description: |
+ *       Invalidates the refresh token and logs out the authenticated user.
+ *       Requires valid access token in Authorization header.
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/RefreshRequest'
+ *           examples:
+ *             example1:
+ *               summary: Logout request
+ *               value:
+ *                 refresh_token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+ *     responses:
+ *       200:
+ *         description: Logout successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/SuccessResponse'
+ *             example:
+ *               success: true
+ *               data:
+ *                 message: "Logged out successfully"
+ *       400:
+ *         $ref: '#/components/responses/ValidationError'
+ *       401:
+ *         $ref: '#/components/responses/UnauthorizedError'
+ */
 router.post('/logout', authGuard, schemaValidator(refreshSchema), authController.logout);
+
+/**
+ * @swagger
+ * /auth/me:
+ *   get:
+ *     tags: [Auth]
+ *     summary: Get current user information
+ *     description: |
+ *       Returns information about the currently authenticated user.
+ *       Requires valid access token in Authorization header.
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: User information retrieved successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/SuccessResponse'
+ *             examples:
+ *               member:
+ *                 summary: Member user
+ *                 value:
+ *                   success: true
+ *                   data:
+ *                     id: 1
+ *                     username: "member@example.com"
+ *                     fullname: "John Doe"
+ *                     position: "Administrator"
+ *                     role: "ADMIN"
+ *                     region_id: "10"
+ *               client:
+ *                 summary: Client user
+ *                 value:
+ *                   success: true
+ *                   data:
+ *                     id: 1
+ *                     username: "client_app_001"
+ *                     fullname: "Client Application"
+ *                     organization_id: "ORG001"
+ *                     region_id: "10"
+ *       401:
+ *         $ref: '#/components/responses/UnauthorizedError'
+ *       404:
+ *         description: User not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *             example:
+ *               success: false
+ *               data:
+ *                 error_code: 404
+ *                 error_msg: "User not found"
+ */
 router.get('/me', authGuard, authController.getMe);
 
 module.exports = router;
