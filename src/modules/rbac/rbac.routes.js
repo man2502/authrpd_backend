@@ -2,10 +2,12 @@ const express = require('express');
 const router = express.Router();
 const rbacController = require('./rbac.controller');
 const { authGuard } = require('../../middlewares/auth.guard');
+const { validate_id_param } = require('../../helpers/validators');
+const require_permissions = require('../../middlewares/require_permissions');
 
 router.get('/roles', authGuard, rbacController.getRoles);
 router.post('/roles', authGuard, rbacController.createRole);
-router.put('/roles/:id', authGuard, rbacController.updateRole);
+router.put('/roles/:id', authGuard, validate_id_param(), rbacController.updateRole);
 /**
  * @swagger
  * /rbac/roles/{id}/permissions:
@@ -58,9 +60,9 @@ router.put('/roles/:id', authGuard, rbacController.updateRole);
  *                 error_code: 404
  *                 error_msg: Role not found
  */
-router.get('/roles/:id/permissions', authGuard, rbacController.getRolePermissions); // Best practice endpoint
+router.get('/roles/:id/permissions', authGuard, validate_id_param(), rbacController.getRolePermissions); // Best practice endpoint
 router.get('/permissions', authGuard, rbacController.getPermissions);
-router.post('/roles/:id/permissions', authGuard, rbacController.assignPermissions);
+router.post('/roles/:id/permissions', authGuard, validate_id_param(), rbacController.assignPermissions);
 
 module.exports = router;
 

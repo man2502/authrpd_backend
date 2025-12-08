@@ -6,7 +6,8 @@ const ApiError = require('../../helpers/api.error');
 /**
  * Получает права роли с кэшированием
  * @param {number} roleId - ID роли
- * @returns {Promise<Array>} - массив прав
+ * @returns {Promise<Array>} - массив прав (имена разрешений)
+ * @throws {ApiError} - Если роль не найдена (404)
  */
 async function getRolePermissions(roleId) {
   return await cacheData(
@@ -18,11 +19,18 @@ async function getRolePermissions(roleId) {
             model: Permission,
             as: 'permissions',
             through: { attributes: [] },
+            where: { is_active: true }, // Only active permissions
+            required: false,
           },
         ],
       });
 
-      return role ? role.permissions.map((p) => p.name) : [];
+      if (!role) {
+        throw new ApiError(404, 'Role not found');
+      }
+
+      // Return array of permission names (empty array if role has no permissions)
+      return (role.permissions || []).map((p) => p.name);
     },
     3600 // TTL 1 час
   );

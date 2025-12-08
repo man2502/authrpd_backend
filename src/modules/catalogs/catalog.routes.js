@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const catalogController = require('./catalog.controller');
 const { authGuard } = require('../../middlewares/auth.guard');
+const require_permissions = require('../../middlewares/require_permissions');
 
 /**
  * @swagger
@@ -35,9 +36,14 @@ const { authGuard } = require('../../middlewares/auth.guard');
 router.get('/versions', catalogController.getVersions);
 
 // Protected endpoints
-router.get('/regions', authGuard, catalogController.getRegions);
-router.post('/regions', authGuard, catalogController.createRegion);
-router.put('/regions/:code', authGuard, catalogController.updateRegion);
+// Example usage of require_permissions middleware:
+// - RBAC_MANAGE: Full RBAC administration (roles, permissions)
+// - CATALOG_WRITE: Write access to catalogs (create, update, delete)
+// - CATALOG_READ: Read access to catalogs (list, view)
+
+router.get('/regions', authGuard, require_permissions('CATALOG_READ'), catalogController.getRegions);
+router.post('/regions', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createRegion);
+router.put('/regions/:code', authGuard, require_permissions('CATALOG_WRITE'), catalogController.updateRegion);
 
 router.get('/ministries', authGuard, catalogController.getMinistries);
 router.post('/ministries', authGuard, catalogController.createMinistry);
