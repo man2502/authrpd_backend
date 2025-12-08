@@ -27,7 +27,7 @@ module.exports = {
         email: 'superadmin@example.com',
         role_id: 1,
         organization_id: 'ORG001',
-        region_id: 'A',
+        region_id: '10',
         is_active: true,
         // created_at и updated_at будут установлены автоматически благодаря timestamps: true
       },
@@ -44,7 +44,7 @@ module.exports = {
         email: 'admin@example.com',
         role_id: 2,
         organization_id: 'ORG002',
-        region_id: 'B',
+        region_id: '12',
         is_active: true,
       },
     });
@@ -64,7 +64,7 @@ module.exports = {
         is_active: true,
         organization_id: 'ORG001',
         ministry_id: 'M01',
-        region_id: 'A',
+        region_id: '10',
         // created_at и updated_at будут установлены автоматически благодаря timestamps: true
       },
     });
