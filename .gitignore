@@ -9,6 +9,8 @@ logs/
 .DS_Store
 keys/rsa/*
 !keys/rsa/.gitkeep
+keys/ec/*
+!keys/ec/.gitkeep
 coverage/
 .nyc_output/
 yarn.lock

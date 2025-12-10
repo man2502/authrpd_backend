@@ -103,7 +103,7 @@ app.get('/health', (req, res) => {
  *       Public endpoint that provides JSON Web Key Set for JWT token verification.
  *       
  *       **How it works:**
- *       - Returns public keys used to verify JWT tokens signed with RS256
+ *       - Returns public keys used to verify JWT tokens signed with ES256
  *       - Keys are rotated monthly with format kid=YYYY-MM
  *       - Clients use these keys to verify token signatures
  *       - No authentication required (public endpoint)
@@ -123,25 +123,31 @@ app.get('/health', (req, res) => {
  *                     properties:
  *                       kty:
  *                         type: string
- *                         example: RSA
+ *                         example: EC
  *                       kid:
  *                         type: string
  *                         example: 2024-01
  *                       use:
  *                         type: string
  *                         example: sig
- *                       n:
+ *                       crv:
  *                         type: string
- *                         description: RSA modulus
- *                       e:
+ *                         description: EC curve name (P-256 for ES256)
+ *                         example: P-256
+ *                       x:
  *                         type: string
- *                         description: RSA exponent
+ *                         description: EC public key x coordinate (base64url)
+ *                       y:
+ *                         type: string
+ *                         description: EC public key y coordinate (base64url)
  *             example:
  *               keys:
- *                 - kty: RSA
+ *                 - kty: EC
  *                   kid: 2024-01
  *                   use: sig
- *                   n: "0vx7agoebGcQSuuPiLJXZptN9nndrQmb..."
+ *                   crv: P-256
+ *                   x: "MKBCTNIcKUSDii11ySs3526iDZ8AiTo7Tu6KPAqv7D4"
+ *                   y: "4Etl6SRW2YiLUrN5vfvVHuhp7x8PxltmWWlbbM4IFyM"
  *                   e: AQAB
  */
 // JWKS endpoint (public, no authentication required)

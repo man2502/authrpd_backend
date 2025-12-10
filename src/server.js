@@ -58,7 +58,7 @@ async function startServer() {
     });
 
     // Генерируем ключи при старте
-    const keysDir = path.resolve(config.security.rsaKeysDir);
+    const keysDir = path.resolve(config.security.ecKeysDir || config.security.rsaKeysDir);
     const keyInfo = ensureMonthlyKeyPair(keysDir);
     if (keyInfo.skipped) {
       logger.info(`Using existing key pair for ${keyInfo.kid}`, {

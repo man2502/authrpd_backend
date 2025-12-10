@@ -64,7 +64,7 @@ Government-grade treasury authentication and catalog management API.
 
 ## Authentication
 
-This API uses JWT (JSON Web Tokens) with RS256 algorithm for authentication.
+This API uses JWT (JSON Web Tokens) with ES256 algorithm for authentication.
 
 ### How to Authenticate:
 
@@ -75,7 +75,7 @@ This API uses JWT (JSON Web Tokens) with RS256 algorithm for authentication.
 
 ### Token Security:
 
-- **Algorithm**: RS256 (asymmetric signing)
+- **Algorithm**: ES256 (ECDSA P-256, asymmetric signing)
 - **Access Token TTL**: 20 minutes (1200 seconds)
 - **Refresh Token TTL**: 60 days
 - **Key Rotation**: Monthly rotation with \`kid=YYYY-MM\` format
@@ -184,7 +184,7 @@ Rate limit information is included in response headers:
           scheme: 'bearer',
           bearerFormat: 'JWT',
           description: `
-JWT authentication using RS256 algorithm.
+JWT authentication using ES256 algorithm.
 
 **How it works:**
 1. Obtain access token via login endpoint
@@ -193,7 +193,7 @@ JWT authentication using RS256 algorithm.
 4. Token must be valid (not expired, correct issuer/audience)
 
 **Token Format:**
-- Algorithm: RS256 (asymmetric)
+- Algorithm: ES256 (ECDSA P-256, asymmetric)
 - Key ID: kid=YYYY-MM (monthly rotation)
 - Claims: iss, aud, exp, nbf, sub, role, permissions
 

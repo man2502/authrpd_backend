@@ -40,7 +40,9 @@ module.exports = {
   },
   
   security: {
-    rsaKeysDir: process.env.RSA_KEYS_DIR || './keys/rsa',
+    ecKeysDir: process.env.EC_KEYS_DIR || './keys/ec',
+    // Backward compatibility: support old env var name
+    rsaKeysDir: process.env.RSA_KEYS_DIR || process.env.EC_KEYS_DIR || './keys/ec',
     audience: process.env.AUDIENCE || 'RPD',
     issuer: process.env.ISSUER || 'AUTHRPD',
     accessTtlSeconds: parseInt(process.env.ACCESS_TTL_SECONDS || '1200', 10),

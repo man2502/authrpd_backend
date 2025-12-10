@@ -39,10 +39,10 @@ function ensureMonthlyKeyPair(baseDir) {
   // Создаем директорию
   fs.mkdirSync(dir, { recursive: true });
 
-  // Генерируем ключевую пару
-  logger.info(`Generating RSA key pair for ${kid}...`);
-  const { privateKey, publicKey } = generateKeyPairSync('rsa', {
-    modulusLength: 2048,
+  // Генерируем ключевую пару ECDSA (ES256 использует P-256 кривую)
+  logger.info(`Generating ECDSA key pair for ${kid}...`);
+  const { privateKey, publicKey } = generateKeyPairSync('ec', {
+    namedCurve: 'prime256v1', // P-256 curve for ES256
     publicKeyEncoding: { type: 'spki', format: 'pem' },
     privateKeyEncoding: { type: 'pkcs8', format: 'pem' },
   });

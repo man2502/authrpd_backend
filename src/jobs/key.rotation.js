@@ -8,7 +8,7 @@ const path = require('path');
  */
 async function checkAndRotateKeys() {
   try {
-    const keysDir = path.resolve(config.security.rsaKeysDir);
+    const keysDir = path.resolve(config.security.ecKeysDir || config.security.rsaKeysDir);
     const keyInfo = ensureMonthlyKeyPair(keysDir);
     
     if (keyInfo.skipped) {

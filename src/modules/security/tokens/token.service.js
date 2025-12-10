@@ -14,7 +14,7 @@ const logger = require('../../../config/logger');
 function generateAccessToken(userType, userId, additionalClaims = {}) {
   try {
     const kid = getKid();
-    const { privateKey } = loadKeyPair(config.security.rsaKeysDir, kid);
+    const { privateKey } = loadKeyPair(config.security.ecKeysDir || config.security.rsaKeysDir, kid);
 
     const payload = {
       iss: config.security.issuer,
@@ -27,9 +27,9 @@ function generateAccessToken(userType, userId, additionalClaims = {}) {
     };
 
     const token = jwt.sign(payload, privateKey, {
-      algorithm: 'RS256',
+      algorithm: 'ES256',
       header: {
-        alg: 'RS256',
+        alg: 'ES256',
         typ: 'JWT',
         kid: kid,
       },
@@ -55,10 +55,10 @@ function verifyAccessToken(token) {
     }
 
     const kid = decoded.header.kid;
-    const { publicKey } = loadKeyPair(config.security.rsaKeysDir, kid);
+    const { publicKey } = loadKeyPair(config.security.ecKeysDir || config.security.rsaKeysDir, kid);
 
     const payload = jwt.verify(token, publicKey, {
-      algorithms: ['RS256'],
+      algorithms: ['ES256'],
       issuer: config.security.issuer,
       audience: config.security.audience,
     });
@@ -165,7 +165,7 @@ async function issueAccessToken(user, userType = 'MEMBER', options = {}) {
     // Prepare JWT payload
     const now = Math.floor(Date.now() / 1000);
     const kid = getKid();
-    const { privateKey } = loadKeyPair(config.security.rsaKeysDir, kid);
+    const { privateKey } = loadKeyPair(config.security.ecKeysDir || config.security.rsaKeysDir, kid);
 
     // Build claims
     // Always use array format for audience (JWT spec supports both string and array)
@@ -187,9 +187,9 @@ async function issueAccessToken(user, userType = 'MEMBER', options = {}) {
 
     // Sign token
     const token = jwt.sign(payload, privateKey, {
-      algorithm: 'RS256',
+      algorithm: 'ES256',
       header: {
-        alg: 'RS256',
+        alg: 'ES256',
         typ: 'JWT',
         kid: kid,
       },

@@ -7,7 +7,7 @@
  * - Each RPD deployment has a configured audience (RPD_AUDIENCE env var)
  * - Tokens are issued with aud claim matching the RPD instance's audience
  * - This middleware validates:
- *   1. Token signature (RS256 with public key from JWKS)
+ *   1. Token signature (ES256 with public key from JWKS)
  *   2. Token expiration
  *   3. Token issuer (must match AuthRPD issuer)
  *   4. Token audience (must match this RPD's configured audience)
@@ -96,7 +96,7 @@ function verifyRpdToken(req, res, next) {
     token,
     getKey,
     {
-      algorithms: ['RS256'],
+      algorithms: ['ES256'],
       issuer: issuer,
       // Don't validate audience here - we'll do custom validation to support arrays
       audience: false,
