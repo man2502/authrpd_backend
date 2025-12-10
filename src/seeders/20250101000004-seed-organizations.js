@@ -14,20 +14,20 @@ module.exports = {
     // Используем findOrCreate для идемпотентности
     const organizations = [
       {
-        code: 'ORG001',
+        code: '1001',
         title_tm: 'Ahal hassahanasy',
         title_ru: 'Ахалская больница',
-        region_id: 'A',
+        region_id: '10',
         ministry_id: 'M01',
         financing_type: 'LOCAL',
         tax_code: '123456789',
         is_active: true,
       },
       {
-        code: 'ORG002',
+        code: '1002',
         title_tm: 'Balkan mekdebi',
         title_ru: 'Балканская школа',
-        region_id: 'B',
+        region_id: '11',
         ministry_id: 'M02',
         financing_type: 'CENTRAL',
         tax_code: '987654321',

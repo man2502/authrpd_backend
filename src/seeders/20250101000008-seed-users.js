@@ -26,7 +26,7 @@ module.exports = {
         phone: '+99312345678',
         email: 'superadmin@example.com',
         role_id: 1,
-        organization_id: 'ORG001',
+        organization_id: '1001',
         region_id: '10',
         is_active: true,
         // created_at и updated_at будут установлены автоматически благодаря timestamps: true
@@ -43,7 +43,7 @@ module.exports = {
         phone: '+99312345679',
         email: 'admin@example.com',
         role_id: 2,
-        organization_id: 'ORG002',
+        organization_id: '1002',
         region_id: '12',
         is_active: true,
       },
@@ -62,7 +62,7 @@ module.exports = {
         email_verified: true,
         is_blocked: false,
         is_active: true,
-        organization_id: 'ORG001',
+        organization_id: '1001',
         ministry_id: 'M01',
         region_id: '10',
         // created_at и updated_at будут установлены автоматически благодаря timestamps: true

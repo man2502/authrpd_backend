@@ -24,6 +24,7 @@ const Document = require('./catalogs/Document')(sequelize, DataTypes);
 const ClassifierField = require('./catalogs/ClassifierField')(sequelize, DataTypes);
 const ClassifierDocument = require('./catalogs/ClassifierDocument')(sequelize, DataTypes);
 const AuthAuditLog = require('./AuthAuditLog')(sequelize, DataTypes);
+const RpdInstance = require('./RpdInstance')(sequelize, DataTypes);
 
 // Define associations
 // Member associations
@@ -66,6 +67,10 @@ Organization.hasMany(Organization, { foreignKey: 'parent_id', as: 'children' });
 // Region associations
 Region.belongsTo(Region, { foreignKey: 'parent_id', as: 'parent' });
 Region.hasMany(Region, { foreignKey: 'parent_id', as: 'children' });
+
+// RPD Instance associations
+RpdInstance.belongsTo(Region, { foreignKey: 'region_id', as: 'region' });
+Region.hasOne(RpdInstance, { foreignKey: 'region_id', as: 'rpdInstance' });
 
 // Bank associations
 Bank.belongsTo(Region, { foreignKey: 'region_id', as: 'region' });
@@ -124,6 +129,7 @@ const db = {
   ClassifierField,
   ClassifierDocument,
   AuthAuditLog,
+  RpdInstance,
 };
 
 module.exports = db;

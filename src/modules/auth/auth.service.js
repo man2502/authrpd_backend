@@ -11,7 +11,7 @@ const { get_user_permissions } = require('../rbac/services/permission.service');
 const { logEvent, auditActions } = require('../audit/audit.service');
 const ApiError = require('../../helpers/api.error');
 const logger = require('../../config/logger');
-
+const { issueAccessToken } = require('../security/tokens/token.service');
 /**
  * Аутентификация member
  * @param {string} username - имя пользователя
@@ -45,15 +45,22 @@ async function loginMember(username, password, metadata = {}) {
       throw new ApiError(401, 'Invalid credentials');
     }
 
-    // Обновляем last_login_at (Sequelize with underscored:true converts lastLoginAt to last_login_at)
+    // Update last login
     await member.update({ lastLoginAt: new Date() });
 
-    // Генерируем токены
-    const accessToken = generateAccessToken('MEMBER', member.id, {
-      role: member.role?.name,
-      region_id: member.region_id,
-    });
+    // Issue RPD access token
+    // This automatically resolves region hierarchy and sets correct audience
+    const accessToken = await issueAccessToken(
+      {
+        id: member.id,
+        role_id: member.role_id,
+        region_id: member.region_id,
+        department_id: member.department_id,
+      },
+      'MEMBER'
+    );
 
+    // Generate refresh token
     const refreshToken = generateRefreshToken();
     await saveRefreshToken({
       token: refreshToken,
@@ -62,19 +69,18 @@ async function loginMember(username, password, metadata = {}) {
       ...metadata,
     });
 
-    // Логируем успешный вход (audit + application log)
+    // Log successful login
     await logEvent({
       action: auditActions.LOGIN_SUCCESS,
       actorType: 'MEMBER',
       actorId: member.id,
-      meta: { username },
+      meta: { username, region_id: member.region_id },
     });
-    
-    // Application log для мониторинга
-    logger.info('Member authenticated successfully', {
+
+    logger.info('Member authenticated with RPD token', {
       user_id: member.id,
       username: member.username,
-      role: member.role?.name,
+      region_id: member.region_id,
     });
 
     const permissions = await get_user_permissions(member.id);
@@ -88,6 +94,7 @@ async function loginMember(username, password, metadata = {}) {
         fullname: member.fullname,
         role: member.role?.name,
         region_id: member.region_id,
+        department_id: member.department_id,
         permissions,
       },
     };
@@ -95,10 +102,11 @@ async function loginMember(username, password, metadata = {}) {
     if (error instanceof ApiError) {
       throw error;
     }
-    logger.error('Member login error:', error);
+    logger.error('Member login error (RPD):', error);
     throw new ApiError(500, 'Login failed');
   }
 }
+
 
 /**
  * Аутентификация client
@@ -133,14 +141,17 @@ async function loginClient(username, password, metadata = {}) {
       throw new ApiError(401, 'Invalid credentials');
     }
 
-    // Обновляем last_login_at (Sequelize with underscored:true converts lastLoginAt to last_login_at)
     await client.update({ lastLoginAt: new Date() });
 
-    // Генерируем токены
-    const accessToken = generateAccessToken('CLIENT', client.id, {
-      organization_id: client.organization_id,
-      region_id: client.region_id,
-    });
+    // Issue RPD access token
+    const accessToken = await issueAccessToken(
+      {
+        id: client.id,
+        role_id: null, // Clients may not have role_id
+        region_id: client.region_id,
+      },
+      'CLIENT'
+    );
 
     const refreshToken = generateRefreshToken();
     await saveRefreshToken({
@@ -150,12 +161,11 @@ async function loginClient(username, password, metadata = {}) {
       ...metadata,
     });
 
-    // Логируем успешный вход
     await logEvent({
       action: auditActions.LOGIN_SUCCESS,
       actorType: 'CLIENT',
       actorId: client.id,
-      meta: { username },
+      meta: { username, region_id: client.region_id },
     });
 
     return {
@@ -173,7 +183,7 @@ async function loginClient(username, password, metadata = {}) {
     if (error instanceof ApiError) {
       throw error;
     }
-    logger.error('Client login error:', error);
+    logger.error('Client login error (RPD):', error);
     throw new ApiError(500, 'Login failed');
   }
 }
@@ -313,6 +323,7 @@ async function getCurrentUser(userType, userId) {
       position: member.position,
       role: member.role?.name,
       region_id: member.region_id,
+      department_id: member.department_id,
       permissions,
     };
   } else if (userType === 'CLIENT') {

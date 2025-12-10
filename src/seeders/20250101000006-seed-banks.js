@@ -20,7 +20,7 @@ module.exports = {
         title_ru: 'Госбанк',
         code_mfo: '390',
         code_bab: '01',
-        region_id: 'A',
+        region_id: '10',
         is_active: true,
       },
     });
@@ -34,7 +34,7 @@ module.exports = {
         account_number: '1230000000001',
         bank_id: bank.id,
         expense_type: 'BUDGET',
-        organization_id: 'ORG001',
+        organization_id: '1002',
         is_active: true,
       },
     });

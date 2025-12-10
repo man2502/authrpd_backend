@@ -11,134 +11,110 @@ const { Permission } = require('../models');
  */
 module.exports = {
   async up(queryInterface, Sequelize) {
+    // Helper function to safely create permission (handles existing records)
+    const createPermission = async (name) => {
+      try {
+        // First, check if permission exists (including soft-deleted)
+        let existing = await Permission.findOne({
+          where: { name },
+          paranoid: false, // Include soft-deleted records
+        });
+
+        if (existing) {
+          // If soft-deleted, restore it
+          if (existing.deleted_at) {
+            existing.deleted_at = null;
+            existing.is_active = true;
+            await existing.save();
+            console.log(`↻ Restored permission: ${name}`);
+            return existing;
+          }
+          // Already exists and active
+          console.log(`⊘ Permission already exists: ${name}`);
+          return existing;
+        }
+
+        // Doesn't exist, create it
+        const permission = await Permission.create({
+          name,
+          is_active: true,
+        });
+        console.log(`✓ Created permission: ${name}`);
+        return permission;
+      } catch (error) {
+        // Handle duplicate key errors (ID conflict)
+        if (
+          error.name === 'SequelizeUniqueConstraintError' ||
+          error.name === 'SequelizeDatabaseError' ||
+          (error.original && error.original.code === '23505') // PostgreSQL duplicate key error
+        ) {
+          // Try to find existing permission by name (it might exist but findOrCreate missed it)
+          const existing = await Permission.findOne({
+            where: { name },
+            paranoid: false,
+          });
+          if (existing) {
+            if (existing.deleted_at) {
+              existing.deleted_at = null;
+              existing.is_active = true;
+              await existing.save();
+              console.log(`↻ Restored permission: ${name}`);
+            } else {
+              console.log(`⊘ Permission already exists: ${name}`);
+            }
+            return existing;
+          }
+        }
+        // If still fails, log and continue
+        console.warn(`⚠️  Error creating permission ${name}:`, error.message);
+        return null;
+      }
+    };
+
     // CORE permissions (from TZ example)
-    await Permission.findOrCreate({
-      where: { name: 'CATALOG_READ' },
-      defaults: { name: 'CATALOG_READ', is_active: true },
-    });
-
-    await Permission.findOrCreate({
-      where: { name: 'CATALOG_WRITE' },
-      defaults: { name: 'CATALOG_WRITE', is_active: true },
-    });
-
-    await Permission.findOrCreate({
-      where: { name: 'RBAC_MANAGE' },
-      defaults: { name: 'RBAC_MANAGE', is_active: true },
-    });
+    // Note: Some of these may already exist from seed-rbac.js (20250101000007)
+    await createPermission('CATALOG_READ');
+    await createPermission('CATALOG_WRITE');
+    await createPermission('RBAC_MANAGE');
 
     // RBAC permissions
-    await Permission.findOrCreate({
-      where: { name: 'RBAC_READ' },
-      defaults: { name: 'RBAC_READ', is_active: true },
-    });
+    await createPermission('RBAC_READ');
 
     // MEMBER permissions
-    await Permission.findOrCreate({
-      where: { name: 'MEMBER_READ' },
-      defaults: { name: 'MEMBER_READ', is_active: true },
-    });
-
-    await Permission.findOrCreate({
-      where: { name: 'MEMBER_CREATE' },
-      defaults: { name: 'MEMBER_CREATE', is_active: true },
-    });
-
-    await Permission.findOrCreate({
-      where: { name: 'MEMBER_UPDATE' },
-      defaults: { name: 'MEMBER_UPDATE', is_active: true },
-    });
-
-    await Permission.findOrCreate({
-      where: { name: 'MEMBER_DISABLE' },
-      defaults: { name: 'MEMBER_DISABLE', is_active: true },
-    });
+    await createPermission('MEMBER_READ');
+    await createPermission('MEMBER_CREATE');
+    await createPermission('MEMBER_UPDATE');
+    await createPermission('MEMBER_DISABLE');
 
     // CLIENT permissions
-    await Permission.findOrCreate({
-      where: { name: 'CLIENT_READ' },
-      defaults: { name: 'CLIENT_READ', is_active: true },
-    });
-
-    await Permission.findOrCreate({
-      where: { name: 'CLIENT_CREATE' },
-      defaults: { name: 'CLIENT_CREATE', is_active: true },
-    });
-
-    await Permission.findOrCreate({
-      where: { name: 'CLIENT_UPDATE' },
-      defaults: { name: 'CLIENT_UPDATE', is_active: true },
-    });
-
-    await Permission.findOrCreate({
-      where: { name: 'CLIENT_BLOCK' },
-      defaults: { name: 'CLIENT_BLOCK', is_active: true },
-    });
-
-    await Permission.findOrCreate({
-      where: { name: 'CLIENT_UNBLOCK' },
-      defaults: { name: 'CLIENT_UNBLOCK', is_active: true },
-    });
+    await createPermission('CLIENT_READ');
+    await createPermission('CLIENT_CREATE');
+    await createPermission('CLIENT_UPDATE');
+    await createPermission('CLIENT_BLOCK');
+    await createPermission('CLIENT_UNBLOCK');
 
     // DEPARTMENT permissions
-    await Permission.findOrCreate({
-      where: { name: 'DEPARTMENT_READ' },
-      defaults: { name: 'DEPARTMENT_READ', is_active: true },
-    });
-
-    await Permission.findOrCreate({
-      where: { name: 'DEPARTMENT_WRITE' },
-      defaults: { name: 'DEPARTMENT_WRITE', is_active: true },
-    });
+    await createPermission('DEPARTMENT_READ');
+    await createPermission('DEPARTMENT_WRITE');
 
     // SYNC permissions
-    await Permission.findOrCreate({
-      where: { name: 'SYNC_READ' },
-      defaults: { name: 'SYNC_READ', is_active: true },
-    });
-
-    await Permission.findOrCreate({
-      where: { name: 'SYNC_MANAGE' },
-      defaults: { name: 'SYNC_MANAGE', is_active: true },
-    });
+    await createPermission('SYNC_READ');
+    await createPermission('SYNC_MANAGE');
 
     // AUDIT permissions
-    await Permission.findOrCreate({
-      where: { name: 'AUDIT_READ' },
-      defaults: { name: 'AUDIT_READ', is_active: true },
-    });
+    await createPermission('AUDIT_READ');
 
     // SECURITY permissions
-    await Permission.findOrCreate({
-      where: { name: 'SECURITY_READ' },
-      defaults: { name: 'SECURITY_READ', is_active: true },
-    });
-
-    await Permission.findOrCreate({
-      where: { name: 'SECURITY_MANAGE' },
-      defaults: { name: 'SECURITY_MANAGE', is_active: true },
-    });
-
-    await Permission.findOrCreate({
-      where: { name: 'KEYS_MANAGE' },
-      defaults: { name: 'KEYS_MANAGE', is_active: true },
-    });
-
-    await Permission.findOrCreate({
-      where: { name: 'JWKS_READ' },
-      defaults: { name: 'JWKS_READ', is_active: true },
-    });
+    await createPermission('SECURITY_READ');
+    await createPermission('SECURITY_MANAGE');
+    await createPermission('KEYS_MANAGE');
+    await createPermission('JWKS_READ');
 
     // TOKEN/SESSION permissions
-    await Permission.findOrCreate({
-      where: { name: 'TOKEN_REVOKE' },
-      defaults: { name: 'TOKEN_REVOKE', is_active: true },
-    });
+    await createPermission('TOKEN_REVOKE');
+    await createPermission('SESSION_MANAGE');
 
-    await Permission.findOrCreate({
-      where: { name: 'SESSION_MANAGE' },
-      defaults: { name: 'SESSION_MANAGE', is_active: true },
-    });
+    console.log('✓ Permissions seeding completed');
   },
 
   async down(queryInterface, Sequelize) {

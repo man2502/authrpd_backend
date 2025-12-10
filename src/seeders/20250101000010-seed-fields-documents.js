@@ -7,6 +7,7 @@ const {
   ClassifierDocument,
   ReceiverOrganization,
   Department,
+  Organization,
 } = require('../models');
 
 /**
@@ -95,22 +96,37 @@ module.exports = {
     }
 
     // Departments
+    // Note: organization_id must reference existing organizations from seed-organizations.js
+    // Organizations seeder creates: '1001' (Ahal hassahanasy) and '1002' (Balkan mekdebi)
     const departments = [
       {
         title_tm: 'Baş hünärmenler bölümi',
         title_ru: 'Отдел главных специалистов',
-        organization_id: 'ORG001',
+        organization_id: '1001', // References 'Ahal hassahanasy' from organizations seeder
         is_active: true,
       },
       {
         title_tm: 'Hasapçylyk bölümi',
         title_ru: 'Отдел бухгалтерии',
-        organization_id: 'ORG002',
+        organization_id: '1002', // References 'Balkan mekdebi' from organizations seeder
         is_active: true,
       },
     ];
 
     for (const department of departments) {
+      // Verify organization exists before creating department
+      if (department.organization_id) {
+        const org = await Organization.findOne({
+          where: { code: department.organization_id, is_active: true },
+        });
+        if (!org) {
+          console.warn(
+            `⚠️  Organization ${department.organization_id} not found. Skipping department: ${department.title_tm}`
+          );
+          continue;
+        }
+      }
+
       await Department.findOrCreate({
         where: {
           title_tm: department.title_tm,
