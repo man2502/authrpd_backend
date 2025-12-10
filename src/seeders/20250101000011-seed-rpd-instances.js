@@ -25,6 +25,11 @@ module.exports = {
       {
         region_code: '10',
         code: 'rpd_ashgabat',
+        audience: 'authrpd:all',
+      },
+      {
+        region_code: '10',
+        code: 'rpd_ashgabat',
         audience: 'rpd:ashgabat',
       },
       {
@@ -62,14 +67,14 @@ module.exports = {
       });
 
       if (!region) {
-        console.warn(`⚠️  Region not found: ${rpdData.region_code}. Skipping RPD instance creation.`);
+        console.warn(`️Region not found: ${rpdData.region_code}. Skipping RPD instance creation.`);
         continue;
       }
 
       // Валидация: только top-level регионы (без parent_id) могут иметь RPD instances
       if (region.parent_id) {
         console.warn(
-          `⚠️  Region ${rpdData.region_code} (${region.title_tm}) is a sub-region (parent: ${region.parent_id}). ` +
+          `Region ${rpdData.region_code} (${region.title_tm}) is a sub-region (parent: ${region.parent_id}). ` +
           `Skipping RPD instance creation. Only top-level regions can have RPD instances.`
         );
         continue;
@@ -81,7 +86,7 @@ module.exports = {
       });
 
       if (existing) {
-        console.log(`✓ RPD instance already exists for region ${rpdData.region_code}: ${existing.code}`);
+        console.log(`RPD instance already exists for region ${rpdData.region_code}: ${existing.code}`);
         continue;
       }
 

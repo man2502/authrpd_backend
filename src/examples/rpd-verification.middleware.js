@@ -69,8 +69,10 @@ function getKey(header, callback) {
  * Validates:
  * - Signature using JWKS
  * - Issuer matches AuthRPD
- * - Audience matches this RPD's configured audience
+ * - Audience matches this RPD's configured audience (supports multi-audience tokens)
  * - Token is not expired
+ * 
+ * Supports both single audience (string) and multi-audience (array) tokens for backward compatibility.
  * 
  * On success, attaches decoded payload to req.user
  */
@@ -89,14 +91,15 @@ function verifyRpdToken(req, res, next) {
 
   const token = authHeader.substring(7); // Remove 'Bearer ' prefix
 
-  // Verify token
+  // Verify token (without audience check first, we'll do custom audience validation)
   jwt.verify(
     token,
     getKey,
     {
       algorithms: ['RS256'],
       issuer: issuer,
-      audience: expectedAudience, // CRITICAL: Must match this RPD's audience
+      // Don't validate audience here - we'll do custom validation to support arrays
+      audience: false,
     },
     (err, decoded) => {
       if (err) {
@@ -129,26 +132,40 @@ function verifyRpdToken(req, res, next) {
             },
           });
         }
-        if (err.name === 'JsonWebTokenAudienceError') {
-          // This is the key security check - token from wrong RPD instance
-          console.warn('Token audience mismatch:', {
-            expected: expectedAudience,
-            received: decoded?.aud,
-            token_issuer: decoded?.iss,
-          });
-          return res.status(403).json({
-            success: false,
-            data: {
-              error_code: 403,
-              error_msg: 'Token not valid for this RPD instance',
-            },
-          });
-        }
         return res.status(401).json({
           success: false,
           data: {
             error_code: 401,
             error_msg: 'Token verification failed',
+          },
+        });
+      }
+
+      // Custom audience validation (supports both string and array)
+      const tokenAudience = decoded.aud;
+      let audienceValid = false;
+
+      if (Array.isArray(tokenAudience)) {
+        // Multi-audience token: check if expected audience is in the array
+        audienceValid = tokenAudience.includes(expectedAudience);
+      } else if (typeof tokenAudience === 'string') {
+        // Single audience token (backward compatibility)
+        audienceValid = tokenAudience === expectedAudience;
+      }
+
+      if (!audienceValid) {
+        // This is the key security check - token from wrong RPD instance
+        console.warn('Token audience mismatch:', {
+          expected: expectedAudience,
+          received: tokenAudience,
+          received_type: Array.isArray(tokenAudience) ? 'array' : 'string',
+          token_issuer: decoded.iss,
+        });
+        return res.status(403).json({
+          success: false,
+          data: {
+            error_code: 403,
+            error_msg: 'Token not valid for this RPD instance',
           },
         });
       }
@@ -160,7 +177,8 @@ function verifyRpdToken(req, res, next) {
         role_id: decoded.role_id,
         region_id: decoded.region_id, // Top region ID
         sub_region_id: decoded.sub_region_id || null, // Sub-region ID if applicable
-        aud: decoded.aud, // Audience (should match expectedAudience)
+        aud: decoded.aud, // Audience (string or array)
+        audiences: Array.isArray(decoded.aud) ? decoded.aud : [decoded.aud], // Always array for convenience
         iss: decoded.iss, // Issuer
         exp: decoded.exp,
         iat: decoded.iat,
@@ -238,34 +256,48 @@ module.exports = {
 /**
  * Example Token Payloads:
  * 
- * 1. Top Region User (region_id: 'AHAL')
+ * 1. Top Region User - Single Instance (region_id: '11')
  * {
  *   "iss": "AUTHRPD",
  *   "sub": "MEMBER:123",
- *   "aud": "rpd:ahal",
+ *   "aud": ["rpd:ahal"],  // Array format (even for single instance)
  *   "iat": 1704067200,
  *   "exp": 1704068400,
  *   "jti": "550e8400-e29b-41d4-a716-446655440000",
  *   "role_id": 5,
- *   "region_id": "AHAL"
+ *   "region_id": "11"
  * }
  * 
- * 2. Sub-Region User (region_id: 'ASGABAT_CITY', parent: 'AHAL')
+ * 2. Top Region User - Multiple Instances (region_id: '11' with 2 RPD instances)
+ * {
+ *   "iss": "AUTHRPD",
+ *   "sub": "MEMBER:123",
+ *   "aud": ["rpd:ahal:primary", "rpd:ahal:secondary"],  // Multi-audience
+ *   "iat": 1704067200,
+ *   "exp": 1704068400,
+ *   "jti": "550e8400-e29b-41d4-a716-446655440000",
+ *   "role_id": 5,
+ *   "region_id": "11"
+ * }
+ * 
+ * 3. Sub-Region User (region_id: 'ASGABAT_CITY', parent: '11')
  * {
  *   "iss": "AUTHRPD",
  *   "sub": "MEMBER:456",
- *   "aud": "rpd:ahal",  // Uses parent region's audience
+ *   "aud": ["rpd:ahal:primary", "rpd:ahal:secondary"],  // Uses parent region's audiences
  *   "iat": 1704067200,
  *   "exp": 1704068400,
  *   "jti": "550e8400-e29b-41d4-a716-446655440001",
  *   "role_id": 5,
- *   "region_id": "AHAL",           // Top region ID
+ *   "region_id": "11",           // Top region ID
  *   "sub_region_id": "ASGABAT_CITY" // Original user region
  * }
  * 
  * Security Note:
- * - A token with aud="rpd:ahal" will be REJECTED by a RPD instance expecting aud="rpd:balkan"
+ * - A token with aud=["rpd:ahal:primary"] will be REJECTED by a RPD instance expecting "rpd:balkan"
+ * - The middleware checks if the expected audience is in the token's audience array
  * - This prevents users from one region accessing another region's RPD system
  * - The middleware's audience check is the critical security boundary
+ * - Backward compatibility: Tokens with string audience (old format) are also supported
  */
 

@@ -4,22 +4,40 @@ const { cacheData, invalidateCache } = require('../../../helpers/cache.helper');
 const logger = require('../../../config/logger');
 const ApiError = require('../../../helpers/api.error');
 /**
- * Gets the RPD instance for a given region.
+ * Gets all RPD instances for a given region.
  * If the region is a sub-region, resolves to its top parent region first.
+ * Returns all active RPD instances for that region (supports multi-audience).
  * 
  * @param {string} regionId - The region code (can be sub-region or top region)
  * @param {boolean} useCache - Whether to use cache (default: true)
- * @returns {Promise<Object>} - RPD instance object with id, code, region_id, audience, is_active
- * @throws {ApiError} - If top region not found, RPD instance not found, or instance is inactive
+ * @returns {Promise<Object>} - Object containing array of RPD instances with audiences array
+ * @throws {ApiError} - If top region not found, or no active RPD instances found
  * 
  * @example
- * // For top region
- * const instance = await getRpdInstanceByRegion('AHAL');
- * // Returns: { id: 1, code: 'rpd_ahal', region_id: 'AHAL', audience: 'rpd:ahal', is_active: true }
+ * // For top region with single instance
+ * const result = await getRpdInstanceByRegion('11');
+ * // Returns: {
+ * //   top_region_id: '11',
+ * //   original_region_id: null,
+ * //   instances: [{ id: 1, code: 'rpd_ahal', audience: 'rpd:ahal', ... }],
+ * //   audiences: ['rpd:ahal']
+ * // }
+ * 
+ * // For top region with multiple instances
+ * const result = await getRpdInstanceByRegion('11');
+ * // Returns: {
+ * //   top_region_id: '11',
+ * //   original_region_id: null,
+ * //   instances: [
+ * //     { id: 1, code: 'rpd_ahal_primary', audience: 'rpd:ahal:primary', ... },
+ * //     { id: 2, code: 'rpd_ahal_secondary', audience: 'rpd:ahal:secondary', ... }
+ * //   ],
+ * //   audiences: ['rpd:ahal:primary', 'rpd:ahal:secondary']
+ * // }
  * 
  * // For sub-region
- * const instance = await getRpdInstanceByRegion('ASGABAT_CITY');
- * // Resolves to top region 'AHAL' and returns its RPD instance
+ * const result = await getRpdInstanceByRegion('ASGABAT_CITY');
+ * // Resolves to top region '11' and returns all its RPD instances
  */
 async function getRpdInstanceByRegion(regionId, useCache = true) {
   if (!regionId) {
@@ -34,8 +52,8 @@ async function getRpdInstanceByRegion(regionId, useCache = true) {
     // Step 1: Resolve to top region
     const topRegionId = await resolveTopRegion(regionId, useCache);
     
-    // Step 2: Find RPD instance for top region
-    const rpdInstance = await RpdInstance.findOne({
+    // Step 2: Find ALL active RPD instances for top region
+    const rpdInstances = await RpdInstance.findAll({
       where: {
         region_id: topRegionId,
         is_active: true,
@@ -48,22 +66,25 @@ async function getRpdInstanceByRegion(regionId, useCache = true) {
           required: false,
         },
       ],
+      order: [['code', 'ASC']], // Consistent ordering
     });
 
-    if (!rpdInstance) {
-      logger.error(`RPD instance not found for top region: ${topRegionId} (original region: ${regionId})`);
+    if (!rpdInstances || rpdInstances.length === 0) {
+      logger.error(`No RPD instances found for top region: ${topRegionId} (original region: ${regionId})`);
       throw new ApiError(
         404,
-        `RPD instance not found for region: ${regionId}. No active RPD instance configured for top region: ${topRegionId}`
+        `No active RPD instances found for region: ${regionId}. No active RPD instances configured for top region: ${topRegionId}`
       );
     }
 
-    return {
+    // Extract audiences array
+    const audiences = rpdInstances.map(inst => inst.audience);
+
+    // Map instances to return format
+    const instances = rpdInstances.map(rpdInstance => ({
       id: rpdInstance.id,
       code: rpdInstance.code,
       region_id: rpdInstance.region_id,
-      top_region_id: topRegionId,
-      original_region_id: regionId !== topRegionId ? regionId : null,
       audience: rpdInstance.audience,
       is_active: rpdInstance.is_active,
       region: rpdInstance.region ? {
@@ -71,6 +92,13 @@ async function getRpdInstanceByRegion(regionId, useCache = true) {
         title_tm: rpdInstance.region.title_tm,
         title_ru: rpdInstance.region.title_ru,
       } : null,
+    }));
+
+    return {
+      top_region_id: topRegionId,
+      original_region_id: regionId !== topRegionId ? regionId : null,
+      instances: instances,
+      audiences: audiences, // Array of all audiences for this region
     };
   };
 
@@ -213,10 +241,8 @@ async function createRpdInstance(data) {
     throw new ApiError(409, `RPD instance with audience already exists: ${audience}`);
   }
 
-  const existingByRegion = await RpdInstance.findOne({ where: { region_id } });
-  if (existingByRegion) {
-    throw new ApiError(409, `RPD instance already exists for region: ${region_id}`);
-  }
+  // Note: Multiple RPD instances per region are now allowed for multi-audience support
+  // Removed the check that prevented multiple instances for the same region
 
   // Create instance
   const instance = await RpdInstance.create({

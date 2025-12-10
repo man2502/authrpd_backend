@@ -81,28 +81,38 @@ function generateRefreshToken() {
 
 /**
  * Issues an access token for RPD systems.
- * Resolves the user's region to top parent region and uses that region's RPD audience.
+ * Resolves the user's region to top parent region and uses that region's RPD audiences.
+ * Supports multi-audience tokens when multiple RPD instances exist for a region.
  * 
  * @param {Object} user - User object with id, role_id, region_id
  * @param {string} userType - User type ('MEMBER' or 'CLIENT')
  * @param {Object} options - Additional options
  * @param {boolean} options.useCache - Whether to use cache for region/RPD lookup (default: true)
- * @returns {Promise<string>} - JWT access token with RPD audience
+ * @returns {Promise<string>} - JWT access token with RPD audience(s) as array
  * @throws {Error} - If region resolution fails or RPD instance not found
  * 
  * @example
- * // Top region user
+ * // Top region user with single RPD instance
  * const token = await issueAccessToken({
  *   id: 1,
  *   role_id: 5,
- *   region_id: 'AHAL'
+ *   region_id: '11'
  * }, 'MEMBER');
+ * // Token will have aud: ['rpd:ahal']
  * 
- * // Sub-region user (automatically resolves to parent's RPD)
+ * // Top region user with multiple RPD instances
+ * const token = await issueAccessToken({
+ *   id: 1,
+ *   role_id: 5,
+ *   region_id: '11' // Has 2 RPD instances
+ * }, 'MEMBER');
+ * // Token will have aud: ['rpd:ahal:primary', 'rpd:ahal:secondary']
+ * 
+ * // Sub-region user (automatically resolves to parent's RPD instances)
  * const token = await issueAccessToken({
  *   id: 2,
  *   role_id: 5,
- *   region_id: 'ASGABAT_CITY' // This will resolve to AHAL's RPD instance
+ *   region_id: 'ASGABAT_CITY' // This will resolve to parent region's RPD instances
  * }, 'MEMBER');
  */
 async function issueAccessToken(user, userType = 'MEMBER', options = {}) {
@@ -113,9 +123,44 @@ async function issueAccessToken(user, userType = 'MEMBER', options = {}) {
       throw new Error('User object must have id and region_id');
     }
 
-    // Get RPD instance for user's region (resolves to top region automatically)
+    // Get all RPD instances for user's region (resolves to top region automatically)
+    // Returns: { top_region_id, original_region_id, instances: [...], audiences: [...] }
     const { getRpdInstanceByRegion } = require('../../rpd/services/rpd-instance.service');
-    const rpdInstance = await getRpdInstanceByRegion(user.region_id, useCache);
+    const rpdData = await getRpdInstanceByRegion(user.region_id, useCache);
+
+    // Validate rpdData structure (handle potential cache issues with old format)
+    if (!rpdData) {
+      throw new Error('RPD instance data is undefined');
+    }
+
+    // Handle both new format (with instances array) and old format (backward compatibility)
+    let audiences;
+    let topRegionId;
+    let originalRegionId;
+
+    if (rpdData.audiences && Array.isArray(rpdData.audiences)) {
+      // New format: { top_region_id, original_region_id, instances: [...], audiences: [...] }
+      audiences = rpdData.audiences;
+      topRegionId = rpdData.top_region_id;
+      originalRegionId = rpdData.original_region_id;
+    } else if (rpdData.audience) {
+      // Old format (from cache): { audience, top_region_id, ... } - convert to array
+      logger.warn('Detected old RPD instance format in cache, converting to array format');
+      audiences = [rpdData.audience];
+      topRegionId = rpdData.top_region_id || rpdData.region_id;
+      originalRegionId = rpdData.original_region_id;
+    } else {
+      throw new Error(`Invalid RPD instance data format: ${JSON.stringify(rpdData)}`);
+    }
+
+    // Validate audiences array
+    if (!audiences || audiences.length === 0) {
+      throw new Error('No audiences found in RPD instance data');
+    }
+
+    if (!topRegionId) {
+      throw new Error('Top region ID not found in RPD instance data');
+    }
 
     // Prepare JWT payload
     const now = Math.floor(Date.now() / 1000);
@@ -123,20 +168,21 @@ async function issueAccessToken(user, userType = 'MEMBER', options = {}) {
     const { privateKey } = loadKeyPair(config.security.rsaKeysDir, kid);
 
     // Build claims
+    // Always use array format for audience (JWT spec supports both string and array)
     const payload = {
       iss: config.security.issuer,
       sub: `${userType}:${user.id}`,
-      aud: rpdInstance.audience, // RPD instance audience (e.g., "rpd:ahal")
+      aud: audiences, // Array of all RPD instance audiences (always array format)
       iat: now,
       exp: now + config.security.accessTtlSeconds,
       jti: uuidv4(),
       role_id: user.role_id || null,
-      region_id: rpdInstance.top_region_id, // Top region ID (parent for sub-regions)
+      region_id: topRegionId, // Top region ID (parent for sub-regions)
     };
 
     // Include sub_region_id if user is in a sub-region
-    if (rpdInstance.original_region_id && rpdInstance.original_region_id !== rpdInstance.top_region_id) {
-      payload.sub_region_id = rpdInstance.original_region_id;
+    if (originalRegionId && originalRegionId !== topRegionId) {
+      payload.sub_region_id = originalRegionId;
     }
 
     // Sign token
@@ -153,8 +199,9 @@ async function issueAccessToken(user, userType = 'MEMBER', options = {}) {
       user_id: user.id,
       user_type: userType,
       region_id: user.region_id,
-      top_region_id: rpdInstance.top_region_id,
-      audience: rpdInstance.audience,
+      top_region_id: topRegionId,
+      audiences: audiences, // Array of audiences
+      instance_count: rpdData.instances ? rpdData.instances.length : audiences.length,
     });
 
     return token;
