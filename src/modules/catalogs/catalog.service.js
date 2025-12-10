@@ -16,7 +16,8 @@ const {
 const { cacheData, invalidateCache, invalidateCachePattern } = require('../../helpers/cache.helper');
 const { logEvent, auditActions } = require('../audit/audit.service');
 const ApiError = require('../../helpers/api.error');
-
+const sequelize = require('../../config/db');
+const localize = require('../../helpers/localize.helper');
 /**
  * Инкрементирует версию каталога
  * @param {string} catalogName - имя каталога
@@ -33,8 +34,9 @@ async function bumpCatalogVersion(catalogName) {
     await version.save();
   }
 
-  // Инвалидируем кэш каталога (все локализации) и общий список версий
+  // Инвалидируем кэш каталога (все локализации и unlocalized) и общий список версий
   await invalidateCachePattern(`catalog:${catalogName}:*`);
+  await invalidateCache(`catalog:${catalogName}:unlocalized`);
   await invalidateCache('catalog:versions:all');
 }
 
@@ -55,14 +57,42 @@ async function getCatalogVersions() {
 }
 
 // Regions
-async function getRegions(lang = 'tm') {
-  return await cacheData(
-    `catalog:regions:${lang}`,
+async function getRegions(lang = 'tm', shouldLocalize = true) {
+  // Cache unlocalized data separately
+  const unlocalizedCacheKey = 'catalog:regions:unlocalized';
+  const localizedCacheKey = `catalog:regions:localized:${lang}`;
+  
+  // Fetch unlocalized data (cached separately)
+  const rawData = await cacheData(
+    unlocalizedCacheKey,
     async () => {
       return await Region.findAll({
         where: { is_active: true },
         order: [['code', 'ASC']],
+        attributes: {
+          include: [
+            [sequelize.col('parent.title_tm'), 'parent_tm'],
+            [sequelize.col('parent.title_ru'), 'parent_ru'],
+          ]
+        },
+        include: [
+          { model: Region, as: 'parent', attributes: [] }
+        ],
       });
+    },
+    21600 // TTL 6 часов
+  );
+
+  // Return unlocalized if requested
+  if (!shouldLocalize) {
+    return rawData;
+  }
+
+  // Cache localized data separately per language
+  return await cacheData(
+    localizedCacheKey,
+    async () => {
+      return localize(rawData, lang);
     },
     21600 // TTL 6 часов
   );
@@ -113,14 +143,33 @@ async function deleteRegion(code) {
 }
 
 // Ministries
-async function getMinistries(lang = 'tm') {
-  return await cacheData(
-    `catalog:ministries:${lang}`,
+async function getMinistries(lang = 'tm', shouldLocalize = true) {
+  // Cache unlocalized data separately
+  const unlocalizedCacheKey = 'catalog:ministries:unlocalized';
+  const localizedCacheKey = `catalog:ministries:localized:${lang}`;
+  
+  // Fetch unlocalized data (cached separately)
+  const rawData = await cacheData(
+    unlocalizedCacheKey,
     async () => {
       return await Ministry.findAll({
         where: { is_active: true },
         order: [['code', 'ASC']],
       });
+    },
+    21600
+  );
+
+  // Return unlocalized if requested
+  if (!shouldLocalize) {
+    return rawData;
+  }
+
+  // Cache localized data separately per language
+  return await cacheData(
+    localizedCacheKey,
+    async () => {
+      return localize(rawData, lang);
     },
     21600
   );
@@ -171,14 +220,49 @@ async function deleteMinistry(code) {
 }
 
 // Organizations
-async function getOrganizations(lang = 'tm') {
-  return await cacheData(
-    `catalog:organizations:${lang}`,
+async function getOrganizations(lang = 'tm', shouldLocalize = true) {
+  // Cache unlocalized data separately
+  const unlocalizedCacheKey = 'catalog:organizations:unlocalized';
+  const localizedCacheKey = `catalog:organizations:localized:${lang}`;
+  
+  // Fetch unlocalized data (cached separately)
+  const rawData = await cacheData(
+    unlocalizedCacheKey,
     async () => {
       return await Organization.findAll({
         where: { is_active: true },
         order: [['code', 'ASC']],
+        attributes: {
+          include: [
+            [sequelize.col('region.title_tm'), 'region_tm'],
+            [sequelize.col('region.title_ru'), 'region_ru'],
+            [sequelize.col('ministry.title_tm'), 'ministry_tm'],
+            [sequelize.col('ministry.title_ru'), 'ministry_ru'],
+            [sequelize.col('parent.title_tm'), 'parent_tm'],
+            [sequelize.col('parent.title_ru'), 'parent_ru'],
+
+          ]
+        },
+        include: [
+          { model: Region, as: 'region', attributes: [] },
+          { model: Ministry, as: 'ministry', attributes: [] },
+          { model: Organization, as: 'parent', attributes: [] }
+        ],
       });
+    },
+    21600
+  );
+
+  // Return unlocalized if requested
+  if (!shouldLocalize) {
+    return rawData;
+  }
+
+  // Cache localized data separately per language
+  return await cacheData(
+    localizedCacheKey,
+    async () => {
+      return localize(rawData, lang);
     },
     21600
   );
@@ -229,14 +313,33 @@ async function deleteOrganization(code) {
 }
 
 // Classifier Economic
-async function getClassifierEconomic(lang = 'tm') {
-  return await cacheData(
-    `catalog:classifier_economic:${lang}`,
+async function getClassifierEconomic(lang = 'tm', shouldLocalize = true) {
+  // Cache unlocalized data separately
+  const unlocalizedCacheKey = 'catalog:classifier_economic:unlocalized';
+  const localizedCacheKey = `catalog:classifier_economic:localized:${lang}`;
+  
+  // Fetch unlocalized data (cached separately)
+  const rawData = await cacheData(
+    unlocalizedCacheKey,
     async () => {
       return await ClassifierEconomic.findAll({
         where: { is_active: true },
         order: [['code', 'ASC']],
       });
+    },
+    21600
+  );
+
+  // Return unlocalized if requested
+  if (!shouldLocalize) {
+    return rawData;
+  }
+
+  // Cache localized data separately per language
+  return await cacheData(
+    localizedCacheKey,
+    async () => {
+      return localize(rawData, lang);
     },
     21600
   );
@@ -287,14 +390,33 @@ async function deleteClassifierEconomic(code) {
 }
 
 // Classifier Purpose
-async function getClassifierPurpose(lang = 'tm') {
-  return await cacheData(
-    `catalog:classifier_purpose:${lang}`,
+async function getClassifierPurpose(lang = 'tm', shouldLocalize = true) {
+  // Cache unlocalized data separately
+  const unlocalizedCacheKey = 'catalog:classifier_purpose:unlocalized';
+  const localizedCacheKey = `catalog:classifier_purpose:localized:${lang}`;
+  
+  // Fetch unlocalized data (cached separately)
+  const rawData = await cacheData(
+    unlocalizedCacheKey,
     async () => {
       return await ClassifierPurpose.findAll({
         where: { is_active: true },
         order: [['code', 'ASC']],
       });
+    },
+    21600
+  );
+
+  // Return unlocalized if requested
+  if (!shouldLocalize) {
+    return rawData;
+  }
+
+  // Cache localized data separately per language
+  return await cacheData(
+    localizedCacheKey,
+    async () => {
+      return localize(rawData, lang);
     },
     21600
   );
@@ -345,14 +467,33 @@ async function deleteClassifierPurpose(code) {
 }
 
 // Classifier Functional
-async function getClassifierFunctional(lang = 'tm') {
-  return await cacheData(
-    `catalog:classifier_functional:${lang}`,
+async function getClassifierFunctional(lang = 'tm', shouldLocalize = true) {
+  // Cache unlocalized data separately
+  const unlocalizedCacheKey = 'catalog:classifier_functional:unlocalized';
+  const localizedCacheKey = `catalog:classifier_functional:localized:${lang}`;
+  
+  // Fetch unlocalized data (cached separately)
+  const rawData = await cacheData(
+    unlocalizedCacheKey,
     async () => {
       return await ClassifierFunctional.findAll({
         where: { is_active: true },
         order: [['code', 'ASC']],
       });
+    },
+    21600
+  );
+
+  // Return unlocalized if requested
+  if (!shouldLocalize) {
+    return rawData;
+  }
+
+  // Cache localized data separately per language
+  return await cacheData(
+    localizedCacheKey,
+    async () => {
+      return localize(rawData, lang);
     },
     21600
   );
@@ -403,14 +544,33 @@ async function deleteClassifierFunctional(code) {
 }
 
 // Classifier Income
-async function getClassifierIncome(lang = 'tm') {
-  return await cacheData(
-    `catalog:classifier_income:${lang}`,
+async function getClassifierIncome(lang = 'tm', shouldLocalize = true) {
+  // Cache unlocalized data separately
+  const unlocalizedCacheKey = 'catalog:classifier_income:unlocalized';
+  const localizedCacheKey = `catalog:classifier_income:localized:${lang}`;
+  
+  // Fetch unlocalized data (cached separately)
+  const rawData = await cacheData(
+    unlocalizedCacheKey,
     async () => {
       return await ClassifierIncome.findAll({
         where: { is_active: true },
         order: [['code', 'ASC']],
       });
+    },
+    21600
+  );
+
+  // Return unlocalized if requested
+  if (!shouldLocalize) {
+    return rawData;
+  }
+
+  // Cache localized data separately per language
+  return await cacheData(
+    localizedCacheKey,
+    async () => {
+      return localize(rawData, lang);
     },
     21600
   );
@@ -461,14 +621,42 @@ async function deleteClassifierIncome(code) {
 }
 
 // Banks
-async function getBanks(lang = 'tm') {
-  return await cacheData(
-    `catalog:banks:${lang}`,
+async function getBanks(lang = 'tm', shouldLocalize = true) {
+  // Cache unlocalized data separately
+  const unlocalizedCacheKey = 'catalog:banks:unlocalized';
+  const localizedCacheKey = `catalog:banks:localized:${lang}`;
+  
+  // Fetch unlocalized data (cached separately)
+  const rawData = await cacheData(
+    unlocalizedCacheKey,
     async () => {
       return await Bank.findAll({
         where: { is_active: true },
         order: [['id', 'ASC']],
+        attributes: {
+          include: [
+            [sequelize.col('region.title_tm'), 'region_tm'],
+            [sequelize.col('region.title_ru'), 'region_ru'],
+          ]
+        },
+        include: [
+          { model: Region, as: 'region', attributes: [] }
+        ],
       });
+    },
+    21600
+  );
+
+  // Return unlocalized if requested
+  if (!shouldLocalize) {
+    return rawData;
+  }
+
+  // Cache localized data separately per language
+  return await cacheData(
+    localizedCacheKey,
+    async () => {
+      return localize(rawData, lang);
     },
     21600
   );
@@ -519,14 +707,45 @@ async function deleteBank(id) {
 }
 
 // Bank Accounts
-async function getBankAccounts(lang = 'tm') {
-  return await cacheData(
-    `catalog:bank_accounts:${lang}`,
+async function getBankAccounts(lang = 'tm', shouldLocalize = true) {
+  // Cache unlocalized data separately
+  const unlocalizedCacheKey = 'catalog:bank_accounts:unlocalized';
+  const localizedCacheKey = `catalog:bank_accounts:localized:${lang}`;
+  
+  // Fetch unlocalized data (cached separately)
+  const rawData = await cacheData(
+    unlocalizedCacheKey,
     async () => {
       return await BankAccount.findAll({
         where: { is_active: true },
         order: [['id', 'ASC']],
+        attributes: {
+          include: [
+            [sequelize.col('bank.title_tm'), 'bank_tm'],
+            [sequelize.col('bank.title_ru'), 'bank_ru'],
+            [sequelize.col('organization.title_tm'), 'organization_tm'],
+            [sequelize.col('organization.title_ru'), 'organization_ru'],
+          ]
+        },
+        include: [
+          { model: Bank, as: 'bank', attributes: [] },
+          { model: Organization, as: 'organization', attributes: [] }
+        ],
       });
+    },
+    21600
+  );
+
+  // Return unlocalized if requested
+  if (!shouldLocalize) {
+    return rawData;
+  }
+
+  // Cache localized data separately per language
+  return await cacheData(
+    localizedCacheKey,
+    async () => {
+      return localize(rawData, lang);
     },
     21600
   );
@@ -577,14 +796,33 @@ async function deleteBankAccount(id) {
 }
 
 // Fields
-async function getFields(lang = 'tm') {
-  return await cacheData(
-    `catalog:fields:${lang}`,
+async function getFields(lang = 'tm', shouldLocalize = true) {
+  // Cache unlocalized data separately
+  const unlocalizedCacheKey = 'catalog:fields:unlocalized';
+  const localizedCacheKey = `catalog:fields:localized:${lang}`;
+  
+  // Fetch unlocalized data (cached separately)
+  const rawData = await cacheData(
+    unlocalizedCacheKey,
     async () => {
       return await Field.findAll({
         where: { is_active: true },
         order: [['id', 'ASC']],
       });
+    },
+    21600
+  );
+
+  // Return unlocalized if requested
+  if (!shouldLocalize) {
+    return rawData;
+  }
+
+  // Cache localized data separately per language
+  return await cacheData(
+    localizedCacheKey,
+    async () => {
+      return localize(rawData, lang);
     },
     21600
   );
@@ -635,14 +873,33 @@ async function deleteField(id) {
 }
 
 // Documents
-async function getDocuments(lang = 'tm') {
-  return await cacheData(
-    `catalog:documents:${lang}`,
+async function getDocuments(lang = 'tm', shouldLocalize = true) {
+  // Cache unlocalized data separately
+  const unlocalizedCacheKey = 'catalog:documents:unlocalized';
+  const localizedCacheKey = `catalog:documents:localized:${lang}`;
+  
+  // Fetch unlocalized data (cached separately)
+  const rawData = await cacheData(
+    unlocalizedCacheKey,
     async () => {
       return await Document.findAll({
         where: { is_active: true },
         order: [['id', 'ASC']],
       });
+    },
+    21600
+  );
+
+  // Return unlocalized if requested
+  if (!shouldLocalize) {
+    return rawData;
+  }
+
+  // Cache localized data separately per language
+  return await cacheData(
+    localizedCacheKey,
+    async () => {
+      return localize(rawData, lang);
     },
     21600
   );

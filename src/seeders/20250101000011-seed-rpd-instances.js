@@ -29,7 +29,7 @@ module.exports = {
       },
       {
         region_code: '10',
-        code: 'rpd_ashgabat',
+        code: 'auth_rpd',
         audience: 'rpd:ashgabat',
       },
       {
@@ -81,14 +81,14 @@ module.exports = {
       }
 
       // Проверяем, не существует ли уже RPD instance для этого региона
-      const existing = await RpdInstance.findOne({
-        where: { region_id: rpdData.region_code },
-      });
+      // const existing = await RpdInstance.findOne({
+      //   where: { region_id: rpdData.region_code },
+      // });
 
-      if (existing) {
-        console.log(`RPD instance already exists for region ${rpdData.region_code}: ${existing.code}`);
-        continue;
-      }
+      // if (existing) {
+      //   console.log(`RPD instance already exists for region ${rpdData.region_code}: ${existing.code}`);
+      //   continue;
+      // }
 
       // Создаем RPD instance
       await RpdInstance.findOrCreate({

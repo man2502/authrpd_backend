@@ -32,57 +32,7 @@ const initializeSwagger = require('./docs/swagger.init');
 
 const app = express();
 
-/**
- * ============================================================================
- * MIDDLEWARE ORDER FOR AUTHRPD
- * ============================================================================
- * 
- * The order of middleware is critical for security and functionality.
- * This order follows security best practices for a government-grade API:
- * 
- * 1. Trust Proxy (if behind reverse proxy)
- *    - Must be first to correctly identify client IPs
- * 
- * 2. Request ID Middleware
- *    - Generates correlation IDs for request tracking
- *    - Must be early to include in all logs
- * 
- * 3. Security Headers (Helmet)
- *    - Sets security headers (HSTS, X-Frame-Options, etc.)
- *    - Should be early to protect all responses
- * 
- * 4. CORS
- *    - Handles cross-origin requests
- *    - Must be before routes that need CORS
- * 
- * 5. Body Parsers (with size limits)
- *    - Parses JSON and URL-encoded bodies
- *    - Size limits prevent DoS via large payloads
- *    - Must be before routes that read req.body
- * 
- * 6. Global Rate Limiter
- *    - Protects all routes from abuse
- *    - Should be after body parsing but before routes
- * 
- * 7. Request Logger
- *    - Logs all HTTP requests
- *    - Should be after request ID is set
- * 
- * 8. Default Query Parameters
- *    - Sets default lang='tm' for all routes if not provided
- *    - Should be before routes to ensure defaults are available
- * 
- * 9. Routes
- *    - Application routes with specific rate limiters
- * 
- * 10. 404 Handler
- *     - Handles unknown routes
- * 
- * 11. Error Handler
- *     - Must be last to catch all errors
- * 
- * ============================================================================
- */
+
 
 // 1. Trust Proxy Configuration
 // Required when behind reverse proxy (nginx, load balancer) to get correct client IPs
