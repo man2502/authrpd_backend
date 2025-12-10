@@ -45,16 +45,16 @@ const PARTITION_TABLES_CONFIG = [
     columnName: 'partition_year',
     yearsAhead: 1, // Create current year + 1 year ahead
   },
-  {
-    tableName: 'rbac_audit_log',
-    columnName: 'partition_year',
-    yearsAhead: 1,
-  },
-  {
-    tableName: 'catalog_audit_log',
-    columnName: 'partition_year',
-    yearsAhead: 1,
-  },
+  // {
+  //   tableName: 'rbac_audit_log',
+  //   columnName: 'partition_year',
+  //   yearsAhead: 1,
+  // },
+  // {
+  //   tableName: 'catalog_audit_log',
+  //   columnName: 'partition_year',
+  //   yearsAhead: 1,
+  // },
   // Add more tables as needed:
   // {
   //   tableName: 'your_table_name',

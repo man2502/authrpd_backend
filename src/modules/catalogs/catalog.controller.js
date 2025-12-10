@@ -1,5 +1,7 @@
 const catalogService = require('./catalog.service');
 const { successResponse } = require('../../helpers/response.helper');
+const { cacheData } = require('../../helpers/cache.helper');
+const localize = require('../../helpers/localize.helper');
 
 async function getVersions(req, res, next) {
   try {
@@ -14,7 +16,23 @@ async function getRegions(req, res, next) {
   try {
     // lang is set by validate_lang_query() middleware (default: 'tm')
     const shouldLocalize = req.query.localized !== false; // Default true for backward compatibility
-    const regions = await catalogService.getRegions(req.query.lang, shouldLocalize);
+    const lang = req.query.lang || 'tm';
+    
+    // Determine cache key based on localization
+    const cacheKey = shouldLocalize 
+      ? `catalog:regions:localized:${lang}`
+      : 'catalog:regions:unlocalized';
+    
+    // Get data from service and cache it
+    const regions = await cacheData(
+      cacheKey,
+      async () => {
+        const rawData = await catalogService.getRegions();
+        return shouldLocalize ? localize(rawData, lang) : rawData;
+      },
+      21600 // TTL 6 hours
+    );
+    
     res.json(successResponse(regions));
   } catch (error) {
     next(error);
@@ -52,7 +70,23 @@ async function getMinistries(req, res, next) {
   try {
     // lang is set by validate_lang_query() middleware (default: 'tm')
     const shouldLocalize = req.query.localized !== false; // Default true for backward compatibility
-    const ministries = await catalogService.getMinistries(req.query.lang, shouldLocalize);
+    const lang = req.query.lang || 'tm';
+    
+    // Determine cache key based on localization
+    const cacheKey = shouldLocalize 
+      ? `catalog:ministries:localized:${lang}`
+      : 'catalog:ministries:unlocalized';
+    
+    // Get data from service and cache it
+    const ministries = await cacheData(
+      cacheKey,
+      async () => {
+        const rawData = await catalogService.getMinistries();
+        return shouldLocalize ? localize(rawData, lang) : rawData;
+      },
+      21600 // TTL 6 hours
+    );
+    
     res.json(successResponse(ministries));
   } catch (error) {
     next(error);
@@ -90,7 +124,23 @@ async function getOrganizations(req, res, next) {
   try {
     // lang is set by validate_lang_query() middleware (default: 'tm')
     const shouldLocalize = req.query.localized !== false; // Default true for backward compatibility
-    const organizations = await catalogService.getOrganizations(req.query.lang, shouldLocalize);
+    const lang = req.query.lang || 'tm';
+    
+    // Determine cache key based on localization
+    const cacheKey = shouldLocalize 
+      ? `catalog:organizations:localized:${lang}`
+      : 'catalog:organizations:unlocalized';
+    
+    // Get data from service and cache it
+    const organizations = await cacheData(
+      cacheKey,
+      async () => {
+        const rawData = await catalogService.getOrganizations();
+        return shouldLocalize ? localize(rawData, lang) : rawData;
+      },
+      21600 // TTL 6 hours
+    );
+    
     res.json(successResponse(organizations));
   } catch (error) {
     next(error);
@@ -129,7 +179,23 @@ async function getClassifierEconomic(req, res, next) {
   try {
     // lang is set by validate_lang_query() middleware (default: 'tm')
     const shouldLocalize = req.query.localized !== false; // Default true for backward compatibility
-    const items = await catalogService.getClassifierEconomic(req.query.lang, shouldLocalize);
+    const lang = req.query.lang || 'tm';
+    
+    // Determine cache key based on localization
+    const cacheKey = shouldLocalize 
+      ? `catalog:classifier_economic:localized:${lang}`
+      : 'catalog:classifier_economic:unlocalized';
+    
+    // Get data from service and cache it
+    const items = await cacheData(
+      cacheKey,
+      async () => {
+        const rawData = await catalogService.getClassifierEconomic();
+        return shouldLocalize ? localize(rawData, lang) : rawData;
+      },
+      21600 // TTL 6 hours
+    );
+    
     res.json(successResponse(items));
   } catch (error) {
     next(error);
@@ -168,7 +234,23 @@ async function getClassifierPurpose(req, res, next) {
   try {
     // lang is set by validate_lang_query() middleware (default: 'tm')
     const shouldLocalize = req.query.localized !== false; // Default true for backward compatibility
-    const items = await catalogService.getClassifierPurpose(req.query.lang, shouldLocalize);
+    const lang = req.query.lang || 'tm';
+    
+    // Determine cache key based on localization
+    const cacheKey = shouldLocalize 
+      ? `catalog:classifier_purpose:localized:${lang}`
+      : 'catalog:classifier_purpose:unlocalized';
+    
+    // Get data from service and cache it
+    const items = await cacheData(
+      cacheKey,
+      async () => {
+        const rawData = await catalogService.getClassifierPurpose();
+        return shouldLocalize ? localize(rawData, lang) : rawData;
+      },
+      21600 // TTL 6 hours
+    );
+    
     res.json(successResponse(items));
   } catch (error) {
     next(error);
@@ -207,7 +289,23 @@ async function getClassifierFunctional(req, res, next) {
   try {
     // lang is set by validate_lang_query() middleware (default: 'tm')
     const shouldLocalize = req.query.localized !== false; // Default true for backward compatibility
-    const items = await catalogService.getClassifierFunctional(req.query.lang, shouldLocalize);
+    const lang = req.query.lang || 'tm';
+    
+    // Determine cache key based on localization
+    const cacheKey = shouldLocalize 
+      ? `catalog:classifier_functional:localized:${lang}`
+      : 'catalog:classifier_functional:unlocalized';
+    
+    // Get data from service and cache it
+    const items = await cacheData(
+      cacheKey,
+      async () => {
+        const rawData = await catalogService.getClassifierFunctional();
+        return shouldLocalize ? localize(rawData, lang) : rawData;
+      },
+      21600 // TTL 6 hours
+    );
+    
     res.json(successResponse(items));
   } catch (error) {
     next(error);
@@ -246,7 +344,23 @@ async function getClassifierIncome(req, res, next) {
   try {
     // lang is set by validate_lang_query() middleware (default: 'tm')
     const shouldLocalize = req.query.localized !== false; // Default true for backward compatibility
-    const items = await catalogService.getClassifierIncome(req.query.lang, shouldLocalize);
+    const lang = req.query.lang || 'tm';
+    
+    // Determine cache key based on localization
+    const cacheKey = shouldLocalize 
+      ? `catalog:classifier_income:localized:${lang}`
+      : 'catalog:classifier_income:unlocalized';
+    
+    // Get data from service and cache it
+    const items = await cacheData(
+      cacheKey,
+      async () => {
+        const rawData = await catalogService.getClassifierIncome();
+        return shouldLocalize ? localize(rawData, lang) : rawData;
+      },
+      21600 // TTL 6 hours
+    );
+    
     res.json(successResponse(items));
   } catch (error) {
     next(error);
@@ -285,7 +399,23 @@ async function getBanks(req, res, next) {
   try {
     // lang is set by validate_lang_query() middleware (default: 'tm')
     const shouldLocalize = req.query.localized !== false; // Default true for backward compatibility
-    const items = await catalogService.getBanks(req.query.lang, shouldLocalize);
+    const lang = req.query.lang || 'tm';
+    
+    // Determine cache key based on localization
+    const cacheKey = shouldLocalize 
+      ? `catalog:banks:localized:${lang}`
+      : 'catalog:banks:unlocalized';
+    
+    // Get data from service and cache it
+    const items = await cacheData(
+      cacheKey,
+      async () => {
+        const rawData = await catalogService.getBanks();
+        return shouldLocalize ? localize(rawData, lang) : rawData;
+      },
+      21600 // TTL 6 hours
+    );
+    
     res.json(successResponse(items));
   } catch (error) {
     next(error);
@@ -324,7 +454,23 @@ async function getBankAccounts(req, res, next) {
   try {
     // lang is set by validate_lang_query() middleware (default: 'tm')
     const shouldLocalize = req.query.localized !== false; // Default true for backward compatibility
-    const items = await catalogService.getBankAccounts(req.query.lang, shouldLocalize);
+    const lang = req.query.lang || 'tm';
+    
+    // Determine cache key based on localization
+    const cacheKey = shouldLocalize 
+      ? `catalog:bank_accounts:localized:${lang}`
+      : 'catalog:bank_accounts:unlocalized';
+    
+    // Get data from service and cache it
+    const items = await cacheData(
+      cacheKey,
+      async () => {
+        const rawData = await catalogService.getBankAccounts();
+        return shouldLocalize ? localize(rawData, lang) : rawData;
+      },
+      21600 // TTL 6 hours
+    );
+    
     res.json(successResponse(items));
   } catch (error) {
     next(error);
@@ -363,7 +509,23 @@ async function getFields(req, res, next) {
   try {
     // lang is set by validate_lang_query() middleware (default: 'tm')
     const shouldLocalize = req.query.localized !== false; // Default true for backward compatibility
-    const items = await catalogService.getFields(req.query.lang, shouldLocalize);
+    const lang = req.query.lang || 'tm';
+    
+    // Determine cache key based on localization
+    const cacheKey = shouldLocalize 
+      ? `catalog:fields:localized:${lang}`
+      : 'catalog:fields:unlocalized';
+    
+    // Get data from service and cache it
+    const items = await cacheData(
+      cacheKey,
+      async () => {
+        const rawData = await catalogService.getFields();
+        return shouldLocalize ? localize(rawData, lang) : rawData;
+      },
+      21600 // TTL 6 hours
+    );
+    
     res.json(successResponse(items));
   } catch (error) {
     next(error);
@@ -402,7 +564,23 @@ async function getDocuments(req, res, next) {
   try {
     // lang is set by validate_lang_query() middleware (default: 'tm')
     const shouldLocalize = req.query.localized !== false; // Default true for backward compatibility
-    const items = await catalogService.getDocuments(req.query.lang, shouldLocalize);
+    const lang = req.query.lang || 'tm';
+    
+    // Determine cache key based on localization
+    const cacheKey = shouldLocalize 
+      ? `catalog:documents:localized:${lang}`
+      : 'catalog:documents:unlocalized';
+    
+    // Get data from service and cache it
+    const items = await cacheData(
+      cacheKey,
+      async () => {
+        const rawData = await catalogService.getDocuments();
+        return shouldLocalize ? localize(rawData, lang) : rawData;
+      },
+      21600 // TTL 6 hours
+    );
+    
     res.json(successResponse(items));
   } catch (error) {
     next(error);

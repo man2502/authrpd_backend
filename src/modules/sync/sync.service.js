@@ -41,8 +41,7 @@ async function getCatalogDataByVersion(catalogName, version = null, lang = 'tm')
 
   switch (catalogName) {
     case 'regions':
-      // Get unlocalized data, then localize in sync service
-      data = await catalogService.getRegions(lang, false);
+      data = await catalogService.getRegions();
       break;
     case 'receiver_organizations':
       data = await ReceiverOrganization.findAll({
@@ -51,34 +50,34 @@ async function getCatalogDataByVersion(catalogName, version = null, lang = 'tm')
       });
       break;
     case 'ministries':
-      data = await catalogService.getMinistries(lang, false);
+      data = await catalogService.getMinistries();
       break;
     case 'organizations':
-      data = await catalogService.getOrganizations(lang, false);
+      data = await catalogService.getOrganizations();
       break;
     case 'classifier_economic':
-      data = await catalogService.getClassifierEconomic(lang, false);
+      data = await catalogService.getClassifierEconomic();
       break;
     case 'classifier_purpose':
-      data = await catalogService.getClassifierPurpose(lang, false);
+      data = await catalogService.getClassifierPurpose();
       break;
     case 'classifier_functional':
-      data = await catalogService.getClassifierFunctional(lang, false);
+      data = await catalogService.getClassifierFunctional();
       break;
     case 'classifier_income':
-      data = await catalogService.getClassifierIncome(lang, false);
+      data = await catalogService.getClassifierIncome();
       break;
     case 'banks':
-      data = await catalogService.getBanks(lang, false);
+      data = await catalogService.getBanks();
       break;
     case 'bank_accounts':
-      data = await catalogService.getBankAccounts(lang, false);
+      data = await catalogService.getBankAccounts();
       break;
     case 'fields':
-      data = await catalogService.getFields(lang, false);
+      data = await catalogService.getFields();
       break;
     case 'documents':
-      data = await catalogService.getDocuments(lang, false);
+      data = await catalogService.getDocuments();
       break;
     case 'classifier_fields':
       data = await ClassifierField.findAll({
