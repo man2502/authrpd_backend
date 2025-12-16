@@ -2,7 +2,7 @@ const authService = require('./auth.service');
 const { successResponse } = require('../../helpers/response.helper');
 const { authGuard } = require('../../middlewares/auth.guard');
 const logger = require('../../config/logger');
-
+const localize = require('../../helpers/localize.helper');
 /**
  * Контроллер для аутентификации member
  * Логирует успешные и неуспешные попытки входа
@@ -85,7 +85,7 @@ async function logout(req, res, next) {
 async function getMe(req, res, next) {
   try {
     const user = await authService.getCurrentUser(req.user.type, req.user.id);
-    res.json(successResponse(user));
+    res.json(successResponse(localize(user, req.query.lang || 'tm')));
   } catch (error) {
     next(error);
   }

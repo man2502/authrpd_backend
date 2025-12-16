@@ -36,14 +36,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
-      department_id: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-      },
       organization_id: {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      // top region should be ,
       region_id: {
         type: DataTypes.STRING,
         allowNull: true,
@@ -64,7 +61,6 @@ module.exports = (sequelize, DataTypes) => {
       indexes: [
         { unique: true, fields: ['username'] },
         { fields: ['role_id'] },
-        { fields: ['department_id'] },
         { fields: ['organization_id'] },
         { fields: ['region_id'] },
       ],

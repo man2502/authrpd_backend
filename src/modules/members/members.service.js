@@ -1,4 +1,4 @@
-const { Member, Role, Department, Organization, Region } = require('../../models');
+const { Member, Role,  Organization, Region } = require('../../models');
 const bcrypt = require('bcryptjs');
 const { logEvent, auditActions } = require('../audit/audit.service');
 const ApiError = require('../../helpers/api.error');
@@ -32,7 +32,6 @@ async function getAllMembers(options = {}) {
     where,
     include: [
       { model: Role, as: 'role', attributes: ['id', 'name', 'title_tm', 'title_ru'] },
-      { model: Department, as: 'department', attributes: ['id', 'name'] },
       { model: Organization, as: 'organization', attributes: ['code', 'title_tm', 'title_ru'] },
       { model: Region, as: 'region', attributes: ['code', 'title_tm', 'title_ru'] },
     ],
@@ -61,7 +60,6 @@ async function getMemberById(id) {
   const member = await Member.findByPk(id, {
     include: [
       { model: Role, as: 'role', attributes: ['id', 'name', 'title_tm', 'title_ru'] },
-      { model: Department, as: 'department', attributes: ['id', 'name'] },
       { model: Organization, as: 'organization', attributes: ['code', 'title_tm', 'title_ru'] },
       { model: Region, as: 'region', attributes: ['code', 'title_tm', 'title_ru'] },
     ],
@@ -97,7 +95,6 @@ async function createMember(data) {
     phone: data.phone,
     email: data.email,
     role_id: data.role_id,
-    department_id: data.department_id,
     organization_id: data.organization_id,
     region_id: data.region_id,
     is_active: data.is_active !== undefined ? data.is_active : true,

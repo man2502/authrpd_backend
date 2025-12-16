@@ -24,8 +24,8 @@ const authRoutes = require('./modules/auth/auth.routes');
 const rbacRoutes = require('./modules/rbac/rbac.routes');
 const catalogRoutes = require('./modules/catalogs/catalog.routes');
 const syncRoutes = require('./modules/sync/sync.routes');
-const membersRoutes = require('./modules/members/routes/members.routes');
-const clientsRoutes = require('./modules/clients/routes/clients.routes');
+const membersRoutes = require('./modules/members/members.routes');
+const clientsRoutes = require('./modules/clients/clients.routes');
 
 // Swagger documentation (must be imported before routes)
 const initializeSwagger = require('./docs/swagger.init');

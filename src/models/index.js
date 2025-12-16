@@ -7,7 +7,6 @@ const Client = require('./Client')(sequelize, DataTypes);
 const Role = require('./Role')(sequelize, DataTypes);
 const Permission = require('./Permission')(sequelize, DataTypes);
 const RolePermission = require('./RolePermission')(sequelize, DataTypes);
-const Department = require('./Department')(sequelize, DataTypes);
 const CatalogVersion = require('./CatalogVersion')(sequelize, DataTypes);
 const Region = require('./catalogs/Region')(sequelize, DataTypes);
 const Ministry = require('./catalogs/Ministry')(sequelize, DataTypes);
@@ -29,7 +28,6 @@ const RpdInstance = require('./RpdInstance')(sequelize, DataTypes);
 // Define associations
 // Member associations
 Member.belongsTo(Role, { foreignKey: 'role_id', as: 'role' });
-Member.belongsTo(Department, { foreignKey: 'department_id', as: 'department' });
 Member.belongsTo(Organization, { foreignKey: 'organization_id', as: 'organization' });
 Member.belongsTo(Region, { foreignKey: 'region_id', as: 'region' });
 
@@ -53,10 +51,6 @@ Permission.belongsToMany(Role, {
   as: 'roles',
 });
 
-// Department associations
-Department.belongsTo(Organization, { foreignKey: 'organization_id', as: 'organization' });
-Department.belongsTo(Department, { foreignKey: 'parent_id', as: 'parent' });
-Department.hasMany(Department, { foreignKey: 'parent_id', as: 'children' });
 
 // Organization associations
 Organization.belongsTo(Region, { foreignKey: 'region_id', as: 'region' });
@@ -112,7 +106,6 @@ const db = {
   Role,
   Permission,
   RolePermission,
-  Department,
   CatalogVersion,
   Region,
   Ministry,

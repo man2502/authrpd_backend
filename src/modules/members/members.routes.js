@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const membersController = require('../members.controller');
-const { authGuard } = require('../../../middlewares/auth.guard');
-const { validate_id_param, validate_query } = require('../../../helpers/validators');
-const { paginationValidator } = require('../../../helpers/validators');
-const require_permissions = require('../../../middlewares/require_permissions');
-const schemaValidator = require('../../../middlewares/schema.validator');
-const { createMemberSchema, updateMemberSchema } = require('../members.schemas');
+const membersController = require('./members.controller');
+const { authGuard } = require('../../middlewares/auth.guard');
+const { validate_id_param, validate_query } = require('../../helpers/validators');
+const { paginationValidator } = require('../../helpers/validators');
+const require_permissions = require('../../middlewares/require_permissions');
+const schemaValidator = require('../../middlewares/schema.validator');
+const { createMemberSchema, updateMemberSchema } = require('./members.schemas');
 
 /**
  * Members admin routes

@@ -24,7 +24,8 @@ async function loginMember(username, password, metadata = {}) {
     const member = await Member.findOne({
       where: { username, is_active: true },
       include: ['role'],
-    });
+      // raw: true,
+    })
 
     if (!member) {
       await logEvent({
@@ -46,7 +47,7 @@ async function loginMember(username, password, metadata = {}) {
     }
 
     // Update last login
-    await member.update({ lastLoginAt: new Date() });
+    await member.update({ last_login_at: new Date() });
 
     // Issue RPD access token
     // This automatically resolves region hierarchy and sets correct audience
@@ -56,6 +57,7 @@ async function loginMember(username, password, metadata = {}) {
         role_id: member.role_id,
         region_id: member.region_id,
         department_id: member.department_id,
+        organization_id: member.organization_id,
       },
       'MEMBER'
     );
@@ -74,6 +76,8 @@ async function loginMember(username, password, metadata = {}) {
       action: auditActions.LOGIN_SUCCESS,
       actorType: 'MEMBER',
       actorId: member.id,
+      ip: metadata.ip,
+      userAgent: metadata.userAgent,
       meta: { username, region_id: member.region_id },
     });
 
@@ -95,7 +99,9 @@ async function loginMember(username, password, metadata = {}) {
         role: member.role?.name,
         region_id: member.region_id,
         department_id: member.department_id,
+        organization_id: member.organization_id,
         permissions,
+       
       },
     };
   } catch (error) {
@@ -141,7 +147,7 @@ async function loginClient(username, password, metadata = {}) {
       throw new ApiError(401, 'Invalid credentials');
     }
 
-    await client.update({ lastLoginAt: new Date() });
+    await client.update({ last_login_at: new Date() });
 
     // Issue RPD access token
     const accessToken = await issueAccessToken(
@@ -177,6 +183,7 @@ async function loginClient(username, password, metadata = {}) {
         fullname: client.fullname,
         organization_id: client.organization_id,
         region_id: client.region_id,
+        last_login_at: client.last_login_at,
       },
     };
   } catch (error) {
@@ -200,7 +207,7 @@ async function refreshTokens(refreshToken, metadata = {}) {
     const { RefreshToken: RefreshTokenModel } = require('../security/tokens/refresh.repository');
     const bcrypt = require('bcryptjs');
     const { sequelize } = require('../../models');
-    
+
     // Получаем все активные токены
     const tokens = await RefreshTokenModel.findAll({
       where: {
@@ -223,7 +230,7 @@ async function refreshTokens(refreshToken, metadata = {}) {
       if (isValid) {
         tokenRecord = token;
         userType = token.user_type;
-        
+
         if (userType === 'MEMBER') {
           user = await Member.findByPk(token.user_id, { include: ['role', 'region'] });
         } else if (userType === 'CLIENT') {
@@ -248,7 +255,7 @@ async function refreshTokens(refreshToken, metadata = {}) {
     const additionalClaims = userType === 'MEMBER' && user.role
       ? { role: user.role.name, region_id: user.region_id }
       : { organization_id: user.organization_id, region_id: user.region_id };
-    
+
     const accessToken = generateAccessToken(userType, user.id, additionalClaims);
     const newRefreshToken = generateRefreshToken();
     await saveRefreshToken({
@@ -323,8 +330,16 @@ async function getCurrentUser(userType, userId) {
       position: member.position,
       role: member.role?.name,
       region_id: member.region_id,
+      organization_id: member.organization_id,
       department_id: member.department_id,
       permissions,
+      last_login_at: member.last_login_at,
+      region_tm: member.region?.title_tm,
+      region_ru: member.region?.title_ru,
+      organization_tm: member.organization?.title_tm,
+      organization_ru: member.organization?.title_ru,
+      department_tm: member.department?.title_tm,
+      department_ru: member.department?.title_ru,
     };
   } else if (userType === 'CLIENT') {
     const client = await Client.findByPk(userId, {
@@ -339,6 +354,11 @@ async function getCurrentUser(userType, userId) {
       fullname: client.fullname,
       organization_id: client.organization_id,
       region_id: client.region_id,
+      last_login_at: client.last_login_at,
+      region_tm: client.region?.title_tm,
+      region_ru: client.region?.title_ru,
+      organization_tm: client.organization?.title_tm,
+      organization_ru: client.organization?.title_ru,
     };
   }
   throw new ApiError(400, 'Invalid user type');

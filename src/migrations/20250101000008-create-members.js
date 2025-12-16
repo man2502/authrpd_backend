@@ -41,14 +41,7 @@ module.exports = {
           key: 'id',
         },
       },
-      department_id: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references: {
-          model: 'departments',
-          key: 'id',
-        },
-      },
+      
       organization_id: {
         type: Sequelize.STRING,
         allowNull: true,
@@ -90,7 +83,6 @@ module.exports = {
     });
 
     await queryInterface.addIndex('members', ['role_id']);
-    await queryInterface.addIndex('members', ['department_id']);
     await queryInterface.addIndex('members', ['organization_id']);
     await queryInterface.addIndex('members', ['region_id']);
   },
