@@ -40,23 +40,30 @@ services:
       redis:
         condition: service_healthy
     environment:
-      NODE_ENV: production
-      CURRENT_ENV: production
-      HOST: 0.0.0.0
-      PORT: 3000
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_NAME: authrpd
-      DB_USER: authrpd_user
-      DB_PASSWORD: secret
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
-      REDIS_PASSWORD: ""
-      RSA_KEYS_DIR: /app/keys/rsa
-      AUDIENCE: RPD
-      ISSUER: AUTHRPD
-      ACCESS_TTL_SECONDS: 1200
-      REFRESH_TTL_DAYS: 60
+      NODE_ENV: ${NODE_ENV:-production}
+      CURRENT_ENV: ${CURRENT_ENV:-production}
+      HOST: ${HOST:-0.0.0.0}
+      PORT: ${PORT:-3000}
+      DB_HOST: ${DB_HOST:-postgres}
+      DB_PORT: ${DB_PORT:-5432}
+      DB_NAME: ${DB_NAME:-authrpd}
+      DB_USER: ${DB_USER:-authrpd_user}
+      DB_PASSWORD: ${DB_PASSWORD:-secret}
+      REDIS_HOST: ${REDIS_HOST:-redis}
+      REDIS_PORT: ${REDIS_PORT:-6379}
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-}
+      RSA_KEYS_DIR: ${RSA_KEYS_DIR:-/app/keys/rsa}
+      AUDIENCE: ${AUDIENCE:-RPD}
+      ISSUER: ${ISSUER:-AUTHRPD}
+      ACCESS_TTL_SECONDS: ${ACCESS_TTL_SECONDS:-1200}
+      REFRESH_TTL_DAYS: ${REFRESH_TTL_DAYS:-60}
+      # Logging Configuration
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      SERVICE_NAME: ${SERVICE_NAME:-authrpd}
+      GRAYLOG_ENABLED: ${GRAYLOG_ENABLED:-false}
+      GRAYLOG_HOST: ${GRAYLOG_HOST:-}
+      GRAYLOG_PORT: ${GRAYLOG_PORT:-12201}
+      GRAYLOG_PROTOCOL: ${GRAYLOG_PROTOCOL:-udp}
       # Security - CORS Configuration
       CORS_ORIGINS: ${CORS_ORIGINS:-https://example.com,https://admin.example.com}
       CORS_ALLOW_CREDENTIALS: ${CORS_ALLOW_CREDENTIALS:-true}
@@ -69,15 +76,8 @@ services:
       BODY_URLENC_LIMIT: ${BODY_URLENC_LIMIT:-10mb}
       # Security - HSTS
       HSTS_MAX_AGE: ${HSTS_MAX_AGE:-31536000}
-      # Security - Trust Proxy (set to true if behind nginx/load balancer)
+      # Security - Trust Proxy
       TRUST_PROXY: ${TRUST_PROXY:-true}
-      # Logging Configuration
-      LOG_LEVEL: ${LOG_LEVEL:-info}
-      SERVICE_NAME: ${SERVICE_NAME:-authrpd}
-      GRAYLOG_ENABLED: ${GRAYLOG_ENABLED:-false}
-      GRAYLOG_HOST: ${GRAYLOG_HOST:-}
-      GRAYLOG_PORT: ${GRAYLOG_PORT:-12201}
-      GRAYLOG_PROTOCOL: ${GRAYLOG_PROTOCOL:-udp}
       # Swagger Documentation
       SWAGGER_ENABLED: ${SWAGGER_ENABLED:-false}
       API_BASE_URL: ${API_BASE_URL:-https://api.authrpd.gov}
