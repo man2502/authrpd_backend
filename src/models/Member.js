@@ -20,10 +20,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      position: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
       phone: {
         type: DataTypes.STRING,
         allowNull: true,

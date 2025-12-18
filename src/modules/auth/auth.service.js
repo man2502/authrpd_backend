@@ -7,7 +7,7 @@ const {
   revokeRefreshToken,
   revokeAllUserTokens,
 } = require('../security/tokens/refresh.repository');
-const { get_user_permissions } = require('../rbac/services/permission.service');
+const { get_user_permissions, get_role_permissions } = require('../rbac/services/permission.service');
 const { logEvent, auditActions } = require('../audit/audit.service');
 const ApiError = require('../../helpers/api.error');
 const logger = require('../../config/logger');
@@ -49,15 +49,16 @@ async function loginMember(username, password, metadata = {}) {
     // Update last login
     await member.update({ last_login_at: new Date() });
 
+    const permissions = await get_role_permissions(member.role_id);
     // Issue RPD access token
     // This automatically resolves region hierarchy and sets correct audience
     const accessToken = await issueAccessToken(
       {
         id: member.id,
-        role_id: member.role_id,
+        role: member.role?.name || null,
         region_id: member.region_id,
-        department_id: member.department_id,
         organization_id: member.organization_id,
+        fullname: member.fullname,
       },
       'MEMBER'
     );
@@ -87,7 +88,6 @@ async function loginMember(username, password, metadata = {}) {
       region_id: member.region_id,
     });
 
-    const permissions = await get_user_permissions(member.id);
 
     return {
       access_token: accessToken,
@@ -98,10 +98,9 @@ async function loginMember(username, password, metadata = {}) {
         fullname: member.fullname,
         role: member.role?.name,
         region_id: member.region_id,
-        department_id: member.department_id,
         organization_id: member.organization_id,
         permissions,
-       
+
       },
     };
   } catch (error) {
@@ -252,11 +251,28 @@ async function refreshTokens(refreshToken, metadata = {}) {
     await revokeRefreshToken(tokenRecord.id);
 
     // Генерируем новые токены
-    const additionalClaims = userType === 'MEMBER' && user.role
-      ? { role: user.role.name, region_id: user.region_id }
-      : { organization_id: user.organization_id, region_id: user.region_id };
+    // Генерируем accessToken как при логине (используем issueAccessToken для MEMBERS c учетом region/role)
+    let accessToken;
 
-    const accessToken = generateAccessToken(userType, user.id, additionalClaims);
+    if (userType === 'MEMBER') {
+      // Вытаскиваем нужные данные для токена (роль, region_id, fullname)
+      const userPayload = {
+        id: user.id,
+        role_id: user.role_id,
+        region_id: user.region_id,
+        fullname: user.fullname,
+        role: user.role ? user.role.name : null,
+      };
+
+      // Используем issueAccessToken для MEMBERS
+      const { issueAccessToken } = require('../security/tokens/token.service');
+      accessToken = await issueAccessToken(userPayload, userType);
+    } else {
+      // Для клиентов fallback на generateAccessToken
+      const additionalClaims = { organization_id: user.organization_id, region_id: user.region_id };
+      accessToken = generateAccessToken(userType, user.id, additionalClaims);
+    }
+  
     const newRefreshToken = generateRefreshToken();
     await saveRefreshToken({
       token: newRefreshToken,
@@ -317,7 +333,7 @@ async function logout(refreshToken, userType, userId) {
 async function getCurrentUser(userType, userId) {
   if (userType === 'MEMBER') {
     const member = await Member.findByPk(userId, {
-      include: ['role', 'department', 'organization', 'region'],
+      include: ['role', 'organization', 'region'],
     });
     if (!member) {
       throw new ApiError(404, 'User not found');
@@ -331,7 +347,6 @@ async function getCurrentUser(userType, userId) {
       role: member.role?.name,
       region_id: member.region_id,
       organization_id: member.organization_id,
-      department_id: member.department_id,
       permissions,
       last_login_at: member.last_login_at,
       region_tm: member.region?.title_tm,

@@ -176,8 +176,13 @@ async function issueAccessToken(user, userType = 'MEMBER', options = {}) {
       iat: now,
       exp: now + config.security.accessTtlSeconds,
       jti: uuidv4(),
-      role_id: user.role_id || null,
-      region_id: topRegionId, // Top region ID (parent for sub-regions)
+      data: {
+        id: user.id,
+        role: user.role || null,
+        region_id: topRegionId, // Top region ID (parent for sub-regions)
+        // permissions: user.permissions,
+        fullname: user.fullname
+      },
     };
 
     // Include sub_region_id if user is in a sub-region

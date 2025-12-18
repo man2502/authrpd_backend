@@ -88,6 +88,45 @@ async function get_user_permissions(user_id) {
   );
 }
 
+/**
+ * Get all permissions for a given role id.
+ * Returns array of permission names.
+ *
+ * @param {number} role_id
+ * @returns {Promise<string[]>}
+ */
+async function get_role_permissions(role_id) {
+  const cacheKey = `role_permissions:${role_id}`;
+  return await cacheData(
+    cacheKey,
+    async () => {
+      const role = await Role.findByPk(role_id, {
+        include: [
+          {
+            model: Permission,
+            as: 'permissions',
+            through: { attributes: [] },
+            where: { is_active: true },
+            required: false,
+          },
+        ],
+      });
+
+      if (!role) {
+        throw new ApiError(404, 'Role not found');
+      }
+
+      const permissionNames = (role.permissions || [])
+        .map((p) => p.name)
+        .filter((name) => name != null);
+      return [...new Set(permissionNames)];
+    },
+    USER_PERMISSIONS_TTL
+  );
+}
+
+
 module.exports = {
   get_user_permissions,
+  get_role_permissions,
 };
