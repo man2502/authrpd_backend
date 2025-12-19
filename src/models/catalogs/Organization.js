@@ -34,6 +34,16 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      classifier_purpose_id: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        comment: 'Ссылка на классификатор целевых расходов',
+      },
+      classifier_functional_id: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        comment: 'Ссылка на классификатор функциональных расходов',
+      },
       is_active: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,

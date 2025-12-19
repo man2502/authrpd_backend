@@ -57,6 +57,8 @@ Organization.belongsTo(Region, { foreignKey: 'region_id', as: 'region' });
 Organization.belongsTo(Ministry, { foreignKey: 'ministry_id', as: 'ministry' });
 Organization.belongsTo(Organization, { foreignKey: 'parent_id', as: 'parent' });
 Organization.hasMany(Organization, { foreignKey: 'parent_id', as: 'children' });
+Organization.belongsTo(ClassifierPurpose, { foreignKey: 'classifier_purpose_id', as: 'classifierPurpose' });
+Organization.belongsTo(ClassifierFunctional, { foreignKey: 'classifier_functional_id', as: 'classifierFunctional' });
 
 // Region associations
 Region.belongsTo(Region, { foreignKey: 'parent_id', as: 'parent' });
@@ -97,6 +99,12 @@ ClassifierEconomic.hasMany(ClassifierDocument, {
   as: 'documents',
 });
 Document.hasMany(ClassifierDocument, { foreignKey: 'document_id', as: 'classifiers' });
+
+// ClassifierPurpose associations
+ClassifierPurpose.hasMany(Organization, { foreignKey: 'classifier_purpose_id', as: 'organizations' });
+
+// ClassifierFunctional associations
+ClassifierFunctional.hasMany(Organization, { foreignKey: 'classifier_functional_id', as: 'organizations' });
 
 const db = {
   sequelize,
