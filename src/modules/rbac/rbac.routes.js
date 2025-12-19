@@ -100,7 +100,7 @@ router.put('/roles/:id', authGuard, validate_id_param(), require_permissions('RB
  *                 error_msg: Role not found
  */
 router.get('/roles/:id/permissions', authGuard, validate_id_param(), require_permissions('RBAC_MANAGE'), rbacController.getRolePermissions); // Best practice endpoint
-router.get('/permissions', authGuard, require_permissions('RBAC_READ'), rbacController.getPermissions);
+router.get('/permissions', authGuard, require_permissions('RBAC_MANAGE'), rbacController.getPermissions);
 router.post('/roles/:id/permissions', authGuard, validate_id_param(), require_permissions('RBAC_MANAGE'), schemaValidator(assignPermissionsSchema), rbacController.assignPermissions);
 
 module.exports = router;
