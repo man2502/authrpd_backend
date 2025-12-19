@@ -12,7 +12,8 @@ RUN npm install --production
 
 COPY . .
 
-RUN mkdir -p /app/keys/rsa
+RUN mkdir -p /app/keys/ec
+# RUN mkdir -p /app/keys/rsa
 
 EXPOSE 3000
 

@@ -16,7 +16,8 @@ RUN npm install
 
 COPY . .
 
-RUN mkdir -p /app/keys/rsa
+# RUN mkdir -p /app/keys/rsa
+RUN mkdir -p /app/keys/ec
 
 EXPOSE 3000
 
