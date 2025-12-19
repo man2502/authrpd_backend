@@ -1,4 +1,4 @@
-Техническое задание (v2)
+Техническое задание (v2.1)
 AuthRPD — Central Auth + Master Catalog + RBAC + Sync
 0) Изменения в этой версии ТЗ (по твоим пунктам)
 
@@ -124,7 +124,7 @@ src/
   migrations/
   seeders/
 keys/
-  rsa/
+  ec/
     2025-12/
       private.pem
       public.pem
@@ -292,6 +292,11 @@ UNIQUE(role_id, permission_id)
 
 6.3. Departments
 
+Примечание: В текущей реализации departments упоминаются в members (department_id), но отдельная таблица departments не реализована. 
+Иерархическая структура организаций реализована через parent_id в таблице organizations.
+
+Планируемая структура (при необходимости):
+
 id
 
 title_tm
@@ -303,6 +308,8 @@ organization_id
 parent_id
 
 is_active
+
+timestamps + paranoid
 
 6.4. Catalogs (Master)
 
@@ -403,10 +410,33 @@ meta JSONB
 
 created_at
 
+Примечание: Реализовано партиционирование по месяцам для оптимизации запросов.
+Детали партиционирования см. в docs/AUDIT_PARTITIONING.md
+
+6.8. RPD Instances
+
+rpd_instances
+
+id
+
+code UNIQUE
+
+region_id (ссылка на regions.code, должен быть top-level регион без parent_id)
+
+audience UNIQUE (JWT audience claim, например "rpd:ahal")
+
+is_active
+
+timestamps (без paranoid)
+
+Примечание: Таблица для отслеживания региональных RPD инстансов, связанных с top-level регионами.
+
 7) Безопасность и ключи
 7.1. Access token
 
-RS256
+ES256 (ECDSA с кривой P-256)
+
+Примечание: Изменено с RS256 на ES256 для лучшей производительности и меньшего размера токенов.
 
 kid в header
 
@@ -414,11 +444,15 @@ aud в payload
 
 iss в payload
 
-TTL 10–30 минут
+sub = {user_type}:{user_id}
+
+TTL 10–30 минут (настраивается через ACCESS_TTL_SECONDS)
 
 7.2. Требование по генерации ключей (обязательное)
 
-Генерация RSA key pair через Node.js crypto.
+Генерация EC (ECDSA) key pair через Node.js crypto.
+
+Кривая: P-256 (prime256v1) для алгоритма ES256.
 
 Ежемесячно.
 
@@ -426,13 +460,16 @@ kid = 'YYYY-MM' (например 2025-12).
 
 Хранение:
 
-/keys/rsa/{kid}/private.pem
+/keys/ec/{kid}/private.pem
 
-/keys/rsa/{kid}/public.pem
+/keys/ec/{kid}/public.pem
 
 При старте сервиса:
 
 если оба файла существуют → генерацию пропустить.
+
+Настройка через переменную окружения:
+EC_KEYS_DIR (по умолчанию ./keys/ec) или RSA_KEYS_DIR (для обратной совместимости)
 
 8) JWKS
 Endpoint
@@ -441,9 +478,13 @@ GET /.well-known/jwks.json
 
 Поведение:
 
-отдаёт входящий набор публичных ключей.
+отдаёт JSON Web Key Set (JWKS) с публичными ключами в формате JWK.
 
-минимум: текущий и предыдущий месяц.
+Формат ключей: EC (Elliptic Curve) с параметрами crv, x, y для алгоритма ES256.
+
+минимум: текущий и предыдущий месяц (для плавной ротации ключей).
+
+Кэширование: JWKS кэшируется для оптимизации запросов.
 
 9) CRUD API
 9.1. Auth
@@ -515,24 +556,40 @@ Pull со стороны RPD.
 10.2. Endpoints
 
 GET /catalogs/versions
+Получение версий всех каталогов (публичный endpoint, без аутентификации).
 
-GET /catalogs/:name?version=X
+GET /catalog-sync/:name?version=X&lang=tm
+Получение данных каталога по версии для синхронизации (публичный endpoint).
+
+Параметры:
+- name: название каталога (regions, ministries, organizations, receiver_organizations, 
+  classifier_economic, classifier_purpose, classifier_functional, classifier_income,
+  banks, bank_accounts, fields, documents, classifier_fields, classifier_documents)
+- version: версия каталога на стороне клиента (опционально, если не указана - возвращаются все данные)
+- lang: язык локализации (tm или ru, по умолчанию tm)
+
+Ответ:
+- Если клиент на актуальной версии: { version: X, up_to_date: true, items: [] }
+- Если есть обновления: { version: X, up_to_date: false, items: [...] }
 
 10.3. Объекты синхронизации
 
 Все master-каталоги, включая:
 
+regions,
+ministries,
+organizations,
+receiver_organizations,
 classifier_economic,
-
 classifier_purpose,
-
 classifier_functional,
-
 classifier_income,
-
 banks,
-
-bank_accounts.
+bank_accounts,
+fields,
+documents,
+classifier_fields,
+classifier_documents.
 
 11) Joi-валидация (обязательный стандарт)
 11.1. Общее правило
@@ -672,11 +729,38 @@ role_permission: [
 
 AuthRPD API, PostgreSQL и Redis запускаются через docker-compose.
 
+Конфигурация:
+- docker-compose.yml - для production окружения
+- docker-compose.dev.yml - для development окружения
+
 14.2. Volume
 
 Директория ключей монтируется как volume:
 
-./keys:/app/keys.
+./keys:/app/keys
+
+14.3. Переменные окружения
+
+Все переменные окружения используют синтаксис подстановки ${VAR:-default} для гибкости конфигурации.
+
+Переменные можно переопределить через:
+- .env файл
+- Переменные окружения системы
+- Значения по умолчанию в docker-compose файлах
+
+Основные переменные (см. env.development.example и env.production.example):
+- NODE_ENV, CURRENT_ENV
+- DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD
+- REDIS_HOST, REDIS_PORT, REDIS_PASSWORD
+- RSA_KEYS_DIR / EC_KEYS_DIR
+- AUDIENCE, ISSUER
+- ACCESS_TTL_SECONDS, REFRESH_TTL_DAYS
+- CORS_ORIGINS, CORS_ALLOW_CREDENTIALS
+- RATE_LIMIT_*, BODY_JSON_LIMIT, BODY_URLENC_LIMIT
+- HSTS_MAX_AGE, TRUST_PROXY
+- LOG_LEVEL, SERVICE_NAME
+- GRAYLOG_* (для интеграции с Graylog)
+- SWAGGER_ENABLED, API_BASE_URL
 
 15) Acceptance Criteria (обновлённые)
 
@@ -686,7 +770,9 @@ CRUD реализован для:
 
 регионов, министерств, организаций,
 
-всех классификаторов,
+получателей (receiver_organizations),
+
+всех классификаторов (economic, purpose, functional, income),
 
 banks и bank_accounts,
 
@@ -694,26 +780,30 @@ fields/documents и связей с классификаторами.
 
 Есть эндпоинт:
 
-GET /rbac/roles/:id/permissions.
+GET /rbac/roles/:id/permissions (доступен также через /admin/roles/:id/permissions).
 
 Реализована Joi-валидация:
 
 body/params/query,
 
-включая /:id через реюзабельные валидаторы.
+включая /:id и /:code через реюзабельные валидаторы.
 
 Присутствуют seeders для каждой таблицы.
 
 При старте:
 
-ключи kid=YYYY-MM создаются через crypto,
+EC ключи kid=YYYY-MM создаются через crypto (кривая P-256 для ES256),
 
 если в FS уже есть — генерация пропускается.
 
-/.well-known/jwks.json доступен и кэшируется.
+/.well-known/jwks.json доступен (публичный endpoint), кэшируется, возвращает EC ключи в формате JWK.
 
-GET /catalogs/versions + GET /catalogs/:name?version=X работают,
-и включают новые каталоги.
+GET /catalogs/versions + GET /catalog-sync/:name?version=X работают,
+и включают все master-каталоги.
+
+Реализовано партиционирование таблицы auth_audit_log для оптимизации.
+
+Добавлена таблица rpd_instances для управления региональными RPD инстансами.
 
 16) Короткий “чеклист качества реализации”
 
@@ -740,3 +830,16 @@ JS-only, но:
 Аудит:
 
 логировать изменения RBAC и каталогов.
+
+Реализовано партиционирование audit логов по месяцам для производительности.
+
+Дополнительные реализованные функции:
+
+- Swagger/OpenAPI документация (настраивается через SWAGGER_ENABLED)
+- Логирование через Winston с ротацией файлов и поддержкой Graylog
+- Middleware для rate limiting (глобальный и для auth endpoints)
+- CORS конфигурация с allowlist origins
+- Security headers через Helmet
+- Request ID для корреляции запросов
+- Health check endpoint (/health)
+- Поддержка локализации (tm/ru) для всех каталогов с билингвальными полями

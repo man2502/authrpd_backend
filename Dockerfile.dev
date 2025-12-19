@@ -20,6 +20,6 @@ RUN mkdir -p /app/keys/rsa
 
 EXPOSE 3000
 
-# Используем nodemon для автоматической перезагрузки
-CMD ["npm", "run", "dev"]
+# Используем startup script, который запустит миграции, сиды и затем nodemon для автоматической перезагрузки
+CMD ["npm", "run", "start:docker"]
 

@@ -16,5 +16,5 @@ RUN mkdir -p /app/keys/rsa
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "start:docker"]
 

@@ -8,6 +8,7 @@
     "dev": "cross-env NODE_ENV=development CURRENT_ENV=development nodemon src/server.js",
     "start:dev": "cross-env NODE_ENV=development CURRENT_ENV=development node src/server.js",
     "start:prod": "cross-env NODE_ENV=production CURRENT_ENV=production node src/server.js",
+    "start:docker": "node scripts/docker-startup.js",
     "migrate": "sequelize-cli db:migrate",
     "migrate:undo": "sequelize-cli db:migrate:undo",
     "seed": "sequelize-cli db:seed:all",
