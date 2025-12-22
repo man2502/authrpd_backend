@@ -89,6 +89,28 @@ router.get('/versions', catalogController.getVersions);
  *     responses:
  *       201: { description: Region created }
  * /catalogs/regions/{code}:
+ *   get:
+ *     tags: [Catalogs]
+ *     summary: Get region by code
+ *     security: [ { bearerAuth: [] } ]
+ *     parameters:
+ *       - in: path
+ *         name: code
+ *         required: true
+ *         schema: { type: string }
+ *         description: Region code
+ *       - in: query
+ *         name: lang
+ *         schema: { type: string, enum: [tm, ru], default: tm }
+ *       - in: query
+ *         name: localized
+ *         schema:
+ *           type: boolean
+ *           default: true
+ *         description: true returns single localized title; false returns title_tm/title_ru
+ *     responses:
+ *       200: { description: Region retrieved successfully }
+ *       404: { description: Region not found }
  *   put:
  *     tags: [Catalogs]
  *     summary: Update region
@@ -131,6 +153,28 @@ router.delete('/regions/:code', authGuard, validate_code_param(), require_permis
  *     summary: Create ministry
  *     security: [ { bearerAuth: [] } ]
  * /catalogs/ministries/{code}:
+ *   get:
+ *     tags: [Catalogs]
+ *     summary: Get ministry by code
+ *     security: [ { bearerAuth: [] } ]
+ *     parameters:
+ *       - in: path
+ *         name: code
+ *         required: true
+ *         schema: { type: string }
+ *         description: Ministry code
+ *       - in: query
+ *         name: lang
+ *         schema: { type: string, enum: [tm, ru], default: tm }
+ *       - in: query
+ *         name: localized
+ *         schema:
+ *           type: boolean
+ *           default: true
+ *         description: true returns single localized title; false returns title_tm/title_ru
+ *     responses:
+ *       200: { description: Ministry retrieved successfully }
+ *       404: { description: Ministry not found }
  *   put:
  *     tags: [Catalogs]
  *     summary: Update ministry
@@ -169,6 +213,28 @@ router.delete('/ministries/:code', authGuard, validate_code_param(), require_per
  *     summary: Create organization
  *     security: [ { bearerAuth: [] } ]
  * /catalogs/organizations/{code}:
+ *   get:
+ *     tags: [Catalogs]
+ *     summary: Get organization by code
+ *     security: [ { bearerAuth: [] } ]
+ *     parameters:
+ *       - in: path
+ *         name: code
+ *         required: true
+ *         schema: { type: string }
+ *         description: Organization code
+ *       - in: query
+ *         name: lang
+ *         schema: { type: string, enum: [tm, ru], default: tm }
+ *       - in: query
+ *         name: localized
+ *         schema:
+ *           type: boolean
+ *           default: true
+ *         description: true returns single localized title; false returns title_tm/title_ru
+ *     responses:
+ *       200: { description: Organization retrieved successfully }
+ *       404: { description: Organization not found }
  *   put:
  *     tags: [Catalogs]
  *     summary: Update organization
@@ -206,6 +272,28 @@ router.delete('/organizations/:code', authGuard, validate_code_param(), require_
  *     summary: Create economic classifier
  *     security: [ { bearerAuth: [] } ]
  * /catalogs/classifier_economic/{code}:
+ *   get:
+ *     tags: [Catalogs]
+ *     summary: Get economic classifier by code
+ *     security: [ { bearerAuth: [] } ]
+ *     parameters:
+ *       - in: path
+ *         name: code
+ *         required: true
+ *         schema: { type: string }
+ *         description: Classifier code
+ *       - in: query
+ *         name: lang
+ *         schema: { type: string, enum: [tm, ru], default: tm }
+ *       - in: query
+ *         name: localized
+ *         schema:
+ *           type: boolean
+ *           default: true
+ *         description: true returns single localized title; false returns title_tm/title_ru
+ *     responses:
+ *       200: { description: Economic classifier retrieved successfully }
+ *       404: { description: Economic classifier not found }
  *   put:
  *     tags: [Catalogs]
  *     summary: Update economic classifier
@@ -244,6 +332,28 @@ router.delete('/classifier_economic/:code', authGuard, validate_code_param(), re
  *     summary: Create purpose classifier
  *     security: [ { bearerAuth: [] } ]
  * /catalogs/classifier_purpose/{code}:
+ *   get:
+ *     tags: [Catalogs]
+ *     summary: Get purpose classifier by code
+ *     security: [ { bearerAuth: [] } ]
+ *     parameters:
+ *       - in: path
+ *         name: code
+ *         required: true
+ *         schema: { type: string }
+ *         description: Classifier code
+ *       - in: query
+ *         name: lang
+ *         schema: { type: string, enum: [tm, ru], default: tm }
+ *       - in: query
+ *         name: localized
+ *         schema:
+ *           type: boolean
+ *           default: true
+ *         description: true returns single localized title; false returns title_tm/title_ru
+ *     responses:
+ *       200: { description: Purpose classifier retrieved successfully }
+ *       404: { description: Purpose classifier not found }
  *   put:
  *     tags: [Catalogs]
  *     summary: Update purpose classifier
@@ -282,6 +392,28 @@ router.delete('/classifier_purpose/:code', authGuard, validate_code_param(), req
  *     summary: Create functional classifier
  *     security: [ { bearerAuth: [] } ]
  * /catalogs/classifier_functional/{code}:
+ *   get:
+ *     tags: [Catalogs]
+ *     summary: Get functional classifier by code
+ *     security: [ { bearerAuth: [] } ]
+ *     parameters:
+ *       - in: path
+ *         name: code
+ *         required: true
+ *         schema: { type: string }
+ *         description: Classifier code
+ *       - in: query
+ *         name: lang
+ *         schema: { type: string, enum: [tm, ru], default: tm }
+ *       - in: query
+ *         name: localized
+ *         schema:
+ *           type: boolean
+ *           default: true
+ *         description: true returns single localized title; false returns title_tm/title_ru
+ *     responses:
+ *       200: { description: Functional classifier retrieved successfully }
+ *       404: { description: Functional classifier not found }
  *   put:
  *     tags: [Catalogs]
  *     summary: Update functional classifier
@@ -320,6 +452,28 @@ router.delete('/classifier_functional/:code', authGuard, validate_code_param(), 
  *     summary: Create income classifier
  *     security: [ { bearerAuth: [] } ]
  * /catalogs/classifier_income/{code}:
+ *   get:
+ *     tags: [Catalogs]
+ *     summary: Get income classifier by code
+ *     security: [ { bearerAuth: [] } ]
+ *     parameters:
+ *       - in: path
+ *         name: code
+ *         required: true
+ *         schema: { type: string }
+ *         description: Classifier code
+ *       - in: query
+ *         name: lang
+ *         schema: { type: string, enum: [tm, ru], default: tm }
+ *       - in: query
+ *         name: localized
+ *         schema:
+ *           type: boolean
+ *           default: true
+ *         description: true returns single localized title; false returns title_tm/title_ru
+ *     responses:
+ *       200: { description: Income classifier retrieved successfully }
+ *       404: { description: Income classifier not found }
  *   put:
  *     tags: [Catalogs]
  *     summary: Update income classifier
@@ -358,6 +512,28 @@ router.delete('/classifier_income/:code', authGuard, validate_code_param(), requ
  *     summary: Create bank
  *     security: [ { bearerAuth: [] } ]
  * /catalogs/banks/{id}:
+ *   get:
+ *     tags: [Catalogs]
+ *     summary: Get bank by id
+ *     security: [ { bearerAuth: [] } ]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: integer }
+ *         description: Bank ID
+ *       - in: query
+ *         name: lang
+ *         schema: { type: string, enum: [tm, ru], default: tm }
+ *       - in: query
+ *         name: localized
+ *         schema:
+ *           type: boolean
+ *           default: true
+ *         description: true returns single localized title; false returns title_tm/title_ru
+ *     responses:
+ *       200: { description: Bank retrieved successfully }
+ *       404: { description: Bank not found }
  *   put:
  *     tags: [Catalogs]
  *     summary: Update bank
@@ -396,6 +572,28 @@ router.delete('/banks/:id', authGuard, validate_id_param(), require_permissions(
  *     summary: Create bank account
  *     security: [ { bearerAuth: [] } ]
  * /catalogs/bank_accounts/{id}:
+ *   get:
+ *     tags: [Catalogs]
+ *     summary: Get bank account by id
+ *     security: [ { bearerAuth: [] } ]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: integer }
+ *         description: Bank account ID
+ *       - in: query
+ *         name: lang
+ *         schema: { type: string, enum: [tm, ru], default: tm }
+ *       - in: query
+ *         name: localized
+ *         schema:
+ *           type: boolean
+ *           default: true
+ *         description: true returns single localized title; false returns title_tm/title_ru
+ *     responses:
+ *       200: { description: Bank account retrieved successfully }
+ *       404: { description: Bank account not found }
  *   put:
  *     tags: [Catalogs]
  *     summary: Update bank account
@@ -434,6 +632,28 @@ router.delete('/bank_accounts/:id', authGuard, validate_id_param(), require_perm
  *     summary: Create field
  *     security: [ { bearerAuth: [] } ]
  * /catalogs/fields/{id}:
+ *   get:
+ *     tags: [Catalogs]
+ *     summary: Get field by id
+ *     security: [ { bearerAuth: [] } ]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: integer }
+ *         description: Field ID
+ *       - in: query
+ *         name: lang
+ *         schema: { type: string, enum: [tm, ru], default: tm }
+ *       - in: query
+ *         name: localized
+ *         schema:
+ *           type: boolean
+ *           default: true
+ *         description: true returns single localized title; false returns title_tm/title_ru
+ *     responses:
+ *       200: { description: Field retrieved successfully }
+ *       404: { description: Field not found }
  *   put:
  *     tags: [Catalogs]
  *     summary: Update field
@@ -472,6 +692,28 @@ router.delete('/fields/:id', authGuard, validate_id_param(), require_permissions
  *     summary: Create document
  *     security: [ { bearerAuth: [] } ]
  * /catalogs/documents/{id}:
+ *   get:
+ *     tags: [Catalogs]
+ *     summary: Get document by id
+ *     security: [ { bearerAuth: [] } ]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema: { type: integer }
+ *         description: Document ID
+ *       - in: query
+ *         name: lang
+ *         schema: { type: string, enum: [tm, ru], default: tm }
+ *       - in: query
+ *         name: localized
+ *         schema:
+ *           type: boolean
+ *           default: true
+ *         description: true returns single localized title; false returns title_tm/title_ru
+ *     responses:
+ *       200: { description: Document retrieved successfully }
+ *       404: { description: Document not found }
  *   put:
  *     tags: [Catalogs]
  *     summary: Update document
