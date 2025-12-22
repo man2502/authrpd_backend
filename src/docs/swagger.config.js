@@ -57,6 +57,7 @@ const options = {
     info: {
       title: 'AuthRPD API',
       version: '1.0.0',
+      author:'Anvar M',
       description: `
 # AuthRPD - Central Authentication and Master Catalog System
 
@@ -127,7 +128,7 @@ Rate limit information is included in response headers:
       `,
       contact: {
         name: 'AuthRPD Support',
-        email: 'support@authrpd.gov',
+        email: 'man.tlf25@gmail.com',
       },
       license: {
         name: 'Proprietary',
@@ -135,7 +136,7 @@ Rate limit information is included in response headers:
     },
     servers: [
       {
-        url: process.env.API_BASE_URL || 'http://localhost:3000',
+        url: process.env.API_BASE_URL || 'http://localhost:5000',
         description: 'Development server',
       },
       {
