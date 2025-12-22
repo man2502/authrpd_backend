@@ -39,6 +39,18 @@ async function getRegions(req, res, next) {
   }
 }
 
+async function getRegionByCode(req, res, next) {
+  try {
+    const shouldLocalize = req.query.localized !== false;
+    const lang = req.query.lang || 'tm';
+    const region = await catalogService.getRegionByCode(req.params.code);
+    const localizedRegion = shouldLocalize ? localize([region], lang)[0] : region;
+    res.json(successResponse(localizedRegion));
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function createRegion(req, res, next) {
   try {
     const region = await catalogService.createRegion(req.body);
@@ -93,6 +105,18 @@ async function getMinistries(req, res, next) {
   }
 }
 
+async function getMinistryByCode(req, res, next) {
+  try {
+    const shouldLocalize = req.query.localized !== false;
+    const lang = req.query.lang || 'tm';
+    const ministry = await catalogService.getMinistryByCode(req.params.code);
+    const localizedMinistry = shouldLocalize ? localize([ministry], lang)[0] : ministry;
+    res.json(successResponse(localizedMinistry));
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function createMinistry(req, res, next) {
   try {
     const ministry = await catalogService.createMinistry(req.body);
@@ -142,6 +166,18 @@ async function getOrganizations(req, res, next) {
     );
     
     res.json(successResponse(organizations));
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function getOrganizationByCode(req, res, next) {
+  try {
+    const shouldLocalize = req.query.localized !== false;
+    const lang = req.query.lang || 'tm';
+    const organization = await catalogService.getOrganizationByCode(req.params.code);
+    const localizedOrganization = shouldLocalize ? localize([organization], lang)[0] : organization;
+    res.json(successResponse(localizedOrganization));
   } catch (error) {
     next(error);
   }
@@ -202,6 +238,18 @@ async function getClassifierEconomic(req, res, next) {
   }
 }
 
+async function getClassifierEconomicByCode(req, res, next) {
+  try {
+    const shouldLocalize = req.query.localized !== false;
+    const lang = req.query.lang || 'tm';
+    const item = await catalogService.getClassifierEconomicByCode(req.params.code);
+    const localizedItem = shouldLocalize ? localize([item], lang)[0] : item;
+    res.json(successResponse(localizedItem));
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function createClassifierEconomic(req, res, next) {
   try {
     const item = await catalogService.createClassifierEconomic(req.body);
@@ -252,6 +300,18 @@ async function getClassifierPurpose(req, res, next) {
     );
     
     res.json(successResponse(items));
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function getClassifierPurposeByCode(req, res, next) {
+  try {
+    const shouldLocalize = req.query.localized !== false;
+    const lang = req.query.lang || 'tm';
+    const item = await catalogService.getClassifierPurposeByCode(req.params.code);
+    const localizedItem = shouldLocalize ? localize([item], lang)[0] : item;
+    res.json(successResponse(localizedItem));
   } catch (error) {
     next(error);
   }
@@ -312,6 +372,18 @@ async function getClassifierFunctional(req, res, next) {
   }
 }
 
+async function getClassifierFunctionalByCode(req, res, next) {
+  try {
+    const shouldLocalize = req.query.localized !== false;
+    const lang = req.query.lang || 'tm';
+    const item = await catalogService.getClassifierFunctionalByCode(req.params.code);
+    const localizedItem = shouldLocalize ? localize([item], lang)[0] : item;
+    res.json(successResponse(localizedItem));
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function createClassifierFunctional(req, res, next) {
   try {
     const item = await catalogService.createClassifierFunctional(req.body);
@@ -362,6 +434,18 @@ async function getClassifierIncome(req, res, next) {
     );
     
     res.json(successResponse(items));
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function getClassifierIncomeByCode(req, res, next) {
+  try {
+    const shouldLocalize = req.query.localized !== false;
+    const lang = req.query.lang || 'tm';
+    const item = await catalogService.getClassifierIncomeByCode(req.params.code);
+    const localizedItem = shouldLocalize ? localize([item], lang)[0] : item;
+    res.json(successResponse(localizedItem));
   } catch (error) {
     next(error);
   }
@@ -422,6 +506,18 @@ async function getBanks(req, res, next) {
   }
 }
 
+async function getBankById(req, res, next) {
+  try {
+    const shouldLocalize = req.query.localized !== false;
+    const lang = req.query.lang || 'tm';
+    const item = await catalogService.getBankById(req.params.id);
+    const localizedItem = shouldLocalize ? localize([item], lang)[0] : item;
+    res.json(successResponse(localizedItem));
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function createBank(req, res, next) {
   try {
     const item = await catalogService.createBank(req.body);
@@ -472,6 +568,18 @@ async function getBankAccounts(req, res, next) {
     );
     
     res.json(successResponse(items));
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function getBankAccountById(req, res, next) {
+  try {
+    const shouldLocalize = req.query.localized !== false;
+    const lang = req.query.lang || 'tm';
+    const item = await catalogService.getBankAccountById(req.params.id);
+    const localizedItem = shouldLocalize ? localize([item], lang)[0] : item;
+    res.json(successResponse(localizedItem));
   } catch (error) {
     next(error);
   }
@@ -532,6 +640,18 @@ async function getFields(req, res, next) {
   }
 }
 
+async function getFieldById(req, res, next) {
+  try {
+    const shouldLocalize = req.query.localized !== false;
+    const lang = req.query.lang || 'tm';
+    const item = await catalogService.getFieldById(req.params.id);
+    const localizedItem = shouldLocalize ? localize([item], lang)[0] : item;
+    res.json(successResponse(localizedItem));
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function createField(req, res, next) {
   try {
     const item = await catalogService.createField(req.body);
@@ -587,6 +707,18 @@ async function getDocuments(req, res, next) {
   }
 }
 
+async function getDocumentById(req, res, next) {
+  try {
+    const shouldLocalize = req.query.localized !== false;
+    const lang = req.query.lang || 'tm';
+    const item = await catalogService.getDocumentById(req.params.id);
+    const localizedItem = shouldLocalize ? localize([item], lang)[0] : item;
+    res.json(successResponse(localizedItem));
+  } catch (error) {
+    next(error);
+  }
+}
+
 async function createDocument(req, res, next) {
   try {
     const item = await catalogService.createDocument(req.body);
@@ -617,46 +749,57 @@ async function deleteDocument(req, res, next) {
 module.exports = {
   getVersions,
   getRegions,
+  getRegionByCode,
   createRegion,
   updateRegion,
   deleteRegion,
   getMinistries,
+  getMinistryByCode,
   createMinistry,
   updateMinistry,
   deleteMinistry,
   getOrganizations,
+  getOrganizationByCode,
   createOrganization,
   updateOrganization,
   deleteOrganization,
   getClassifierEconomic,
+  getClassifierEconomicByCode,
   createClassifierEconomic,
   updateClassifierEconomic,
   deleteClassifierEconomic,
   getClassifierPurpose,
+  getClassifierPurposeByCode,
   createClassifierPurpose,
   updateClassifierPurpose,
   deleteClassifierPurpose,
   getClassifierFunctional,
+  getClassifierFunctionalByCode,
   createClassifierFunctional,
   updateClassifierFunctional,
   deleteClassifierFunctional,
   getClassifierIncome,
+  getClassifierIncomeByCode,
   createClassifierIncome,
   updateClassifierIncome,
   deleteClassifierIncome,
   getBanks,
+  getBankById,
   createBank,
   updateBank,
   deleteBank,
   getBankAccounts,
+  getBankAccountById,
   createBankAccount,
   updateBankAccount,
   deleteBankAccount,
   getFields,
+  getFieldById,
   createField,
   updateField,
   deleteField,
   getDocuments,
+  getDocumentById,
   createDocument,
   updateDocument,
   deleteDocument,

@@ -100,6 +100,26 @@ async function updateRegion(code, data) {
   return region;
 }
 
+async function getRegionByCode(code) {
+  const region = await Region.findOne({
+    where: { code, is_active: true },
+    attributes: {
+      include: [
+        [sequelize.col('parent.title_tm'), 'parent_tm'],
+        [sequelize.col('parent.title_ru'), 'parent_ru'],
+      ]
+    },
+    include: [
+      { model: Region, as: 'parent', attributes: [] }
+    ],
+    raw: true,
+  });
+  if (!region) {
+    throw new ApiError(404, 'Region not found');
+  }
+  return region;
+}
+
 async function deleteRegion(code) {
   const region = await Region.findByPk(code);
   if (!region) {
@@ -150,6 +170,17 @@ async function updateMinistry(code, data) {
     targetId: code,
     meta: { action: 'updated' },
   });
+  return ministry;
+}
+
+async function getMinistryByCode(code) {
+  const ministry = await Ministry.findOne({
+    where: { code, is_active: true },
+    raw: true,
+  });
+  if (!ministry) {
+    throw new ApiError(404, 'Ministry not found');
+  }
   return ministry;
 }
 
@@ -222,6 +253,38 @@ async function updateOrganization(code, data) {
   return organization;
 }
 
+async function getOrganizationByCode(code) {
+  const organization = await Organization.findOne({
+    where: { code, is_active: true },
+    attributes: {
+      include: [
+        [sequelize.col('region.title_tm'), 'region_tm'],
+        [sequelize.col('region.title_ru'), 'region_ru'],
+        [sequelize.col('ministry.title_tm'), 'ministry_tm'],
+        [sequelize.col('ministry.title_ru'), 'ministry_ru'],
+        [sequelize.col('parent.title_tm'), 'parent_tm'],
+        [sequelize.col('parent.title_ru'), 'parent_ru'],
+        [sequelize.col('classifierPurpose.title_tm'), 'classifier_purpose_tm'],
+        [sequelize.col('classifierPurpose.title_ru'), 'classifier_purpose_ru'],
+        [sequelize.col('classifierFunctional.title_tm'), 'classifier_functional_tm'],
+        [sequelize.col('classifierFunctional.title_ru'), 'classifier_functional_ru'],
+      ]
+    },
+    include: [
+      { model: Region, as: 'region', attributes: [] },
+      { model: Ministry, as: 'ministry', attributes: [] },
+      { model: Organization, as: 'parent', attributes: [] },
+      { model: ClassifierPurpose, as: 'classifierPurpose', attributes: [] },
+      { model: ClassifierFunctional, as: 'classifierFunctional', attributes: [] },
+    ],
+    raw: true,
+  });
+  if (!organization) {
+    throw new ApiError(404, 'Organization not found');
+  }
+  return organization;
+}
+
 async function deleteOrganization(code) {
   const organization = await Organization.findByPk(code);
   if (!organization) {
@@ -272,6 +335,17 @@ async function updateClassifierEconomic(code, data) {
     targetId: code,
     meta: { action: 'updated' },
   });
+  return item;
+}
+
+async function getClassifierEconomicByCode(code) {
+  const item = await ClassifierEconomic.findOne({
+    where: { code, is_active: true },
+    raw: true,
+  });
+  if (!item) {
+    throw new ApiError(404, 'Classifier economic not found');
+  }
   return item;
 }
 
@@ -328,6 +402,17 @@ async function updateClassifierPurpose(code, data) {
   return item;
 }
 
+async function getClassifierPurposeByCode(code) {
+  const item = await ClassifierPurpose.findOne({
+    where: { code, is_active: true },
+    raw: true,
+  });
+  if (!item) {
+    throw new ApiError(404, 'Classifier purpose not found');
+  }
+  return item;
+}
+
 async function deleteClassifierPurpose(code) {
   const item = await ClassifierPurpose.findByPk(code);
   if (!item) {
@@ -381,6 +466,17 @@ async function updateClassifierFunctional(code, data) {
   return item;
 }
 
+async function getClassifierFunctionalByCode(code) {
+  const item = await ClassifierFunctional.findOne({
+    where: { code, is_active: true },
+    raw: true,
+  });
+  if (!item) {
+    throw new ApiError(404, 'Classifier functional not found');
+  }
+  return item;
+}
+
 async function deleteClassifierFunctional(code) {
   const item = await ClassifierFunctional.findByPk(code);
   if (!item) {
@@ -431,6 +527,17 @@ async function updateClassifierIncome(code, data) {
     targetId: code,
     meta: { action: 'updated' },
   });
+  return item;
+}
+
+async function getClassifierIncomeByCode(code) {
+  const item = await ClassifierIncome.findOne({
+    where: { code, is_active: true },
+    raw: true,
+  });
+  if (!item) {
+    throw new ApiError(404, 'Classifier income not found');
+  }
   return item;
 }
 
@@ -493,6 +600,26 @@ async function updateBank(id, data) {
     targetId: id,
     meta: { action: 'updated' },
   });
+  return item;
+}
+
+async function getBankById(id) {
+  const item = await Bank.findOne({
+    where: { id, is_active: true },
+    attributes: {
+      include: [
+        [sequelize.col('region.title_tm'), 'region_tm'],
+        [sequelize.col('region.title_ru'), 'region_ru'],
+      ]
+    },
+    include: [
+      { model: Region, as: 'region', attributes: [] }
+    ],
+    raw: true,
+  });
+  if (!item) {
+    throw new ApiError(404, 'Bank not found');
+  }
   return item;
 }
 
@@ -561,6 +688,29 @@ async function updateBankAccount(id, data) {
   return item;
 }
 
+async function getBankAccountById(id) {
+  const item = await BankAccount.findOne({
+    where: { id, is_active: true },
+    attributes: {
+      include: [
+        [sequelize.col('bank.title_tm'), 'bank_tm'],
+        [sequelize.col('bank.title_ru'), 'bank_ru'],
+        [sequelize.col('organization.title_tm'), 'organization_tm'],
+        [sequelize.col('organization.title_ru'), 'organization_ru'],
+      ]
+    },
+    include: [
+      { model: Bank, as: 'bank', attributes: [] },
+      { model: Organization, as: 'organization', attributes: [] }
+    ],
+    raw: true,
+  });
+  if (!item) {
+    throw new ApiError(404, 'Bank account not found');
+  }
+  return item;
+}
+
 async function deleteBankAccount(id) {
   const item = await BankAccount.findByPk(id);
   if (!item) {
@@ -611,6 +761,17 @@ async function updateField(id, data) {
     targetId: id,
     meta: { action: 'updated' },
   });
+  return item;
+}
+
+async function getFieldById(id) {
+  const item = await Field.findOne({
+    where: { id, is_active: true },
+    raw: true,
+  });
+  if (!item) {
+    throw new ApiError(404, 'Field not found');
+  }
   return item;
 }
 
@@ -667,6 +828,17 @@ async function updateDocument(id, data) {
   return item;
 }
 
+async function getDocumentById(id) {
+  const item = await Document.findOne({
+    where: { id, is_active: true },
+    raw: true,
+  });
+  if (!item) {
+    throw new ApiError(404, 'Document not found');
+  }
+  return item;
+}
+
 async function deleteDocument(id) {
   const item = await Document.findByPk(id);
   if (!item) {
@@ -687,46 +859,57 @@ module.exports = {
   getCatalogVersions,
   bumpCatalogVersion,
   getRegions,
+  getRegionByCode,
   createRegion,
   updateRegion,
   deleteRegion,
   getMinistries,
+  getMinistryByCode,
   createMinistry,
   updateMinistry,
   deleteMinistry,
   getOrganizations,
+  getOrganizationByCode,
   createOrganization,
   updateOrganization,
   deleteOrganization,
   getClassifierEconomic,
+  getClassifierEconomicByCode,
   createClassifierEconomic,
   updateClassifierEconomic,
   deleteClassifierEconomic,
   getClassifierPurpose,
+  getClassifierPurposeByCode,
   createClassifierPurpose,
   updateClassifierPurpose,
   deleteClassifierPurpose,
   getClassifierFunctional,
+  getClassifierFunctionalByCode,
   createClassifierFunctional,
   updateClassifierFunctional,
   deleteClassifierFunctional,
   getClassifierIncome,
+  getClassifierIncomeByCode,
   createClassifierIncome,
   updateClassifierIncome,
   deleteClassifierIncome,
   getBanks,
+  getBankById,
   createBank,
   updateBank,
   deleteBank,
   getBankAccounts,
+  getBankAccountById,
   createBankAccount,
   updateBankAccount,
   deleteBankAccount,
   getFields,
+  getFieldById,
   createField,
   updateField,
   deleteField,
   getDocuments,
+  getDocumentById,
   createDocument,
   updateDocument,
   deleteDocument,

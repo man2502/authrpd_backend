@@ -104,6 +104,7 @@ router.get('/versions', catalogController.getVersions);
  *     security: [ { bearerAuth: [] } ]
  */
 router.get('/regions', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getRegions);
+router.get('/regions/:code', authGuard, validate_code_param(), require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getRegionByCode);
 router.post('/regions', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createRegion);
 router.put('/regions/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.updateRegion);
 router.delete('/regions/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteRegion);
@@ -141,6 +142,7 @@ router.delete('/regions/:code', authGuard, validate_code_param(), require_permis
  */
 // Catalog CRUD - protected by CATALOG_READ / CATALOG_WRITE
 router.get('/ministries', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getMinistries);
+router.get('/ministries/:code', authGuard, validate_code_param(), require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getMinistryByCode);
 router.post('/ministries', authGuard, require_permissions('CATALOG_WRITE'), schemaValidator(createMinistrySchema), catalogController.createMinistry);
 router.put('/ministries/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), schemaValidator(updateMinistrySchema), catalogController.updateMinistry);
 router.delete('/ministries/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteMinistry);
@@ -177,6 +179,7 @@ router.delete('/ministries/:code', authGuard, validate_code_param(), require_per
  *     security: [ { bearerAuth: [] } ]
  */
 router.get('/organizations', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getOrganizations);
+router.get('/organizations/:code', authGuard, validate_code_param(), require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getOrganizationByCode);
 router.post('/organizations', authGuard, require_permissions('CATALOG_WRITE'), schemaValidator(createOrganizationSchema), catalogController.createOrganization);
 router.put('/organizations/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), schemaValidator(updateOrganizationSchema), catalogController.updateOrganization);
 router.delete('/organizations/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteOrganization);
@@ -214,6 +217,7 @@ router.delete('/organizations/:code', authGuard, validate_code_param(), require_
  */
 // Classifier Economic
 router.get('/classifier_economic', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getClassifierEconomic);
+router.get('/classifier_economic/:code', authGuard, validate_code_param(), require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getClassifierEconomicByCode);
 router.post('/classifier_economic', authGuard, require_permissions('CATALOG_WRITE'), schemaValidator(createClassifierSchema), catalogController.createClassifierEconomic);
 router.put('/classifier_economic/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), schemaValidator(updateClassifierSchema), catalogController.updateClassifierEconomic);
 router.delete('/classifier_economic/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteClassifierEconomic);
@@ -251,6 +255,7 @@ router.delete('/classifier_economic/:code', authGuard, validate_code_param(), re
  */
 // Classifier Purpose
 router.get('/classifier_purpose', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getClassifierPurpose);
+router.get('/classifier_purpose/:code', authGuard, validate_code_param(), require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getClassifierPurposeByCode);
 router.post('/classifier_purpose', authGuard, require_permissions('CATALOG_WRITE'), schemaValidator(createClassifierSchema), catalogController.createClassifierPurpose);
 router.put('/classifier_purpose/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), schemaValidator(updateClassifierSchema), catalogController.updateClassifierPurpose);
 router.delete('/classifier_purpose/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteClassifierPurpose);
@@ -288,6 +293,7 @@ router.delete('/classifier_purpose/:code', authGuard, validate_code_param(), req
  */
 // Classifier Functional
 router.get('/classifier_functional', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getClassifierFunctional);
+router.get('/classifier_functional/:code', authGuard, validate_code_param(), require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getClassifierFunctionalByCode);
 router.post('/classifier_functional', authGuard, require_permissions('CATALOG_WRITE'), schemaValidator(createClassifierSchema), catalogController.createClassifierFunctional);
 router.put('/classifier_functional/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), schemaValidator(updateClassifierSchema), catalogController.updateClassifierFunctional);
 router.delete('/classifier_functional/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteClassifierFunctional);
@@ -325,6 +331,7 @@ router.delete('/classifier_functional/:code', authGuard, validate_code_param(), 
  */
 // Classifier Income
 router.get('/classifier_income', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getClassifierIncome);
+router.get('/classifier_income/:code', authGuard, validate_code_param(), require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getClassifierIncomeByCode);
 router.post('/classifier_income', authGuard, require_permissions('CATALOG_WRITE'), schemaValidator(createClassifierSchema), catalogController.createClassifierIncome);
 router.put('/classifier_income/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), schemaValidator(updateClassifierSchema), catalogController.updateClassifierIncome);
 router.delete('/classifier_income/:code', authGuard, validate_code_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteClassifierIncome);
@@ -362,6 +369,7 @@ router.delete('/classifier_income/:code', authGuard, validate_code_param(), requ
  */
 // Banks
 router.get('/banks', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getBanks);
+router.get('/banks/:id', authGuard, validate_id_param(), require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getBankById);
 router.post('/banks', authGuard, require_permissions('CATALOG_WRITE'), catalogController.createBank);
 router.put('/banks/:id', authGuard, validate_id_param(), require_permissions('CATALOG_WRITE'), catalogController.updateBank);
 router.delete('/banks/:id', authGuard, validate_id_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteBank);
@@ -399,6 +407,7 @@ router.delete('/banks/:id', authGuard, validate_id_param(), require_permissions(
  */
 // Bank Accounts
 router.get('/bank_accounts', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getBankAccounts);
+router.get('/bank_accounts/:id', authGuard, validate_id_param(), require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getBankAccountById);
 router.post('/bank_accounts', authGuard, require_permissions('CATALOG_WRITE'), schemaValidator(createBankAccountSchema), catalogController.createBankAccount);
 router.put('/bank_accounts/:id', authGuard, validate_id_param(), require_permissions('CATALOG_WRITE'), schemaValidator(updateBankAccountSchema), catalogController.updateBankAccount);
 router.delete('/bank_accounts/:id', authGuard, validate_id_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteBankAccount);
@@ -436,6 +445,7 @@ router.delete('/bank_accounts/:id', authGuard, validate_id_param(), require_perm
  */
 // Fields
 router.get('/fields', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getFields);
+router.get('/fields/:id', authGuard, validate_id_param(), require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getFieldById);
 router.post('/fields', authGuard, require_permissions('CATALOG_WRITE'), schemaValidator(createFieldSchema), catalogController.createField);
 router.put('/fields/:id', authGuard, validate_id_param(), require_permissions('CATALOG_WRITE'), schemaValidator(updateFieldSchema), catalogController.updateField);
 router.delete('/fields/:id', authGuard, validate_id_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteField);
@@ -473,6 +483,7 @@ router.delete('/fields/:id', authGuard, validate_id_param(), require_permissions
  */
 // Documents
 router.get('/documents', authGuard, require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getDocuments);
+router.get('/documents/:id', authGuard, validate_id_param(), require_permissions('CATALOG_READ'), validate_lang_query(), catalogController.getDocumentById);
 router.post('/documents', authGuard, require_permissions('CATALOG_WRITE'), schemaValidator(createDocumentSchema), catalogController.createDocument);
 router.put('/documents/:id', authGuard, validate_id_param(), require_permissions('CATALOG_WRITE'), schemaValidator(updateDocumentSchema), catalogController.updateDocument);
 router.delete('/documents/:id', authGuard, validate_id_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteDocument);
