@@ -39,11 +39,11 @@ services:
       context: .
       dockerfile: Dockerfile.dev
     container_name: authrpd_api_dev
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
+    # depends_on:
+    #   postgres:
+    #     condition: service_healthy
+    #   redis:
+    #     condition: service_healthy
     environment:
       NODE_ENV: ${NODE_ENV:-development}
       CURRENT_ENV: ${CURRENT_ENV:-development}
@@ -96,6 +96,6 @@ services:
     restart: unless-stopped
 
 volumes:
-  postgres_data_dev:
-  redis_data_dev:
+  # postgres_data_dev:
+  # redis_data_dev:
 
