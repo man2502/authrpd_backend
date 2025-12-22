@@ -95,7 +95,7 @@ services:
       - ./data:/app/data
     restart: unless-stopped
 
-volumes:
+# volumes:
   # postgres_data_dev:
   # redis_data_dev:
 
