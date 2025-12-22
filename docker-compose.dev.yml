@@ -4,35 +4,35 @@ version: '3.8'
 # Usage: docker-compose -f docker-compose.dev.yml up
 
 services:
-  postgres:
-    image: postgres:15-alpine
-    container_name: authrpd_postgres_dev
-    environment:
-      POSTGRES_DB: authrpd_dev
-      POSTGRES_USER: authrpd_user
-      POSTGRES_PASSWORD: dev_password_123
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data_dev:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U authrpd_user"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+  # postgres:
+  #   image: postgres:15-alpine
+  #   container_name: authrpd_postgres_dev
+  #   environment:
+  #     POSTGRES_DB: authrpd_dev
+  #     POSTGRES_USER: authrpd_user
+  #     POSTGRES_PASSWORD: dev_password_123
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres_data_dev:/var/lib/postgresql/data
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U authrpd_user"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
 
-  redis:
-    image: redis:7-alpine
-    container_name: authrpd_redis_dev
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data_dev:/data
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: authrpd_redis_dev
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - redis_data_dev:/data
+  #   healthcheck:
+  #     test: ["CMD", "redis-cli", "ping"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 5
 
   authrpd_api:
     build:
