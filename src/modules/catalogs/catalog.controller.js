@@ -6,11 +6,11 @@ const localize = require('../../helpers/localize.helper');
 /**
  * Helper function to parse is_active query parameter
  * @param {any} value - Query parameter value
- * @returns {boolean|undefined} - Parsed boolean or undefined if not provided
+ * @returns {boolean|undefined} - Parsed boolean or undefined if not provided (returns all items)
  */
 function parseIsActive(value) {
-  if (value === undefined || value === null) {
-    return true; // Default to true for backward compatibility
+  if (value === undefined || value === null || value === '') {
+    return undefined; // Return undefined to get all items (both active and inactive)
   }
   return value === 'true' || value === true;
 }
@@ -29,13 +29,14 @@ async function getRegions(req, res, next) {
     // lang is set by validate_lang_query() middleware (default: 'tm')
     const shouldLocalize = req.query.localized !== false; // Default true for backward compatibility
     const lang = req.query.lang || 'tm';
-    // is_active from query (default: true for backward compatibility)
+    // is_active from query (undefined = all items, true = only active, false = only inactive)
     const isActive = parseIsActive(req.query.is_active);
     
     // Determine cache key based on localization and is_active
+    const activeKey = isActive === undefined ? 'all' : isActive.toString();
     const cacheKey = shouldLocalize 
-      ? `catalog:regions:localized:${lang}:active:${isActive}`
-      : `catalog:regions:unlocalized:active:${isActive}`;
+      ? `catalog:regions:localized:${lang}:active:${activeKey}`
+      : `catalog:regions:unlocalized:active:${activeKey}`;
     
     // Get data from service and cache it
     const regions = await cacheData(
@@ -57,7 +58,7 @@ async function getRegionByCode(req, res, next) {
   try {
     const shouldLocalize = req.query.localized !== false;
     const lang = req.query.lang || 'tm';
-    // is_active from query (default: true for backward compatibility)
+    // is_active from query (undefined = all items, true = only active, false = only inactive)
     const isActive = parseIsActive(req.query.is_active);
     const region = await catalogService.getRegionByCode(req.params.code, isActive);
     const localizedRegion = shouldLocalize ? localize([region], lang)[0] : region;
@@ -103,8 +104,8 @@ async function getMinistries(req, res, next) {
     
     // Determine cache key based on localization and is_active
     const cacheKey = shouldLocalize 
-      ? `catalog:ministries:localized:${lang}:active:${isActive}`
-      : `catalog:ministries:unlocalized:active:${isActive}`;
+      ? `catalog:ministries:localized:${lang}:active:${isActive === undefined ? 'all' : isActive.toString()}`
+      : `catalog:ministries:unlocalized:active:${isActive === undefined ? 'all' : isActive.toString()}`;
     
     // Get data from service and cache it
     const ministries = await cacheData(
@@ -171,8 +172,8 @@ async function getOrganizations(req, res, next) {
     
     // Determine cache key based on localization and is_active
     const cacheKey = shouldLocalize 
-      ? `catalog:organizations:localized:${lang}:active:${isActive}`
-      : `catalog:organizations:unlocalized:active:${isActive}`;
+      ? `catalog:organizations:localized:${lang}:active:${isActive === undefined ? 'all' : isActive.toString()}`
+      : `catalog:organizations:unlocalized:active:${isActive === undefined ? 'all' : isActive.toString()}`;
     
     // Get data from service and cache it
     const organizations = await cacheData(
@@ -240,8 +241,8 @@ async function getClassifierEconomic(req, res, next) {
     
     // Determine cache key based on localization and is_active
     const cacheKey = shouldLocalize 
-      ? `catalog:classifier_economic:localized:${lang}:active:${isActive}`
-      : `catalog:classifier_economic:unlocalized:active:${isActive}`;
+      ? `catalog:classifier_economic:localized:${lang}:active:${isActive === undefined ? 'all' : isActive.toString()}`
+      : `catalog:classifier_economic:unlocalized:active:${isActive === undefined ? 'all' : isActive.toString()}`;
     
     // Get data from service and cache it
     const items = await cacheData(
@@ -309,8 +310,8 @@ async function getClassifierPurpose(req, res, next) {
     
     // Determine cache key based on localization and is_active
     const cacheKey = shouldLocalize 
-      ? `catalog:classifier_purpose:localized:${lang}:active:${isActive}`
-      : `catalog:classifier_purpose:unlocalized:active:${isActive}`;
+      ? `catalog:classifier_purpose:localized:${lang}:active:${isActive === undefined ? 'all' : isActive.toString()}`
+      : `catalog:classifier_purpose:unlocalized:active:${isActive === undefined ? 'all' : isActive.toString()}`;
     
     // Get data from service and cache it
     const items = await cacheData(
@@ -378,8 +379,8 @@ async function getClassifierFunctional(req, res, next) {
     
     // Determine cache key based on localization and is_active
     const cacheKey = shouldLocalize 
-      ? `catalog:classifier_functional:localized:${lang}:active:${isActive}`
-      : `catalog:classifier_functional:unlocalized:active:${isActive}`;
+      ? `catalog:classifier_functional:localized:${lang}:active:${isActive === undefined ? 'all' : isActive.toString()}`
+      : `catalog:classifier_functional:unlocalized:active:${isActive === undefined ? 'all' : isActive.toString()}`;
     
     // Get data from service and cache it
     const items = await cacheData(
@@ -447,8 +448,8 @@ async function getClassifierIncome(req, res, next) {
     
     // Determine cache key based on localization and is_active
     const cacheKey = shouldLocalize 
-      ? `catalog:classifier_income:localized:${lang}:active:${isActive}`
-      : `catalog:classifier_income:unlocalized:active:${isActive}`;
+      ? `catalog:classifier_income:localized:${lang}:active:${isActive === undefined ? 'all' : isActive.toString()}`
+      : `catalog:classifier_income:unlocalized:active:${isActive === undefined ? 'all' : isActive.toString()}`;
     
     // Get data from service and cache it
     const items = await cacheData(
@@ -516,8 +517,8 @@ async function getBanks(req, res, next) {
     
     // Determine cache key based on localization and is_active
     const cacheKey = shouldLocalize 
-      ? `catalog:banks:localized:${lang}:active:${isActive}`
-      : `catalog:banks:unlocalized:active:${isActive}`;
+      ? `catalog:banks:localized:${lang}:active:${isActive === undefined ? 'all' : isActive.toString()}`
+      : `catalog:banks:unlocalized:active:${isActive === undefined ? 'all' : isActive.toString()}`;
     
     // Get data from service and cache it
     const items = await cacheData(
@@ -585,8 +586,8 @@ async function getBankAccounts(req, res, next) {
     
     // Determine cache key based on localization and is_active
     const cacheKey = shouldLocalize 
-      ? `catalog:bank_accounts:localized:${lang}:active:${isActive}`
-      : `catalog:bank_accounts:unlocalized:active:${isActive}`;
+      ? `catalog:bank_accounts:localized:${lang}:active:${isActive === undefined ? 'all' : isActive.toString()}`
+      : `catalog:bank_accounts:unlocalized:active:${isActive === undefined ? 'all' : isActive.toString()}`;
     
     // Get data from service and cache it
     const items = await cacheData(
@@ -654,8 +655,8 @@ async function getFields(req, res, next) {
     
     // Determine cache key based on localization and is_active
     const cacheKey = shouldLocalize 
-      ? `catalog:fields:localized:${lang}:active:${isActive}`
-      : `catalog:fields:unlocalized:active:${isActive}`;
+      ? `catalog:fields:localized:${lang}:active:${isActive === undefined ? 'all' : isActive.toString()}`
+      : `catalog:fields:unlocalized:active:${isActive === undefined ? 'all' : isActive.toString()}`;
     
     // Get data from service and cache it
     const items = await cacheData(
@@ -723,8 +724,8 @@ async function getDocuments(req, res, next) {
     
     // Determine cache key based on localization and is_active
     const cacheKey = shouldLocalize 
-      ? `catalog:documents:localized:${lang}:active:${isActive}`
-      : `catalog:documents:unlocalized:active:${isActive}`;
+      ? `catalog:documents:localized:${lang}:active:${isActive === undefined ? 'all' : isActive.toString()}`
+      : `catalog:documents:unlocalized:active:${isActive === undefined ? 'all' : isActive.toString()}`;
     
     // Get data from service and cache it
     const items = await cacheData(

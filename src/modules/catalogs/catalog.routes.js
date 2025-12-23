@@ -86,7 +86,7 @@ router.get('/versions', catalogController.getVersions);
  *           type: boolean
  *         description: |
  *           Filter by active status. true = only active items, false = only inactive items.
- *           If not provided, defaults to true for backward compatibility.
+ *           If not provided, returns all items (both active and inactive).
  *     responses:
  *       200: { description: Regions retrieved }
  *   post:
@@ -121,7 +121,7 @@ router.get('/versions', catalogController.getVersions);
  *           type: boolean
  *         description: |
  *           Filter by active status. true = only active items, false = only inactive items.
- *           If not provided, defaults to true for backward compatibility.
+ *           If not provided, returns all items (both active and inactive).
  *     responses:
  *       200: { description: Region retrieved successfully }
  *       404: { description: Region not found }
@@ -192,7 +192,7 @@ router.delete('/regions/:code', authGuard, validate_code_param(), require_permis
  *           type: boolean
  *         description: |
  *           Filter by active status. true = only active items, false = only inactive items.
- *           If not provided, defaults to true for backward compatibility.
+ *           If not provided, returns all items (both active and inactive).
  *     responses:
  *       200: { description: Ministry retrieved successfully }
  *       404: { description: Ministry not found }
@@ -259,7 +259,7 @@ router.delete('/ministries/:code', authGuard, validate_code_param(), require_per
  *           type: boolean
  *         description: |
  *           Filter by active status. true = only active items, false = only inactive items.
- *           If not provided, defaults to true for backward compatibility.
+ *           If not provided, returns all items (both active and inactive).
  *     responses:
  *       200: { description: Organization retrieved successfully }
  *       404: { description: Organization not found }
@@ -325,7 +325,7 @@ router.delete('/organizations/:code', authGuard, validate_code_param(), require_
  *           type: boolean
  *         description: |
  *           Filter by active status. true = only active items, false = only inactive items.
- *           If not provided, defaults to true for backward compatibility.
+ *           If not provided, returns all items (both active and inactive).
  *     responses:
  *       200: { description: Economic classifier retrieved successfully }
  *       404: { description: Economic classifier not found }
@@ -392,7 +392,7 @@ router.delete('/classifier_economic/:code', authGuard, validate_code_param(), re
  *           type: boolean
  *         description: |
  *           Filter by active status. true = only active items, false = only inactive items.
- *           If not provided, defaults to true for backward compatibility.
+ *           If not provided, returns all items (both active and inactive).
  *     responses:
  *       200: { description: Purpose classifier retrieved successfully }
  *       404: { description: Purpose classifier not found }
@@ -459,7 +459,7 @@ router.delete('/classifier_purpose/:code', authGuard, validate_code_param(), req
  *           type: boolean
  *         description: |
  *           Filter by active status. true = only active items, false = only inactive items.
- *           If not provided, defaults to true for backward compatibility.
+ *           If not provided, returns all items (both active and inactive).
  *     responses:
  *       200: { description: Functional classifier retrieved successfully }
  *       404: { description: Functional classifier not found }
@@ -526,7 +526,7 @@ router.delete('/classifier_functional/:code', authGuard, validate_code_param(), 
  *           type: boolean
  *         description: |
  *           Filter by active status. true = only active items, false = only inactive items.
- *           If not provided, defaults to true for backward compatibility.
+ *           If not provided, returns all items (both active and inactive).
  *     responses:
  *       200: { description: Income classifier retrieved successfully }
  *       404: { description: Income classifier not found }
@@ -593,7 +593,7 @@ router.delete('/classifier_income/:code', authGuard, validate_code_param(), requ
  *           type: boolean
  *         description: |
  *           Filter by active status. true = only active items, false = only inactive items.
- *           If not provided, defaults to true for backward compatibility.
+ *           If not provided, returns all items (both active and inactive).
  *     responses:
  *       200: { description: Bank retrieved successfully }
  *       404: { description: Bank not found }
@@ -660,7 +660,7 @@ router.delete('/banks/:id', authGuard, validate_id_param(), require_permissions(
  *           type: boolean
  *         description: |
  *           Filter by active status. true = only active items, false = only inactive items.
- *           If not provided, defaults to true for backward compatibility.
+ *           If not provided, returns all items (both active and inactive).
  *     responses:
  *       200: { description: Bank account retrieved successfully }
  *       404: { description: Bank account not found }
@@ -727,7 +727,7 @@ router.delete('/bank_accounts/:id', authGuard, validate_id_param(), require_perm
  *           type: boolean
  *         description: |
  *           Filter by active status. true = only active items, false = only inactive items.
- *           If not provided, defaults to true for backward compatibility.
+ *           If not provided, returns all items (both active and inactive).
  *     responses:
  *       200: { description: Field retrieved successfully }
  *       404: { description: Field not found }
@@ -794,7 +794,7 @@ router.delete('/fields/:id', authGuard, validate_id_param(), require_permissions
  *           type: boolean
  *         description: |
  *           Filter by active status. true = only active items, false = only inactive items.
- *           If not provided, defaults to true for backward compatibility.
+ *           If not provided, returns all items (both active and inactive).
  *     responses:
  *       200: { description: Document retrieved successfully }
  *       404: { description: Document not found }

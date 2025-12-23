@@ -55,7 +55,7 @@ async function getCatalogVersions() {
 }
 
 // Regions
-async function getRegions(isActive = true) {
+async function getRegions(isActive = undefined) {
   const whereClause = {};
   if (isActive !== undefined) {
     whereClause.is_active = isActive;
@@ -105,7 +105,7 @@ async function updateRegion(code, data) {
   return region;
 }
 
-async function getRegionByCode(code, isActive = true) {
+async function getRegionByCode(code, isActive = undefined) {
   const whereClause = { code };
   if (isActive !== undefined) {
     whereClause.is_active = isActive;
@@ -147,7 +147,7 @@ async function deleteRegion(code) {
 }
 
 // Ministries
-async function getMinistries(isActive = true) {
+async function getMinistries(isActive = undefined) {
   const whereClause = {};
   if (isActive !== undefined) {
     whereClause.is_active = isActive;
@@ -188,7 +188,7 @@ async function updateMinistry(code, data) {
   return ministry;
 }
 
-async function getMinistryByCode(code, isActive = true) {
+async function getMinistryByCode(code, isActive = undefined) {
   const whereClause = { code };
   if (isActive !== undefined) {
     whereClause.is_active = isActive;
@@ -221,7 +221,7 @@ async function deleteMinistry(code) {
 }
 
 // Organizations
-async function getOrganizations(isActive = true) {
+async function getOrganizations(isActive = undefined) {
   const whereClause = {};
   if (isActive !== undefined) {
     whereClause.is_active = isActive;
@@ -278,7 +278,7 @@ async function updateOrganization(code, data) {
   return organization;
 }
 
-async function getOrganizationByCode(code, isActive = true) {
+async function getOrganizationByCode(code, isActive = undefined) {
   const whereClause = { code };
   if (isActive !== undefined) {
     whereClause.is_active = isActive;
@@ -332,7 +332,7 @@ async function deleteOrganization(code) {
 }
 
 // Classifier Economic
-async function getClassifierEconomic(isActive = true) {
+async function getClassifierEconomic(isActive = undefined) {
   const whereClause = {};
   if (isActive !== undefined) {
     whereClause.is_active = isActive;
@@ -373,7 +373,7 @@ async function updateClassifierEconomic(code, data) {
   return item;
 }
 
-async function getClassifierEconomicByCode(code, isActive = true) {
+async function getClassifierEconomicByCode(code, isActive = undefined) {
   const whereClause = { code };
   if (isActive !== undefined) {
     whereClause.is_active = isActive;
@@ -406,7 +406,7 @@ async function deleteClassifierEconomic(code) {
 }
 
 // Classifier Purpose
-async function getClassifierPurpose(isActive = true) {
+async function getClassifierPurpose(isActive = undefined) {
   const whereClause = {};
   if (isActive !== undefined) {
     whereClause.is_active = isActive;
@@ -447,7 +447,7 @@ async function updateClassifierPurpose(code, data) {
   return item;
 }
 
-async function getClassifierPurposeByCode(code, isActive = true) {
+async function getClassifierPurposeByCode(code, isActive = undefined) {
   const whereClause = { code };
   if (isActive !== undefined) {
     whereClause.is_active = isActive;
@@ -480,7 +480,7 @@ async function deleteClassifierPurpose(code) {
 }
 
 // Classifier Functional
-async function getClassifierFunctional(isActive = true) {
+async function getClassifierFunctional(isActive = undefined) {
   const whereClause = {};
   if (isActive !== undefined) {
     whereClause.is_active = isActive;
@@ -521,7 +521,7 @@ async function updateClassifierFunctional(code, data) {
   return item;
 }
 
-async function getClassifierFunctionalByCode(code, isActive = true) {
+async function getClassifierFunctionalByCode(code, isActive = undefined) {
   const whereClause = { code };
   if (isActive !== undefined) {
     whereClause.is_active = isActive;
@@ -554,7 +554,7 @@ async function deleteClassifierFunctional(code) {
 }
 
 // Classifier Income
-async function getClassifierIncome(isActive = true) {
+async function getClassifierIncome(isActive = undefined) {
   const whereClause = {};
   if (isActive !== undefined) {
     whereClause.is_active = isActive;
@@ -595,7 +595,7 @@ async function updateClassifierIncome(code, data) {
   return item;
 }
 
-async function getClassifierIncomeByCode(code, isActive = true) {
+async function getClassifierIncomeByCode(code, isActive = undefined) {
   const whereClause = { code };
   if (isActive !== undefined) {
     whereClause.is_active = isActive;
@@ -628,7 +628,7 @@ async function deleteClassifierIncome(code) {
 }
 
 // Banks
-async function getBanks(isActive = true) {
+async function getBanks(isActive = undefined) {
   const whereClause = {};
   if (isActive !== undefined) {
     whereClause.is_active = isActive;
@@ -678,7 +678,7 @@ async function updateBank(id, data) {
   return item;
 }
 
-async function getBankById(id, isActive = true) {
+async function getBankById(id, isActive = undefined) {
   const whereClause = { id };
   if (isActive !== undefined) {
     whereClause.is_active = isActive;
@@ -720,7 +720,7 @@ async function deleteBank(id) {
 }
 
 // Bank Accounts
-async function getBankAccounts(isActive = true) {
+async function getBankAccounts(isActive = undefined) {
   const whereClause = {};
   if (isActive !== undefined) {
     whereClause.is_active = isActive;
@@ -773,7 +773,7 @@ async function updateBankAccount(id, data) {
   return item;
 }
 
-async function getBankAccountById(id, isActive = true) {
+async function getBankAccountById(id, isActive = undefined) {
   const whereClause = { id };
   if (isActive !== undefined) {
     whereClause.is_active = isActive;
@@ -818,7 +818,7 @@ async function deleteBankAccount(id) {
 }
 
 // Fields
-async function getFields(isActive = true) {
+async function getFields(isActive = undefined) {
   const whereClause = {};
   if (isActive !== undefined) {
     whereClause.is_active = isActive;
@@ -859,7 +859,7 @@ async function updateField(id, data) {
   return item;
 }
 
-async function getFieldById(id, isActive = true) {
+async function getFieldById(id, isActive = undefined) {
   const whereClause = { id };
   if (isActive !== undefined) {
     whereClause.is_active = isActive;
@@ -892,7 +892,7 @@ async function deleteField(id) {
 }
 
 // Documents
-async function getDocuments(isActive = true) {
+async function getDocuments(isActive = undefined) {
   const whereClause = {};
   if (isActive !== undefined) {
     whereClause.is_active = isActive;
@@ -933,7 +933,7 @@ async function updateDocument(id, data) {
   return item;
 }
 
-async function getDocumentById(id, isActive = true) {
+async function getDocumentById(id, isActive = undefined) {
   const whereClause = { id };
   if (isActive !== undefined) {
     whereClause.is_active = isActive;
