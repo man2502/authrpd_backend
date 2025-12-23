@@ -1,0 +1,650 @@
+[
+  {
+    "code": "001",
+    "title_tm": "Türkmenistanyň Maliýe we ykdysadyýet ministrligi",
+    "title_ru": "Министерство Финансов и экономики Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "002",
+    "title_tm": "Türkmenistanyň Maliýe we ykdysadyýet ministrliginiň Salgyt müdiriýeti",
+    "title_ru": "Налоговое управление Министерства Финансов и экономики Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "003",
+    "title_tm": "Türkmenistanyň Statistika baradaky döwlet komiteti",
+    "title_ru": "Государственная комитет Туркменистана по статистике",
+    "is_active": true
+  },
+  {
+    "code": "004",
+    "title_tm": "Türkmenistanyň Ykdysadyýet we ösüş ministrligi",
+    "title_ru": "Министерство экономики и развития Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "005",
+    "title_tm": "Türkmenistanyň Milli howpsuzlyk ministrligi",
+    "title_ru": "Министерство национальной безопасности Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "006",
+    "title_tm": "Türkmenistanyň Içeri işler ministrligi",
+    "title_ru": "Министерство внутренних дел Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "007",
+    "title_tm": "Türkmenistanyň Döwlet serhet gullugy",
+    "title_ru": "Государственная пограничная служба Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "008",
+    "title_tm": "Türkmenistanyň Goranmak ministrligi",
+    "title_ru": "Министерство обороны Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "009",
+    "title_tm": "Türkmenistanyň Medeniýet ministrligi",
+    "title_ru": "Министерство культуры  Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "010",
+    "title_tm": "Türkmenistanyň Bilim ministrligi",
+    "title_ru": "Министерство образования Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "012",
+    "title_tm": "Türkmenistanyň Adalat ministrligi",
+    "title_ru": "Министерство Адалат Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "013",
+    "title_tm": "Türkmenistanyň Prezidentiniň ýanyndaky Döwlet we hukuk instituty",
+    "title_ru": "Институт государства и права при Президенте Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "014",
+    "title_tm": "Türkmenistanyň Energetika ministrligi",
+    "title_ru": "Министерство Энергетика Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "015",
+    "title_tm": "Dünýä türkmenleriniň ynsanperwer birleşiginiň ştab-kwartirasy",
+    "title_ru": "Штаб-квартира гуманитарной ассоциации туркмен мира",
+    "is_active": true
+  },
+  {
+    "code": "016",
+    "title_tm": "S.A.Nyýazow adyndaky Türkmen oba hojalyk uniwersiteti",
+    "title_ru": "Туркменский Государственный сельскохозяйственный университет им.С.А.Ниязова",
+    "is_active": true
+  },
+  {
+    "code": "017",
+    "title_tm": "Türkmenistanyň Ministrler Kabinetiniň ýanyndaky Gidrometeorologiýa baradaky milli komiteti",
+    "title_ru": "Национальный комитет по гидрометеорологии при Кабинете Министров Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "018",
+    "title_tm": "Türkmen Döwlet neşirýat gullugynyň \"Galkynyş\" kitap merkezi",
+    "title_ru": "Книжный центр \"Галкыныш\" Туркменской государственной издательской службы",
+    "is_active": true
+  },
+  {
+    "code": "019",
+    "title_tm": "Türkmenistanyň Oba hojalyk ministrliginiň garamagyndaky Suw ulgamlaryny we desgalaryny gurmak boýunça merkezi direksiýa",
+    "title_ru": "Цетральная дирекция по строительству водных систем и сооружений Министерства сельского и водного хозяйства Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "020",
+    "title_tm": "Türkmenistanyň Prezidentiniň ýanyndaky Milli kosmos agentligi",
+    "title_ru": "Национальное космическое агентство при Президенте Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "022",
+    "title_tm": "Türkmenistanyň Telewideniýe, radiogepleşikler we kinematografiýa baradaky döwlet komiteti",
+    "title_ru": "Государственной комитет по Телевидению, радиовещанию и кинематографии Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "023",
+    "title_tm": "Türkmenistanyň Prezidentiniň ýanyndaky Döwlet gullugy akademiýasy",
+    "title_ru": "Академия Государственной службы при Президенте Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "024",
+    "title_tm": "Türkmenistanyň Prezidentiniň arhiwi",
+    "title_ru": "Архив Президента Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "025",
+    "title_tm": "Türkmenistanyň Ýokary attestasiýa komiteti",
+    "title_ru": "Высший аттестационный комитет Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "027",
+    "title_tm": "Türkmenistanyň Prezidentiniň edarasynyň Iş dolandyryş müdirligi",
+    "title_ru": "Управление Делами Аппарата Президента Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "029",
+    "title_tm": "Türkmenistanyň «Türkmenhaly» döwlet birleşigi",
+    "title_ru": "Государственная обьединения  \"Туркменхалы\"",
+    "is_active": true
+  },
+  {
+    "code": "030",
+    "title_tm": "Türkmen oba hojalyk instituty",
+    "title_ru": "Туркменский сельскохозяйственный институт",
+    "is_active": true
+  },
+  {
+    "code": "031",
+    "title_tm": "Türkmenistanyň Medeniýet ministrliginiň \"Kinowideohyzmat\" birleşigi",
+    "title_ru": "Объединение \"Киновидеохызмат\" Министерства культуры и телерадиовещания Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "032",
+    "title_tm": "Türkmenistanyň Dokma senagaty ministrligi",
+    "title_ru": "Министерство текстильной промышленности Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "034",
+    "title_tm": "Türkmenistanyň Oba hojalyk ministrliginiň ýanyndaky Döwlet weterinariýa gullugy",
+    "title_ru": "Государственная ветеринарная служба при Министерстве сельского и водного хозяйства",
+    "is_active": true
+  },
+  {
+    "code": "035",
+    "title_tm": "Türkmenistanyň Daşky gurşawy goramak we ýer serişdeleri baradaky döwlet komiteti",
+    "title_ru": "Государственный комитет Туркменистана по охране окружающей среды и земельных ресурсов",
+    "is_active": true
+  },
+  {
+    "code": "036",
+    "title_tm": "Awtomobil ýollarynyň gurluşygyny dolandyrmak baradaky döwlet agentligi",
+    "title_ru": "Государственный концерн ''Туркменавтоёллары''",
+    "is_active": true
+  },
+  {
+    "code": "040",
+    "title_tm": "Türkmenistanyň Maliýe we ykdysadyýet ministrliginiň ýanyndaky Ykdysadyýeti töwekgelçiliklerden goramak agentligi",
+    "title_ru": "Агентство по защите экономики от рисков при Министерстве Финансов и экономики Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "042",
+    "title_tm": "Türkmenistanyň Maliýe we ykdysadyýet ministrliginiň Intellektual eýeçilik boýunça döwlet gullugy",
+    "title_ru": "Государственная служба по интеллектуальной собственности Министерства Финансов и экономики Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "043",
+    "title_tm": "Türkmenistanyň Mejlisiniň Iş dolandyryş bölümi",
+    "title_ru": "Управление Делами Меджлиса Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "044",
+    "title_tm": "Türkmenistanyň Ministrler Kabinetiniň ýanyndaky Metbugatda we beýleki köpçülikleýin habar beriş serişdelerinde döwlet syrlaryny goramak baradaky komitet",
+    "title_ru": "Комитет по охране государственных тайн в печати и средствах массовой информации при Кабинете Министров Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "045",
+    "title_tm": "\"Türkmen atlary\" Döwlet birleşigi",
+    "title_ru": "Государственное объединение ''Туркмен атлары''",
+    "is_active": true
+  },
+  {
+    "code": "046",
+    "title_tm": "Türkmenistanyň Ylymlar akademiýasy",
+    "title_ru": "Академия наук Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "047",
+    "title_tm": "Türkmenistanyň Zähmet we ilaty durmuş taýdan goramak ministrligi",
+    "title_ru": "Министерство труда и социальной защиты населения Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "048",
+    "title_tm": "Türkmenistanyň Gurluşyk we binagärlik ministrligi",
+    "title_ru": "Министерство строительства и архитектуры Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "049",
+    "title_tm": "Türkmenistanyň Döwlet gümrük gullugy",
+    "title_ru": "Государственная таможенная служба Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "050",
+    "title_tm": "Türkmenistanyň Sport baradaky döwlet komiteti",
+    "title_ru": "Государственный комитет Туркменистана по спорту",
+    "is_active": true
+  },
+  {
+    "code": "051",
+    "title_tm": "Türkmenistanyň Sagdyn jemgyýet howpsuzlygyny goraýyş döwlet gullugy",
+    "title_ru": "Государственная служба Туркменистана по охране безопастности здорового общества",
+    "is_active": true
+  },
+  {
+    "code": "052",
+    "title_tm": "Türkmenistanyň Bedenterbiýe we sport baradaky döwlet komiteti",
+    "title_ru": "Министерство спорта и молодёжной политики Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "053",
+    "title_tm": "Türkmenistanyň Saglygy goraýyş we derman senagaty ministrligi",
+    "title_ru": "Министерство здравоохранения и медицинской промышленности Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "056",
+    "title_tm": "Oguzhan adyndaky \"Türkmenfilm\" birleşigi",
+    "title_ru": "Объединение \"Туркменфильм\" имени Огузхана",
+    "is_active": true
+  },
+  {
+    "code": "059",
+    "title_tm": "Türkmenistanyň Ministrler Kabinetiniň ýanyndaky Baş arhiw müdirligi",
+    "title_ru": "Главное архивное управление при Кабинете Министров Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "060",
+    "title_tm": "Arkadag şäheriniň häkimligi",
+    "title_ru": "Хякимлик города Аркадаг",
+    "is_active": true
+  },
+  {
+    "code": "061",
+    "title_tm": "Daşarky bergileri üzmek",
+    "title_ru": "Погашение внешнего долга",
+    "is_active": true
+  },
+  {
+    "code": "062",
+    "title_tm": "Türkmenistanyň Döwlet habarlar agentligi",
+    "title_ru": "Государственное информационное агентство Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "063",
+    "title_tm": "Halkara guramalaryna geçirilýän tölegler",
+    "title_ru": "Взносы в международные организации",
+    "is_active": true
+  },
+  {
+    "code": "064",
+    "title_tm": "Adatdan daşary ýagdaýlar gory",
+    "title_ru": "Фонд чрезвычайных ситуаций",
+    "is_active": true
+  },
+  {
+    "code": "065",
+    "title_tm": "Aşgabat şäher häkimligi",
+    "title_ru": "Хякимлик города Ашхабада",
+    "is_active": true
+  },
+  {
+    "code": "066",
+    "title_tm": "Ahal welaýat häkimligi",
+    "title_ru": "Хякимлик Ахалского велаята",
+    "is_active": true
+  },
+  {
+    "code": "067",
+    "title_tm": "Balkan welaýat häkimligi",
+    "title_ru": "Хякимлик Балканского велаята",
+    "is_active": true
+  },
+  {
+    "code": "068",
+    "title_tm": "Daşoguz welaýat häkimligi",
+    "title_ru": "Хякимлик Дашогузского велаята",
+    "is_active": true
+  },
+  {
+    "code": "069",
+    "title_tm": "Lebap welaýat häkimligi",
+    "title_ru": "Хякимлик Лебапского велаята",
+    "is_active": true
+  },
+  {
+    "code": "070",
+    "title_tm": "Mary welaýat häkimligi",
+    "title_ru": "Хякимлик Марыйского велаята",
+    "is_active": true
+  },
+  {
+    "code": "071",
+    "title_tm": "Türkmenistanyň Jemagat hojalygy ministrligi",
+    "title_ru": "Министерство коммунального хозяйства Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "072",
+    "title_tm": "Türkmenistanyň Jemagat hojalygy ministrliginiň Jemagat gurluşygynyň direksiýasy",
+    "title_ru": "Дирекция коммунального строительства Министерства коммунального хозяйства Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "073",
+    "title_tm": "Türkmenistanyň Jemagat hojalygy instituty",
+    "title_ru": "Институт коммунального хозяйства Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "074",
+    "title_tm": "Türkmenistanyň Daşary işler ministrligi",
+    "title_ru": "Министерство иностранных дел Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "077",
+    "title_tm": "Türkmenistanyň Ýokary kazyýeti",
+    "title_ru": "Верховный казыет Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "078",
+    "title_tm": "Türkmenistanyň Aragatnaşyk ministrligi",
+    "title_ru": "Министерство связи Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "080",
+    "title_tm": "Türkmenistanyň Baş prokuraturasy",
+    "title_ru": "Генеральная прокуратура Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "088",
+    "title_tm": "Merkezleşdirilen düýpli maýa goýumlar",
+    "title_ru": "Централизованные капитальные вложения",
+    "is_active": true
+  },
+  {
+    "code": "089",
+    "title_tm": "\"Amyderýa\" howdan suw hojalyk birleşigi",
+    "title_ru": "Бассейновое водохозяйственное объединение ''Амударья''",
+    "is_active": true
+  },
+  {
+    "code": "098",
+    "title_tm": "Türkmenistanyň Maldarçylyk we guşçulyk senagaty\ndöwlet birleşiginiň  \"Türkmenörimeýdanlarysuwlandyryş\" önümçilik birleşigi",
+    "title_ru": "Производственное объединение \"Туркменпастбищобводнение\" при Министерстве сельского и водного хозяйства",
+    "is_active": true
+  },
+  {
+    "code": "099",
+    "title_tm": "Maýyplaryň merkezi bedenterbiýe we sport kluby",
+    "title_ru": "Центральный физкультурно-спортивный клуб инвалидов",
+    "is_active": true
+  },
+  {
+    "code": "100",
+    "title_tm": "Türkmenistanyň Prezidentiniň howpsuzlyk gullugy",
+    "title_ru": "Служба безопасности Президента Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "102",
+    "title_tm": "Türkmenistanyň Prezidentiniň ýanyndaky Demokratiýa we adam hukuklary milli instituty",
+    "title_ru": "Национальный институт демократии и прав человека при Президенте Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "104",
+    "title_tm": "Birleşen Milletler Guramasynyň Bilim, ylym we medeniýet boýunça guramasynyň (UNESCO) işleri barada Türkmenistanyň milli toparynyň Sekretariaty",
+    "title_ru": "Секретариат национальной комиссии по делам ЮНЕСКО",
+    "is_active": true
+  },
+  {
+    "code": "105",
+    "title_tm": "Türkmenistanyň Ministrler Kabinetiniň ýanyndaky Ulag we kommunikasiýalar agentligi",
+    "title_ru": "Агентство транспорта и коммуникаций при Кабинете Министров Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "111",
+    "title_tm": "V Aziýa oýunlaryna taýýarlyk boýunça Ýerine ýetiriji komitet",
+    "title_ru": "Исполнительный комитет по подготовке к V Азиатским играм",
+    "is_active": true
+  },
+  {
+    "code": "112",
+    "title_tm": "Türkmenistanyň Oba we suw hojalyk ministrligi",
+    "title_ru": "Министерство сельского и водного хозяйства Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "113",
+    "title_tm": "Türkmenistanyň Oguz han adyndaky Inžener-tehnologiýalar uniwersiteti",
+    "title_ru": "Университет инженерных технологий Туркменистана имени Огуз хана",
+    "is_active": true
+  },
+  {
+    "code": "114",
+    "title_tm": "Adalatçynyň diwany",
+    "title_ru": "Омбудсмен",
+    "is_active": true
+  },
+  {
+    "code": "115",
+    "title_tm": "Türkmenistanyň Ykdysady jenaýatlara garşy göreşmek baradaky döwlet gullugy",
+    "title_ru": "Государственная служба Туркменистана по борьбе с экономическими преступлениями",
+    "is_active": true
+  },
+  {
+    "code": "116",
+    "title_tm": "Türkmenistanyň Döwlet, hukuk we demokratiýa instituty",
+    "title_ru": "Институт государства, права и демократии Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "117",
+    "title_tm": "Türkmenistanyň Oba hojalyk we daşky gurşawy goramak  ministrligi",
+    "title_ru": "Министерство сельского хозяйства и охраны окружающей среды Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "118",
+    "title_tm": "Türkmenistanyň Suw hojalygy baradaky döwlet komiteti",
+    "title_ru": "Государственный комитет Туркменистана по водному хозяйству",
+    "is_active": true
+  },
+  {
+    "code": "119",
+    "title_tm": "Türkmenistanyň Daşky gurşawy goramak ministrliginiň Gidrometeorologiýa baradaky gullugy",
+    "title_ru": "Гидрометеорологическая служба Министерства охраны окружающей среды Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "120",
+    "title_tm": "Türkmenistanyň Aragatnaşyk ministrliginiň Kosmos müdirligi",
+    "title_ru": "Космическое управление Министерства связи Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "121",
+    "title_tm": "Aba Annaýew adyndaky Halkara atçylyk akademiýasy",
+    "title_ru": "Международная академия коневодства имени Аба Аннаева",
+    "is_active": true
+  },
+  {
+    "code": "122",
+    "title_tm": "Türkmenistanyň Daşky gurşawy goramak ministrligi",
+    "title_ru": "Министерство охраны окружающей среды Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "123",
+    "title_tm": "Türkmenistanyň Oba hojalyk ministrligi",
+    "title_ru": "Министерство сельского хозяйства Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "124",
+    "title_tm": "Türkmenistanyň Maldarçylyk we guşçylyk senagaty döwlet birleşigi",
+    "title_ru": "Государственное объединение животноводческой и птицеводческой промышленности Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "274",
+    "title_tm": "\"Türkmengaz\" Döwlet konserni",
+    "title_ru": "Государственный концерн «Туркменгаз»",
+    "is_active": true
+  },
+  {
+    "code": "400",
+    "title_tm": "Türkmen döwlet neşirýat gullugynyň hojalyk hasaplaşygyndaky redaksion birleşigi",
+    "title_ru": "Хозрасчётное редакционное объединение Туркменской государственной издательской службы",
+    "is_active": true
+  },
+  {
+    "code": "401",
+    "title_tm": "Döwlet ätiýaçlyk maddy goýumy",
+    "title_ru": "Государственный материальный резерв",
+    "is_active": true
+  },
+  {
+    "code": "404",
+    "title_tm": "Hazar deňzi instituty",
+    "title_ru": "Государственное предприятие по вопросам Каспийского моря при Президенте Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "411",
+    "title_tm": "Türkmenistanyň Halk Maslahaty",
+    "title_ru": "Организация Совета старейшин Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "412",
+    "title_tm": "Türkmenistanyň Döwlet migrasiýa gullugy",
+    "title_ru": "Государственная миграционная служба Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "415",
+    "title_tm": "\"Türkmenistan: Altyn asyr\" elektron gazetiniň redaksiýasy",
+    "title_ru": "Редакция электронной газеты \"Туркменистан: Алтын асыр\"",
+    "is_active": true
+  },
+  {
+    "code": "418",
+    "title_tm": "Türkmenistanyň \"Türkmenbaşynyň Ruhy metjidi\" dini guramasy",
+    "title_ru": "Религиозная организация Туркменистана \"Мечеть духовности Туркменбаши\"",
+    "is_active": true
+  },
+  {
+    "code": "420",
+    "title_tm": "Döwlet býujetiniň ätiýaçlyk serişdeleri",
+    "title_ru": "Резерв Государственного бюджета",
+    "is_active": true
+  },
+  {
+    "code": "421",
+    "title_tm": "Döwlet gazna obligasiýalaryny üzlüşmek bilen bagly çykdajylar",
+    "title_ru": "Расходы связанные с погашением Государственных казначейских облигаций",
+    "is_active": true
+  },
+  {
+    "code": "424",
+    "title_tm": "Türkmenistanda Saýlawlary we sala salşyklary geçirmek boýunça merkezi topar",
+    "title_ru": "Центральная комиссия по выборам и проведению референдумов в Туркменистане",
+    "is_active": true
+  },
+  {
+    "code": "425",
+    "title_tm": "Türkmenistanyň Ýokary gözegçilik edarasy",
+    "title_ru": "Высшая контрольная палата Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "426",
+    "title_tm": "Türkmenistanyň Maliýe we ykdysadyýet ministrliginiň Strategik we durnukly ösüş instituty",
+    "title_ru": "Институт стратегического и стабильного развития Министерства Финансов и экономики Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "427",
+    "title_tm": "Durnuklaşdyryş gaznasyna geçirimler",
+    "title_ru": "Отчисления в Стабилизационный Фонд",
+    "is_active": true
+  },
+  {
+    "code": "428",
+    "title_tm": "Beýik Watançylyk urşuna gatnaşanlara sowgatlar üçin çykdajylar",
+    "title_ru": "Расходы по оплате подарков участникам Великой Отечественной Войны",
+    "is_active": true
+  },
+  {
+    "code": "429",
+    "title_tm": "Kiçi we orta telekeçiligi goldamak bilen baglanyşykly çykdajylar",
+    "title_ru": "Расходы, связанные с поддержкой малого и среднего предпринимательства",
+    "is_active": true
+  },
+  {
+    "code": "430",
+    "title_tm": "Türkmenistanyň Prezidentiniň permanlary boýunça sylaglamalar we baýraklar",
+    "title_ru": "Награждения и премии по указам Президента Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "431",
+    "title_tm": "Türkmenistanyň Pensiýa gaznasy",
+    "title_ru": "Пенсионный фонд Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "432",
+    "title_tm": "Türkmenistanyň Prezidentiniň ýanyndaky Arkadag şäheriniň gurluşygy boýunça döwlet komiteti",
+    "title_ru": "Государственный комитет по строительству города Аркадаг при Президенте Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "500",
+    "title_tm": "Türkmenistanyň Maliýe we ykdysadyýet ministrliginiň ýanyndaky Maliýe gözegçiligi gullugy",
+    "title_ru": "Служба финансового контроля при Министерстве финансов и экономики Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "505",
+    "title_tm": "Bank karzlary boýunça bergileri üzlüşmek bilen bagly çykdajylar",
+    "title_ru": "Расходы, связанные с погашением задолженности по банковским кредитам",
+    "is_active": true
+  },
+  {
+    "code": "510",
+    "title_tm": "Geňeşlikler",
+    "title_ru": "Генгешлики",
+    "is_active": true
+  }
+]
