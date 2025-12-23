@@ -1,7 +1,8 @@
 'use strict';
 
 const { Permission } = require('../models');
-
+const fs = require('fs');
+const path = require('path');
 /**
  * Seeder для всех разрешений (permissions) системы AuthRPD
  * Создает полный набор разрешений согласно ТЗ v2
@@ -11,6 +12,15 @@ const { Permission } = require('../models');
  */
 module.exports = {
   async up(queryInterface, Sequelize) {
+    const dataDir = path.join(__dirname, 'data');
+
+    /**
+    * Helper function to load and seed classifiers from JSON file
+    * @param {string} filename - Name of the JSON file (e.g., 'classifier_economic.json')
+    * @param {Model} Model - Sequelize model class
+    * @param {string} classifierName - Name for logging purposes
+    */
+
     // Helper function to safely create permission (handles existing records)
     const createPermission = async (name) => {
       try {
@@ -70,49 +80,41 @@ module.exports = {
         return null;
       }
     };
+    /**
+    * Helper function to load and seed classifiers from JSON file
+    * @param {string} filename - Name of the JSON file (e.g., 'classifier_economic.json')
+    * @param {Model} Model - Sequelize model class
+    * @param {string} classifierName - Name for logging purposes
+    */
+    async function seedFromJson(filename, classifierName) {
+      const filePath = path.join(dataDir, filename);
 
-    // CORE permissions (from TZ example)
-    // Note: Some of these may already exist from seed-rbac.js (20250101000007)
-    await createPermission('CATALOG_READ');
-    await createPermission('CATALOG_WRITE');
-    await createPermission('RBAC_MANAGE');
+      if (!fs.existsSync(filePath)) {
+        console.warn(`Warning: ${filename} not found in ${dataDir}, skipping ${classifierName} seeding`);
+        return;
+      }
 
-    // RBAC permissions
-    await createPermission('RBAC_READ');
+      try {
+        const fileContent = fs.readFileSync(filePath, 'utf8');
+        const permissions = JSON.parse(fileContent);
 
-    // MEMBER permissions
-    await createPermission('MEMBER_READ');
-    await createPermission('MEMBER_CREATE');
-    await createPermission('MEMBER_UPDATE');
-    await createPermission('MEMBER_DISABLE');
+        if (!Array.isArray(permissions)) {
+          throw new Error(`${filename} must contain a JSON array`);
+        }
 
-    // CLIENT permissions
-    await createPermission('CLIENT_READ');
-    await createPermission('CLIENT_CREATE');
-    await createPermission('CLIENT_UPDATE');
-    await createPermission('CLIENT_BLOCK');
-    await createPermission('CLIENT_UNBLOCK');
+        console.log(`Loading ${permissions.length} ${classifierName} permissions from ${filename}`);
 
-    // DEPARTMENT permissions
-    await createPermission('DEPARTMENT_READ');
-    await createPermission('DEPARTMENT_WRITE');
+        for (const permission of permissions) {
+          await createPermission(permission.name);
+        }
 
-    // SYNC permissions
-    await createPermission('SYNC_READ');
-    await createPermission('SYNC_MANAGE');
-
-    // AUDIT permissions
-    await createPermission('AUDIT_READ');
-
-    // SECURITY permissions
-    await createPermission('SECURITY_READ');
-    await createPermission('SECURITY_MANAGE');
-    await createPermission('KEYS_MANAGE');
-    await createPermission('JWKS_READ');
-
-    // TOKEN/SESSION permissions
-    await createPermission('TOKEN_REVOKE');
-    await createPermission('SESSION_MANAGE');
+        console.log(`Successfully seeded ${classifierName} permissions`);
+      } catch (error) {
+        console.error(`Error loading ${filename}:`, error.message);
+        throw error;
+      }
+    }
+    await seedFromJson('permissions.json', 'permissions');
 
     console.log('✓ Permissions seeding completed');
   },
@@ -121,32 +123,7 @@ module.exports = {
     // Remove all permissions created by this seeder
     await Permission.destroy({
       where: {
-        name: [
-          'CATALOG_READ',
-          'CATALOG_WRITE',
-          'RBAC_MANAGE',
-          'RBAC_READ',
-          'MEMBER_READ',
-          'MEMBER_CREATE',
-          'MEMBER_UPDATE',
-          'MEMBER_DISABLE',
-          'CLIENT_READ',
-          'CLIENT_CREATE',
-          'CLIENT_UPDATE',
-          'CLIENT_BLOCK',
-          'CLIENT_UNBLOCK',
-          'DEPARTMENT_READ',
-          'DEPARTMENT_WRITE',
-          'SYNC_READ',
-          'SYNC_MANAGE',
-          'AUDIT_READ',
-          'SECURITY_READ',
-          'SECURITY_MANAGE',
-          'KEYS_MANAGE',
-          'JWKS_READ',
-          'TOKEN_REVOKE',
-          'SESSION_MANAGE',
-        ],
+
       },
     });
   },

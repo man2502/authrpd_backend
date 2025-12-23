@@ -1,0 +1,282 @@
+[
+  {
+    "name": "CATALOG_READ",
+    "is_active": true
+  },
+  {
+    "name": "CATALOG_WRITE",
+    "is_active": true
+  },
+  {
+    "name": "RBAC_MANAGE",
+    "is_active": true
+  },
+  {
+    "name": "RBAC_READ",
+    "is_active": true
+  },
+  {
+    "name": "PERMISSION_READ",
+    "is_active": true
+  },
+  {
+    "name": "MEMBER_READ",
+    "is_active": true
+  },
+  {
+    "name": "MEMBER_CREATE",
+    "is_active": true
+  },
+  {
+    "name": "MEMBER_UPDATE",
+    "is_active": true
+  },
+  {
+    "name": "MEMBER_DISABLE",
+    "is_active": true
+  },
+  {
+    "name": "CLIENT_READ",
+    "is_active": true
+  },
+  {
+    "name": "CLIENT_CREATE",
+    "is_active": true
+  },
+  {
+    "name": "CLIENT_UPDATE",
+    "is_active": true
+  },
+  {
+    "name": "CLIENT_BLOCK",
+    "is_active": true
+  },
+  {
+    "name": "CLIENT_UNBLOCK",
+    "is_active": true
+  },
+  {
+    "name": "DEPARTMENT_READ",
+    "is_active": true
+  },
+  {
+    "name": "DEPARTMENT_WRITE",
+    "is_active": true
+  },
+  {
+    "name": "SYNC_READ",
+    "is_active": true
+  },
+  {
+    "name": "SYNC_MANAGE",
+    "is_active": true
+  },
+  {
+    "name": "AUDIT_READ",
+    "is_active": true
+  },
+  {
+    "name": "SECURITY_READ",
+    "is_active": true
+  },
+  {
+    "name": "SECURITY_MANAGE",
+    "is_active": true
+  },
+  {
+    "name": "KEYS_MANAGE",
+    "is_active": true
+  },
+  {
+    "name": "JWKS_READ",
+    "is_active": true
+  },
+  {
+    "name": "TOKEN_REVOKE",
+    "is_active": true
+  },
+  {
+    "name": "SESSION_MANAGE",
+    "is_active": true
+  },
+  {
+    "name": "PAYMENT_REQUEST_CREATE",
+    "is_active": true
+  },
+  {
+    "name": "PAYMENT_REQUEST_READ_OWN",
+    "is_active": true
+  },
+  {
+    "name": "PAYMENT_REQUEST_LIST_OWN",
+    "is_active": true
+  },
+  {
+    "name": "PAYMENT_REQUEST_UPDATE_OWN",
+    "is_active": true
+  },
+  {
+    "name": "PAYMENT_REQUEST_SUBMIT_OWN",
+    "is_active": true
+  },
+  {
+    "name": "PAYMENT_REQUEST_WITHDRAW_OWN",
+    "is_active": true
+  },
+  {
+    "name": "PAYMENT_CANDIDATE_CREATE_OWN",
+    "is_active": true
+  },
+  {
+    "name": "PAYMENT_CANDIDATE_READ_OWN",
+    "is_active": true
+  },
+  {
+    "name": "PAYMENT_CANDIDATE_UPDATE_OWN",
+    "is_active": true
+  },
+  {
+    "name": "PAYMENT_CANDIDATE_DELETE_OWN",
+    "is_active": true
+  },
+  {
+    "name": "PAYMENT_DOCUMENT_UPLOAD_OWN",
+    "is_active": true
+  },
+  {
+    "name": "PAYMENT_DOCUMENT_READ_OWN",
+    "is_active": true
+  },
+  {
+    "name": "PAYMENT_DOCUMENT_DELETE_OWN",
+    "is_active": true
+  },
+  {
+    "name": "PAYMENT_FORM_SCHEMA_READ",
+    "is_active": true
+  },
+  {
+    "name": "DEPT_QUEUE_READ",
+    "is_active": true
+  },
+  {
+    "name": "DEPT_REQUEST_READ",
+    "is_active": true
+  },
+  {
+    "name": "DEPT_REQUEST_ACCEPT",
+    "is_active": true
+  },
+  {
+    "name": "DEPT_REQUEST_UNLOCK",
+    "is_active": true
+  },
+  {
+    "name": "DEPT_REQUEST_DECIDE",
+    "is_active": true
+  },
+  {
+    "name": "DEPT_REQUEST_CONFIRM_SUBHEAD",
+    "is_active": true
+  },
+  {
+    "name": "DEPT_REQUEST_CONFIRM_HEAD",
+    "is_active": true
+  },
+  {
+    "name": "DEPT_REQUEST_REROUTE",
+    "is_active": true
+  },
+  {
+    "name": "WORKFLOW_TEMPLATE_READ",
+    "is_active": true
+  },
+  {
+    "name": "WORKFLOW_TEMPLATE_WRITE",
+    "is_active": true
+  },
+  {
+    "name": "WORKFLOW_TEMPLATE_PUBLISH",
+    "is_active": true
+  },
+  {
+    "name": "WORKFLOW_TEMPLATE_ARCHIVE",
+    "is_active": true
+  },
+  {
+    "name": "ROUTE_RULE_READ",
+    "is_active": true
+  },
+  {
+    "name": "ROUTE_RULE_WRITE",
+    "is_active": true
+  },
+  {
+    "name": "VIEW_PAST_YEAR",
+    "is_active": true
+  },
+  {
+    "name": "REPORT_READ",
+    "is_active": true
+  },
+  {
+    "name": "REPORT_EXPORT",
+    "is_active": true
+  },
+  {
+    "name": "SETTINGS_READ",
+    "is_active": true
+  },
+  {
+    "name": "SETTINGS_MANAGE",
+    "is_active": true
+  },
+  {
+    "name": "OUTBOX_READ",
+    "is_active": true
+  },
+  {
+    "name": "OUTBOX_MANAGE",
+    "is_active": true
+  },
+  {
+    "name": "OUTBOX_RETRY",
+    "is_active": true
+  },
+  {
+    "name": "OUTBOX_CANCEL",
+    "is_active": true
+  },
+  {
+    "name": "FORWARD_TO_MAIN",
+    "is_active": true
+  },
+  {
+    "name": "MAIN_INBOX_READ",
+    "is_active": true
+  },
+  {
+    "name": "MAIN_INBOX_MANAGE",
+    "is_active": true
+  },
+  {
+    "name": "MAIN_QUEUE_READ",
+    "is_active": true
+  },
+  {
+    "name": "MAIN_REQUEST_READ",
+    "is_active": true
+  },
+  {
+    "name": "MAIN_REQUEST_ACCEPT",
+    "is_active": true
+  },
+  {
+    "name": "MAIN_REQUEST_DECIDE",
+    "is_active": true
+  },
+  {
+    "name": "MAIN_REQUEST_RETURN_TO_REGION",
+    "is_active": true
+  }
+]
