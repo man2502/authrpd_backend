@@ -1,0 +1,1328 @@
+[
+  {
+    "code": "0100",
+    "title_tm": "Umumy maksatly döwlet hyzmatlary",
+    "title_ru": "Государственные услуги общего назначения",
+    "is_active": true
+  },
+  {
+    "code": "0110",
+    "title_tm": "Ýerine ýetiriji we kanun çykaryjy edaralar, maliýe we salgyt-býujet syýasaty, daşary syýasat işi",
+    "title_ru": "Исполнительные и законодательные органы, финансовая и налогово-бюджетная политика, внешнеполитическая деятельность",
+    "is_active": true
+  },
+  {
+    "code": "0111",
+    "title_tm": "Ýerine ýetiriji we kanun çykaryjy edaralar",
+    "title_ru": "Исполнительные и законодательные органы",
+    "is_active": true
+  },
+  {
+    "code": "0112",
+    "title_tm": "Maliýe we salgyt-býujet işi",
+    "title_ru": "Финансовая и налогово-бюджетная деятельность",
+    "is_active": true
+  },
+  {
+    "code": "0113",
+    "title_tm": "Daşary syýasat işi",
+    "title_ru": "Внешнеполитическая деятельность",
+    "is_active": true
+  },
+  {
+    "code": "0120",
+    "title_tm": "Daşary döwletlere ykdysady kömek bermek",
+    "title_ru": "Оказание экономической помощи иностранным государствам",
+    "is_active": true
+  },
+  {
+    "code": "0130",
+    "title_tm": "Düýpli (fundamental) ylmy barlaglar",
+    "title_ru": "Фундаментальные научные исследования",
+    "is_active": true
+  },
+  {
+    "code": "0131",
+    "title_tm": "Ileri tutulýan ugurlar boýunça işleri geçirmek üçin goýberilýän serişdeler",
+    "title_ru": "Средства, выделяемые на проведение работ по приоритетным направлениям",
+    "is_active": true
+  },
+  {
+    "code": "0132",
+    "title_tm": "Beýleki düýpli ylmy barlaglar geçirmek üçin goýberilýän serişdeler",
+    "title_ru": "Средства, выделяемые на проведение других фундаментальных научных исследований",
+    "is_active": true
+  },
+  {
+    "code": "0133",
+    "title_tm": "Arhiw edaralaryny maliýeleşdirmek",
+    "title_ru": "Финансирование архивных учреждений",
+    "is_active": true
+  },
+  {
+    "code": "0134",
+    "title_tm": "Ylmy taslamalaryň we işläp taýýarlamalaryň seljermeleriniň (ekspertizalarynyň) bahasyny tölemek üçin goýberilýän serişdeler",
+    "title_ru": "Средства, выделяемые на оплату экспертиз научных проектов и разработок",
+    "is_active": true
+  },
+  {
+    "code": "0135",
+    "title_tm": "Ylmy barlaglar babatynda beýleki çäreler",
+    "title_ru": "Прочие мероприятия в области научных исследований",
+    "is_active": true
+  },
+  {
+    "code": "0136",
+    "title_tm": "Ylmy işgärleri taýýarlamaga goýberilýän serişdeder",
+    "title_ru": "Средства, выделяемые на подготовку научных кадров",
+    "is_active": true
+  },
+  {
+    "code": "0137",
+    "title_tm": "Kliniki ordinaturany maliýeleşdirmek",
+    "title_ru": "Финанcирование клинической ординатуры",
+    "is_active": true
+  },
+  {
+    "code": "0140",
+    "title_tm": "Statistika gullugy",
+    "title_ru": "Статистическая служба",
+    "is_active": true
+  },
+  {
+    "code": "0141",
+    "title_tm": "Statistika edaralaryny saklamak",
+    "title_ru": "Содержание статистических органов",
+    "is_active": true
+  },
+  {
+    "code": "0142",
+    "title_tm": "Statistika barlaglaryny we ýazuwlary geçirmek",
+    "title_ru": "Проведение статистических обследований и переписей",
+    "is_active": true
+  },
+  {
+    "code": "0150",
+    "title_tm": "Umumy döwlet dolandyryşy üçin beýleki çykdajylar",
+    "title_ru": "Другие расходы на общегосударственное управление",
+    "is_active": true
+  },
+  {
+    "code": "0151",
+    "title_tm": "Döwlet dolandyryş edaralaryny saklamak üçin çykdajylar",
+    "title_ru": "Расходы на содержание органов государственного управления",
+    "is_active": true
+  },
+  {
+    "code": "0152",
+    "title_tm": "Saýlawlary we sala salşyklary geçirmek üçin çykdajylar",
+    "title_ru": "Расходы на проведение выборов и референдумов",
+    "is_active": true
+  },
+  {
+    "code": "0153",
+    "title_tm": "Beýleki çykdajylar",
+    "title_ru": "Другие расходы",
+    "is_active": true
+  },
+  {
+    "code": "0154",
+    "title_tm": "Kosmos giňişliginiň gurşawyndaky iş",
+    "title_ru": "Деятельность в области космического пространства",
+    "is_active": true
+  },
+  {
+    "code": "0155",
+    "title_tm": "Döwlet maksatly köşkleri dolandyrmak üçin çykdajylar",
+    "title_ru": "Расходы на управление дворцов государственного значения",
+    "is_active": true
+  },
+  {
+    "code": "0200",
+    "title_tm": "Goranmak we serhetleri goramak",
+    "title_ru": "Оборона и охрана границ",
+    "is_active": true
+  },
+  {
+    "code": "0210",
+    "title_tm": "Goranmak",
+    "title_ru": "Оборона",
+    "is_active": true
+  },
+  {
+    "code": "0220",
+    "title_tm": "Serhetleri goramak",
+    "title_ru": "Охрана границ",
+    "is_active": true
+  },
+  {
+    "code": "0300",
+    "title_tm": "Jemgyýetçilik tertibi we howpsuzlyk",
+    "title_ru": "Общественный порядок и безопасность",
+    "is_active": true
+  },
+  {
+    "code": "0310",
+    "title_tm": "Içeri işler edaralary we ýangyn howpsyzlygynyň edaralary",
+    "title_ru": "Органы внутренних дел и пожарной охраны",
+    "is_active": true
+  },
+  {
+    "code": "0311",
+    "title_tm": "Içeri işler edaralary (polisiýa)",
+    "title_ru": "Органы внутренних дел (полиция)",
+    "is_active": true
+  },
+  {
+    "code": "0312",
+    "title_tm": "Ýangyndan goranyş",
+    "title_ru": "Пожарная охрана",
+    "is_active": true
+  },
+  {
+    "code": "0313",
+    "title_tm": "Sagdyn jemgyýet howpsuzlygyny goraýyş işleri",
+    "title_ru": "Деятельности по охране безопастности здорового обшестве",
+    "is_active": true
+  },
+  {
+    "code": "0320",
+    "title_tm": "Kazyýetler",
+    "title_ru": "Суды",
+    "is_active": true
+  },
+  {
+    "code": "0330",
+    "title_tm": "Zähmet–düzediş edaralary",
+    "title_ru": "Исправительно-трудовые учреждения",
+    "is_active": true
+  },
+  {
+    "code": "0340",
+    "title_tm": "Milli howpsuzlyk edaralary",
+    "title_ru": "Органы национальной безопасности",
+    "is_active": true
+  },
+  {
+    "code": "0350",
+    "title_tm": "Prezidentiň howpsuzlyk gullugy",
+    "title_ru": "Служба безопасности Президента",
+    "is_active": true
+  },
+  {
+    "code": "0360",
+    "title_tm": "Jemgyýetçilik tertibini we howpsuzlygy üpjün etmek boýunça beýleki işler",
+    "title_ru": "Другая деятельность по обеспечению общественного порядка и безопасности",
+    "is_active": true
+  },
+  {
+    "code": "0400",
+    "title_tm": "Bilim",
+    "title_ru": "Образование",
+    "is_active": true
+  },
+  {
+    "code": "0410",
+    "title_tm": "Mekdebe çenli terbiýe",
+    "title_ru": "Дошкольное воспитание",
+    "is_active": true
+  },
+  {
+    "code": "0420",
+    "title_tm": "Orta bilim",
+    "title_ru": "Среднее образование",
+    "is_active": true
+  },
+  {
+    "code": "0421",
+    "title_tm": "Başlangyç we umumy orta bilim",
+    "title_ru": "Начальное и общее среднее образование",
+    "is_active": true
+  },
+  {
+    "code": "0422",
+    "title_tm": "Hünär-tehniki bilim",
+    "title_ru": "Профессионально-техническое образование",
+    "is_active": true
+  },
+  {
+    "code": "0423",
+    "title_tm": "Ýörite orta bilim",
+    "title_ru": "Среднее специальное образование",
+    "is_active": true
+  },
+  {
+    "code": "0430",
+    "title_tm": "Ýokary bilim",
+    "title_ru": "Высшее образование",
+    "is_active": true
+  },
+  {
+    "code": "0431",
+    "title_tm": "Türkmenistanyň ýokary okuw mekdepleri",
+    "title_ru": "Высшие учебные заведения Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "0432",
+    "title_tm": "Daşary ýurt ýokary okuw mekdepleri",
+    "title_ru": "Высшие учебные заведения зарубежных стран",
+    "is_active": true
+  },
+  {
+    "code": "0440",
+    "title_tm": "Beýleki edaralar we bilim boýunça çykdajylar",
+    "title_ru": "Прочие учреждения и расходы в области образования",
+    "is_active": true
+  },
+  {
+    "code": "0441",
+    "title_tm": "Bilim ministrliginiň, pudak edaralarynyň, müdirlikleriniň, bölümleriniň diwanyny saklamak üçin çykdajylar",
+    "title_ru": "Расходы по содержанию аппарата министерств, ведомств, управлений, отделов образования",
+    "is_active": true
+  },
+  {
+    "code": "0442",
+    "title_tm": "Merkezleşdirilen hasaphana bölümlerini saklamak boýunça çykdajylar",
+    "title_ru": "Расходы по содержанию централизованных бухгалтерий",
+    "is_active": true
+  },
+  {
+    "code": "0443",
+    "title_tm": "Gurluşyga we düýpli abatlaýşa tehniki gözegçiligi saklamak üçin çykdajylar",
+    "title_ru": "Расходы по содержанию технического надзора за строительством и капитальным ремонтом",
+    "is_active": true
+  },
+  {
+    "code": "0444",
+    "title_tm": "Küşt we şaşka sport mekdepleri",
+    "title_ru": "Спортивные школы шахмат и шашек",
+    "is_active": true
+  },
+  {
+    "code": "0445",
+    "title_tm": "Çagalar bilen mekdepden daşary işler boýunça edaralar we çäreler",
+    "title_ru": "Учреждения и мероприятия по внешкольной работе с детьми",
+    "is_active": true
+  },
+  {
+    "code": "0446",
+    "title_tm": "Kurs çäreleri we hünärleri ýokarlandyrmak",
+    "title_ru": "Курсовые мероприятия и повышение квалификации",
+    "is_active": true
+  },
+  {
+    "code": "0447",
+    "title_tm": "Bilim boýunça usuly işler, tehniki wagyz-nesihat we beýleki çäreler",
+    "title_ru": "Методическая работа, техническая пропаганда и прочие мероприятия по образованию",
+    "is_active": true
+  },
+  {
+    "code": "0448",
+    "title_tm": "Beýleki edaralar we çykdajylar",
+    "title_ru": "Другие учреждения и расходы",
+    "is_active": true
+  },
+  {
+    "code": "0449",
+    "title_tm": "Çagalar öýleri",
+    "title_ru": "Детские дома",
+    "is_active": true
+  },
+  {
+    "code": "0500",
+    "title_tm": "Saglygy goraýyş",
+    "title_ru": "Здравоохранение",
+    "is_active": true
+  },
+  {
+    "code": "0510",
+    "title_tm": "Hassahanalar, ylmy-kliniki we bejeriş-maslahat beriş merkezleri",
+    "title_ru": "Госпитали, научно-клинические и лечебно-консультативные центры",
+    "is_active": true
+  },
+  {
+    "code": "0520",
+    "title_tm": "Saglyk öýleri, merkezler",
+    "title_ru": "Дома здоровья, центры",
+    "is_active": true
+  },
+  {
+    "code": "0521",
+    "title_tm": "Saglyk öýleri, anyklaýyş merkezleri",
+    "title_ru": "Дома здоровья, диагностические центры",
+    "is_active": true
+  },
+  {
+    "code": "0522",
+    "title_tm": "Stomatologiýa merkezleri",
+    "title_ru": "Стоматологические центры",
+    "is_active": true
+  },
+  {
+    "code": "0523",
+    "title_tm": "Tiz we gaýragoýulmasyz kömek merkezleri",
+    "title_ru": "Центры скорой и неотложной помощи",
+    "is_active": true
+  },
+  {
+    "code": "0530",
+    "title_tm": "Ilatyň saglygyny goramak",
+    "title_ru": "Охрана здоровья населения",
+    "is_active": true
+  },
+  {
+    "code": "0531",
+    "title_tm": "Sanitariýa-epidemiologiýa stansiýalary",
+    "title_ru": "Санитарно-эпидемиологические станции",
+    "is_active": true
+  },
+  {
+    "code": "0533",
+    "title_tm": "Çagalar dikeldiş merkezleri",
+    "title_ru": "Детские реабилитационные центры",
+    "is_active": true
+  },
+  {
+    "code": "0534",
+    "title_tm": "Çagalar öýleri",
+    "title_ru": "Дома ребенка",
+    "is_active": true
+  },
+  {
+    "code": "0535",
+    "title_tm": "Keselleriň ýaýramagyna (epidemiýa) garşy göreş boýunça çäreleri maliýeleşdirmek",
+    "title_ru": "Финансирование мероприятий по борьбе с эпидемиями",
+    "is_active": true
+  },
+  {
+    "code": "0536",
+    "title_tm": "Gan merkezleri",
+    "title_ru": "Станции переливания крови",
+    "is_active": true
+  },
+  {
+    "code": "0540",
+    "title_tm": "Saglygy goraýyş babatynda amaly barlaglar we synag taslamalary",
+    "title_ru": "Прикладные исследования и экспериментальные разработки в области здравоохранения",
+    "is_active": true
+  },
+  {
+    "code": "0550",
+    "title_tm": "Ätiýaçlandyryş gaznasy",
+    "title_ru": "Страховой фонд",
+    "is_active": true
+  },
+  {
+    "code": "0551",
+    "title_tm": "Goşmaça saglygy goraýyş hyzmatlarynyň tölegi",
+    "title_ru": "Оплата дополнительных медицинских услуг",
+    "is_active": true
+  },
+  {
+    "code": "0552",
+    "title_tm": "Ätiýaçlandyrylan raýatlara ýeňillikli şertlerde berlen dermanlaryň bahalaryndaky tapawudyň öwezini dolmak",
+    "title_ru": "Возмещение разницы в ценах на медикаменты, реализованные застрахованным гражданам на льготных условиях",
+    "is_active": true
+  },
+  {
+    "code": "0560",
+    "title_tm": "Saglygy goraýyş babatynda beýleki edaralar we çäreler",
+    "title_ru": "Другие учреждения и мероприятия в области здравоохранения",
+    "is_active": true
+  },
+  {
+    "code": "0561",
+    "title_tm": "Saglygy goraýyş ministrliginiň, müdirlikleriniň, bölümleriniň diwanyny saklamak boýunça çykdajylar",
+    "title_ru": "Расходы по содержанию аппарата министерства, управлений, отделов здравоохранения",
+    "is_active": true
+  },
+  {
+    "code": "0562",
+    "title_tm": "Merkezleşdirilen hasaphana bölümlerini saklamak boýunça çykdajylar",
+    "title_ru": "Расходы по содержанию централизованных бухгалтерий",
+    "is_active": true
+  },
+  {
+    "code": "0563",
+    "title_tm": "Öý-internatlar",
+    "title_ru": "Дома-интернаты",
+    "is_active": true
+  },
+  {
+    "code": "0565",
+    "title_tm": "Saglygy goraýyş boýunça beýleki çäreler",
+    "title_ru": "Прочие мероприятия по здравоохранению",
+    "is_active": true
+  },
+  {
+    "code": "0566",
+    "title_tm": "Döwlet saglygy goraýyş-durmuş seljeriş toparlary",
+    "title_ru": "Государственные медико-социальные экспертные комиссии",
+    "is_active": true
+  },
+  {
+    "code": "0567",
+    "title_tm": "Protezlemek (diş protezlemekden başga)",
+    "title_ru": "Протезирование (кроме зубного)",
+    "is_active": true
+  },
+  {
+    "code": "0600",
+    "title_tm": "Döwlet durmuş ätiýaçlandyrmasy, pensiýa we durmuş üpjünçiligi",
+    "title_ru": "Государственное социальное страхование, пенсия и социальное обеспечение",
+    "is_active": true
+  },
+  {
+    "code": "0610",
+    "title_tm": "Pensiýa üpjünçiligi",
+    "title_ru": "Пенсионное обеспечение",
+    "is_active": true
+  },
+  {
+    "code": "0611",
+    "title_tm": "Raýatlaryň aýratyn toparynyň pensiýa üpjünçiligi boýunça döwlet goldawy",
+    "title_ru": "Государственная поддержка по пенсионному обеспечению отдельных категорий граждан",
+    "is_active": true
+  },
+  {
+    "code": "0612",
+    "title_tm": "Döwletiň atly şahsy pensiýalary",
+    "title_ru": "Государственные персональные пенсии",
+    "is_active": true
+  },
+  {
+    "code": "0613",
+    "title_tm": "Pensionerleri sylaglamak",
+    "title_ru": "Вознаграждение пенсионеров",
+    "is_active": true
+  },
+  {
+    "code": "0620",
+    "title_tm": "Döwlet kömek pullary",
+    "title_ru": "Государственные пособия",
+    "is_active": true
+  },
+  {
+    "code": "0621",
+    "title_tm": "Çaga dogulanda berilýän döwlet kömek pullary",
+    "title_ru": "Государственные пособие при рождении ребенка",
+    "is_active": true
+  },
+  {
+    "code": "0622",
+    "title_tm": "Çaga seretmek boýunça döwlet kömek puly",
+    "title_ru": "Пособие по уходу за ребенков",
+    "is_active": true
+  },
+  {
+    "code": "0623",
+    "title_tm": "Maýyplyk boýunça döwlet kömek puly (hökmany pensiýa ätiýaçlandyrmasyna gatnaşyk döwri bäş ýyldan az bolanlara)",
+    "title_ru": "Государственное пособие по инвалидности (период участие которых в обязательном пенсионном страховании составляет менее пяти лет)",
+    "is_active": true
+  },
+  {
+    "code": "0624",
+    "title_tm": "Maýyplyk boýunça 18 ýaşa çenli çagalara döwlet kömek puly",
+    "title_ru": "Государственное пособие по инвалидности детям-инвалидам в возрасте до 18 лет",
+    "is_active": true
+  },
+  {
+    "code": "0625",
+    "title_tm": "Maýyplyk boýunça çagalykdan maýyplara döwlet kömek puly (hökmany pensiýa ätiýaçlandyrmasyna gatnaşyk döwri bäş ýyldan az bolanlara)",
+    "title_ru": "Государственное пособие по инвалидам с детства (период участие которых в обязательном пенсионном страховании составляет менее пяти лет)",
+    "is_active": true
+  },
+  {
+    "code": "0626",
+    "title_tm": "Durmuş hemaýat pullary",
+    "title_ru": "Социальные пособия",
+    "is_active": true
+  },
+  {
+    "code": "0627",
+    "title_tm": "BWU gatnaşanyň ýanýoldaşyna bellenilýän döwlet kömek puly",
+    "title_ru": "Государственное пособие, назначаемое супруге участников ВОВ",
+    "is_active": true
+  },
+  {
+    "code": "0630",
+    "title_tm": "Durmuş goragy babatynda beýleki çykdajylar",
+    "title_ru": "Другие расходы в области социальной защиты",
+    "is_active": true
+  },
+  {
+    "code": "0631",
+    "title_tm": "Ministrligiň merkezi edarasyny, durmuş gorag müdirliklerini, bölümlerini saklamak boýunça çykdajylar",
+    "title_ru": "Расходы по содержанию аппарата министерства, управлений, отделов социальной защиты",
+    "is_active": true
+  },
+  {
+    "code": "0632",
+    "title_tm": "Durmuş kömeginiň sebit merkezleri we bölümleri",
+    "title_ru": "Территориальные центры и отделения социальной помощи",
+    "is_active": true
+  },
+  {
+    "code": "0633",
+    "title_tm": "Ilatyň aýratyn gatlaklaryna ýerlenilýän unuň we çöregiň nyrh aratapawudynyň öwezini dolmak",
+    "title_ru": "Компенсация ценевой разницы на муку и хлеб, реализуемой отдельным категориям населения",
+    "is_active": true
+  },
+  {
+    "code": "0634",
+    "title_tm": "Ýetim çagalara we ata-enesiniň howandarlygyndan galan çagalara ýazuw we okuw esbaplaryny almak üçin berilýän birwagtlaýyn pul kömegi",
+    "title_ru": "Единовременная денежная помощь детям-сиротам и детям, оставшимся без попечения родителей для приобретения письменных и учебных принадлежностей",
+    "is_active": true
+  },
+  {
+    "code": "0640",
+    "title_tm": "Durmuş üpjünçiligi",
+    "title_ru": "Социальное обеспечение",
+    "is_active": true
+  },
+  {
+    "code": "0642",
+    "title_tm": "Ilaty iş bilen üpjün etmek boýunça hyzmatlar",
+    "title_ru": "Услуги по обеспечению работой населению",
+    "is_active": true
+  },
+  {
+    "code": "0700",
+    "title_tm": "Ýaşaýyş jaý-jemagat hojalygy",
+    "title_ru": "Жилищно-коммунальное хозяйство",
+    "is_active": true
+  },
+  {
+    "code": "0710",
+    "title_tm": "Ýaşaýyş jaý gurluşygy we jemagat ösüşi",
+    "title_ru": "Жилищное строительство и коммунальное развитие",
+    "is_active": true
+  },
+  {
+    "code": "0711",
+    "title_tm": "Ýaşaýyş jaý-ulanyş hojalygy",
+    "title_ru": "Жилищно-эксплуатационное хозяйство",
+    "is_active": true
+  },
+  {
+    "code": "0712",
+    "title_tm": "Ýaşaýyş jaý-jemagat hojalygynyň abatlaýyş-gurluşyk guramalary",
+    "title_ru": "Ремонтно-строительные организации жилищно-коммунального хозяйства",
+    "is_active": true
+  },
+  {
+    "code": "0713",
+    "title_tm": "Çykdajy sanawy tertibinde maliýeleşdirilýän ýaşaýyş jaý-jemagat hojalygy we täze ýaşaýyş jaý gurluşygy",
+    "title_ru": "Жилищно-коммунальное хозяйство, финансируемое в сметном порядке и новое жилищное строительство",
+    "is_active": true
+  },
+  {
+    "code": "0714",
+    "title_tm": "Uruş maýyplaryna degişli hususy ýaşaýyş jaýlaryny düýpli abatlamak",
+    "title_ru": "Капитальный ремонт индивидуальных жилых домов, принадлежащих инвалидам войны",
+    "is_active": true
+  },
+  {
+    "code": "0715",
+    "title_tm": "Ýaşaýyş jaý gurluşygy we jemagat hojalygyny ösdürmek üçin beýleki çykdajylar",
+    "title_ru": "Другие расходы на жилищное строительство и коммунальное развитие",
+    "is_active": true
+  },
+  {
+    "code": "0720",
+    "title_tm": "Suw üpjünçiligi",
+    "title_ru": "Водоснабжение",
+    "is_active": true
+  },
+  {
+    "code": "0730",
+    "title_tm": "Arassaçylyk (sanitariýa) çäreleri, daşky gurşawyň hapalanmagyny çäklendirmek we oňa gözegçilik etmek boýunça çäreleri goşmak bilen",
+    "title_ru": "Санитарные мероприятия, включая меры по ограничению и контролю за загрязнением окружающей среды",
+    "is_active": true
+  },
+  {
+    "code": "0731",
+    "title_tm": "Lagym boýunça çykdajylar",
+    "title_ru": "Расходы по канализации",
+    "is_active": true
+  },
+  {
+    "code": "0732",
+    "title_tm": "Arassalamak boýunça çykdajylar",
+    "title_ru": "Расходы по очистке",
+    "is_active": true
+  },
+  {
+    "code": "0733",
+    "title_tm": "Şäheriň zibilhanasy üçin çykdajylar",
+    "title_ru": "Расходы городской свалки",
+    "is_active": true
+  },
+  {
+    "code": "0734",
+    "title_tm": "Zeý suw ulgamlaryny ulanmak boýunça çykdajylar",
+    "title_ru": "Расходы по эксплуатации дренажных систем",
+    "is_active": true
+  },
+  {
+    "code": "0735",
+    "title_tm": "Arassaçylyk çäreleri boýunça beýleki çykdajylar",
+    "title_ru": "Другие расходы по санитарным мероприятиям",
+    "is_active": true
+  },
+  {
+    "code": "0740",
+    "title_tm": "Yşyklandyryş",
+    "title_ru": "Освещение",
+    "is_active": true
+  },
+  {
+    "code": "0741",
+    "title_tm": "Ilatly ýerleri yşyklandyryş",
+    "title_ru": "Освещение населенных пунктов",
+    "is_active": true
+  },
+  {
+    "code": "0742",
+    "title_tm": "Ilata mugt berilýän elektrik energiýasy boýunça çykdajylar",
+    "title_ru": "Расходы по электроэнергии, бесплатно отпускаемой населению",
+    "is_active": true
+  },
+  {
+    "code": "0750",
+    "title_tm": "Ýaşaýyş jaý-jemagat hojalygy boýunça beýleki hyzmatlar",
+    "title_ru": "Другие услуги по жилищно-коммунальному хозяйству",
+    "is_active": true
+  },
+  {
+    "code": "0751",
+    "title_tm": "Jemagat kärhanalarynyň kombinatlary, ýaşaýyş jaý-jemagat hojalygynyň önümçilik birleşikleri",
+    "title_ru": "Комбинаты коммунальных предприятий, производственные объединения жилищно-коммунального хозяйства",
+    "is_active": true
+  },
+  {
+    "code": "0752",
+    "title_tm": "Däp-dessur hyzmatlary kombinatlary",
+    "title_ru": "Комбинаты ритуального обслуживания",
+    "is_active": true
+  },
+  {
+    "code": "0753",
+    "title_tm": "Arassalaýyş we abadanlaşdyryş önümçilik-jemagat birleşigi",
+    "title_ru": "Производственно-коммунальные объединения по очистке и благоустройству",
+    "is_active": true
+  },
+  {
+    "code": "0754",
+    "title_tm": "Bagçylyk hojalygy trestleri",
+    "title_ru": "Тресты зеленого хозяйства",
+    "is_active": true
+  },
+  {
+    "code": "0755",
+    "title_tm": "Şäherleri we ilatly ýerleriň çäklerini abadanlaşdyrmak",
+    "title_ru": "Благоустройство городов и территории населенных пунктов",
+    "is_active": true
+  },
+  {
+    "code": "0756",
+    "title_tm": "Ýaşaýyş jaý-jemagat hojalygy boýunça beýleki hyzmatlar, şol sanda suw çüwdirimleri we liftleri ulanmak",
+    "title_ru": "Другие услуги по жилищно-коммунальному хозяйству, в том числе фонтанное хозяйство и эксплуатация лифтов",
+    "is_active": true
+  },
+  {
+    "code": "0757",
+    "title_tm": "Suwda halas etmek",
+    "title_ru": "Спасение на водах",
+    "is_active": true
+  },
+  {
+    "code": "0758",
+    "title_tm": "Ýyladyş enjamlary",
+    "title_ru": "Теплофикационные установки",
+    "is_active": true
+  },
+  {
+    "code": "0759",
+    "title_tm": "Ýaşaýyş jaý-jemagat hojalygy ministrliginiň, müdirlikleriniň, bölümleriniň diwanyny saklamak boýunça çykdajylar",
+    "title_ru": "Расходы по содержанию аппарата министерства, управлениий, отделов жилищно-коммунального хозяйства",
+    "is_active": true
+  },
+  {
+    "code": "0800",
+    "title_tm": "Dynç alşy guramak we medeniýet babatyndaky işler",
+    "title_ru": "Организация отдыха и деятельность в сфере культуры",
+    "is_active": true
+  },
+  {
+    "code": "0810",
+    "title_tm": "Dynç alşy guramak",
+    "title_ru": "Организация отдыха",
+    "is_active": true
+  },
+  {
+    "code": "0811",
+    "title_tm": "Sport çäreleri",
+    "title_ru": "Спортивные мероприятия",
+    "is_active": true
+  },
+  {
+    "code": "0813",
+    "title_tm": "Suw-sagaldyş çäreleri",
+    "title_ru": "Водно-оздоровительные мероприятия",
+    "is_active": true
+  },
+  {
+    "code": "0814",
+    "title_tm": "Dynç alşy guramak boýunça beýleki çäreler",
+    "title_ru": "Другие мероприятия по организации отдыха",
+    "is_active": true
+  },
+  {
+    "code": "0820",
+    "title_tm": "Medeniýet baradaky işler",
+    "title_ru": "Деятельность в области культуры",
+    "is_active": true
+  },
+  {
+    "code": "0821",
+    "title_tm": "Kitaphanalar",
+    "title_ru": "Библиотеки",
+    "is_active": true
+  },
+  {
+    "code": "0822",
+    "title_tm": "Muzeýler we sergiler",
+    "title_ru": "Музеи и выставки",
+    "is_active": true
+  },
+  {
+    "code": "0823",
+    "title_tm": "Medeniýet köşkleri we öýleri, klublar we klub görnüşli beýleki edaralar",
+    "title_ru": "Дворцы и дома культуры, клубы и другие учреждения клубного типа",
+    "is_active": true
+  },
+  {
+    "code": "0824",
+    "title_tm": "Teatrlary, filarmoniýalary, sazçylyk kollektiwlerini, ansambllary we sungat boýunça beýleki çäreleri maliýeleşdirmek",
+    "title_ru": "Финансирование театров, филармоний, музыкальных коллективов и ансамблей и прочих мероприятий по искусству",
+    "is_active": true
+  },
+  {
+    "code": "0825",
+    "title_tm": "Kino önümçiligini maliýeleşdirmek",
+    "title_ru": "Финансирование кинопроизводства",
+    "is_active": true
+  },
+  {
+    "code": "0826",
+    "title_tm": "Beýleki medeni aň-bilim edaralary we çäreleri",
+    "title_ru": "Прочие культурно-просветительные учреждения и мероприятия",
+    "is_active": true
+  },
+  {
+    "code": "0830",
+    "title_tm": "Köpçülikleýin habar beriş serişdeleri we neşirýat hyzmatlary",
+    "title_ru": "Средства массовой информации и издательские услуги",
+    "is_active": true
+  },
+  {
+    "code": "0831",
+    "title_tm": "Telewideniýe we radioýaýlymlar",
+    "title_ru": "Телевидение и радиовещание",
+    "is_active": true
+  },
+  {
+    "code": "0832",
+    "title_tm": "Döwürleýin metbugat we neşirýatlar",
+    "title_ru": "Периодическая печать и издательства",
+    "is_active": true
+  },
+  {
+    "code": "0840",
+    "title_tm": "Dynç alşy guramak we dynç alyş babatyndaky beýleki çykdajylary maliýeleşdirmek",
+    "title_ru": "Финансирование других расходов по организации отдыха и деятельности в сфере культуры",
+    "is_active": true
+  },
+  {
+    "code": "0841",
+    "title_tm": "Ministrlikleriň, pudak edaralarynyň müdirlikleriniň, medeniýet, sport we ýaşlar syýasaty bölümleriniň diwanyny saklamak boýunça çykdajylar",
+    "title_ru": "Расходы по содержанию аппарата министерств, ведомств, управлений, отделов культуры, спорта",
+    "is_active": true
+  },
+  {
+    "code": "0842",
+    "title_tm": "Merkezleşdirilen hasapçylyk bölümlerini saklamak boýunça çykdajylar",
+    "title_ru": "Расходы по содержанию централизованных бухгалтерий",
+    "is_active": true
+  },
+  {
+    "code": "0843",
+    "title_tm": "Halkara oýunlaryny geçirmek boýunça ýerine ýetiriji komitetini saklamak",
+    "title_ru": "Содержание исполнительного комитета по проведения международной игр",
+    "is_active": true
+  },
+  {
+    "code": "0844",
+    "title_tm": "Beýleki çykdajylar",
+    "title_ru": "Другие расходы",
+    "is_active": true
+  },
+  {
+    "code": "0900",
+    "title_tm": "Ýangyç-energetika toplumy",
+    "title_ru": "Топливно-энергетический комплекс",
+    "is_active": true
+  },
+  {
+    "code": "0910",
+    "title_tm": "Energetiki binalaryny gurmak üçin çykdajylar",
+    "title_ru": "Расходы по строительству энергетических объектов",
+    "is_active": true
+  },
+  {
+    "code": "0920",
+    "title_tm": "Elektrik energiýasyny öndürmek bilen baglanyşykly harajatlaryň üstüni ýapmak üçin ýardamlar (subsidiýalar)",
+    "title_ru": "Субсидии на покрытие затрат, связанные с производственным электроэнергии",
+    "is_active": true
+  },
+  {
+    "code": "0930",
+    "title_tm": "Şäherleri yşyklandyrmak üçin harajatlar bilen baglanyşykly çykdajylar",
+    "title_ru": "Расходы, связанные с затратами на освещение городов",
+    "is_active": true
+  },
+  {
+    "code": "0931",
+    "title_tm": "Şäherleri yşyklandyrmak üçin harajatlar bilen baglanyşykly çykdajylar",
+    "title_ru": "Расходы, связанные с освещением городов",
+    "is_active": true
+  },
+  {
+    "code": "0940",
+    "title_tm": "Içerki gaz geçiriji ulgamlary bilen baglanyşykly çykdajylar",
+    "title_ru": "Расходы, связанные с внутренними газопроводными системами",
+    "is_active": true
+  },
+  {
+    "code": "0941",
+    "title_tm": "Içerki gaz geçiriji ulgamlary boýunça çykdajylar",
+    "title_ru": "Расходы по внутренним газопроводным системам",
+    "is_active": true
+  },
+  {
+    "code": "1000",
+    "title_tm": "Oba hojalyk toplumy",
+    "title_ru": "Агропромышленный комплекс",
+    "is_active": true
+  },
+  {
+    "code": "1010",
+    "title_tm": "Oba hojalygy",
+    "title_ru": "Сельское хозяйство",
+    "is_active": true
+  },
+  {
+    "code": "1012",
+    "title_tm": "Weterinariýa gullugy",
+    "title_ru": "Ветеринарная служба",
+    "is_active": true
+  },
+  {
+    "code": "1015",
+    "title_tm": "Atçylyk",
+    "title_ru": "Коневодство",
+    "is_active": true
+  },
+  {
+    "code": "1017",
+    "title_tm": "Oba hojalygy boýunça gaýry edaralar we çäreler",
+    "title_ru": "Прочие учреждения и мероприятия  по сельскому хозяйству",
+    "is_active": true
+  },
+  {
+    "code": "1018",
+    "title_tm": "Oba hojalygy babatynda barlaglar we synag taslamalary",
+    "title_ru": "Исследования и экспериментальные разработки в области сельского хозяйства",
+    "is_active": true
+  },
+  {
+    "code": "1019",
+    "title_tm": "Oba gurluşygy",
+    "title_ru": "Сельское строительство",
+    "is_active": true
+  },
+  {
+    "code": "1020",
+    "title_tm": "Suw hojalygy",
+    "title_ru": "Водное хозяйство",
+    "is_active": true
+  },
+  {
+    "code": "1030",
+    "title_tm": "Tokaý hojalygy",
+    "title_ru": "Лесное хозяйство",
+    "is_active": true
+  },
+  {
+    "code": "1040",
+    "title_tm": "Balyk hojalygy",
+    "title_ru": "Рыбное хозяйство",
+    "is_active": true
+  },
+  {
+    "code": "1060",
+    "title_tm": "Agrosenagat toplumy babatynda beýleki işler",
+    "title_ru": "Другая деятельность в области агропромышленного комплекса",
+    "is_active": true
+  },
+  {
+    "code": "1061",
+    "title_tm": "Ministrlikleriň, pudak edaralarynyň diwanyny saklamak",
+    "title_ru": "Содержание аппарата министерств, ведомств",
+    "is_active": true
+  },
+  {
+    "code": "1062",
+    "title_tm": "Beýleki çykdajylar",
+    "title_ru": "Другие расходы",
+    "is_active": true
+  },
+  {
+    "code": "1100",
+    "title_tm": "Gazylyp alynýan peýdaly baýlyklar, gurluşyk we binagärçilik",
+    "title_ru": "Полезные ископаемые, строительство и архитектура",
+    "is_active": true
+  },
+  {
+    "code": "1110",
+    "title_tm": "Gazylyp alynýan peýdaly baýlyklar",
+    "title_ru": "Полезные ископаемые",
+    "is_active": true
+  },
+  {
+    "code": "1120",
+    "title_tm": "Gurluşyk we binagärçilik",
+    "title_ru": "Строительство и архитектура",
+    "is_active": true
+  },
+  {
+    "code": "1121",
+    "title_tm": "Gurluşyk we binagärçilik",
+    "title_ru": "Строительство и архитектура",
+    "is_active": true
+  },
+  {
+    "code": "1122",
+    "title_tm": "Ýollary gurmak we abatlamak",
+    "title_ru": "Строительство и ремонт дорог",
+    "is_active": true
+  },
+  {
+    "code": "1200",
+    "title_tm": "Ulaglar we aragatnaşyk",
+    "title_ru": "Транспорт и связь",
+    "is_active": true
+  },
+  {
+    "code": "1210",
+    "title_tm": "Awtoýol ulagy",
+    "title_ru": "Автодорожный транспорт",
+    "is_active": true
+  },
+  {
+    "code": "1211",
+    "title_tm": "Awtomobil ulagy",
+    "title_ru": "Автомобильный транспорт",
+    "is_active": true
+  },
+  {
+    "code": "1212",
+    "title_tm": "Trolleýbus hojalygy",
+    "title_ru": "Троллейбусное хозяйство",
+    "is_active": true
+  },
+  {
+    "code": "1220",
+    "title_tm": "Ýol gaznasy",
+    "title_ru": "Дорожный фонд",
+    "is_active": true
+  },
+  {
+    "code": "1230",
+    "title_tm": "Suw ulaglary",
+    "title_ru": "Водный транспорт",
+    "is_active": true
+  },
+  {
+    "code": "1231",
+    "title_tm": "Deňiz we derýa ulaglary",
+    "title_ru": "Морской и речной транспорт",
+    "is_active": true
+  },
+  {
+    "code": "1240",
+    "title_tm": "Demir ýol ulaglary",
+    "title_ru": "Железнодорожный транспорт",
+    "is_active": true
+  },
+  {
+    "code": "1250",
+    "title_tm": "Howa ulaglary",
+    "title_ru": "Воздушный транспорт",
+    "is_active": true
+  },
+  {
+    "code": "1260",
+    "title_tm": "Aragatnaşyk",
+    "title_ru": "Связь",
+    "is_active": true
+  },
+  {
+    "code": "1261",
+    "title_tm": "Aragatnaşyk pudagynyň edaralary we çäreler",
+    "title_ru": "Учреждения и мероприятия отрасли связи",
+    "is_active": true
+  },
+  {
+    "code": "1270",
+    "title_tm": "Ulag we kommunikasiýalar boýunça çykdajylar",
+    "title_ru": "Расходы по транспорту и коммуникациям",
+    "is_active": true
+  },
+  {
+    "code": "1271",
+    "title_tm": "Ulag we kommunikasiýalar agentliginiň diwanyny saklamak üçin çykdajylar",
+    "title_ru": "Расходы на содержание аппарата Агентства транспорта и коммуникаций",
+    "is_active": true
+  },
+  {
+    "code": "1300",
+    "title_tm": "Ykdysady iş bilen baglanyşykly beýleki çykdajylar",
+    "title_ru": "Другие расходы, связанные с экономической деятельностью",
+    "is_active": true
+  },
+  {
+    "code": "1310",
+    "title_tm": "Döwlet gorlary we ätiýaçlyklary",
+    "title_ru": "Государственные запасы и резервы",
+    "is_active": true
+  },
+  {
+    "code": "1330",
+    "title_tm": "Beýleki çykdajylar",
+    "title_ru": "Другие расходы",
+    "is_active": true
+  },
+  {
+    "code": "1331",
+    "title_tm": "Beýleki çykdajylar",
+    "title_ru": "Другие расходы",
+    "is_active": true
+  },
+  {
+    "code": "1332",
+    "title_tm": "Ministrlikleriň, pudak edaralarynyň diwanyny saklamak",
+    "title_ru": "Содержание аппарата министерств, ведомств",
+    "is_active": true
+  },
+  {
+    "code": "1340",
+    "title_tm": "\"Aralýaka\" ekologiýa maksatnamasy",
+    "title_ru": "Экологическая программа \"Приаралье\"",
+    "is_active": true
+  },
+  {
+    "code": "1400",
+    "title_tm": "Esasy toparlara degişli edilmedik çykdajylar",
+    "title_ru": "Расходы, не отнесенные к основным группам",
+    "is_active": true
+  },
+  {
+    "code": "1440",
+    "title_tm": "Ätiýaçlyk gorlary",
+    "title_ru": "Резервные фонды",
+    "is_active": true
+  },
+  {
+    "code": "1441",
+    "title_tm": "Türkmenistanyň Hökümetiniň ätiýaçlyk gory",
+    "title_ru": "Резервный фонд Правительства Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "1442",
+    "title_tm": "Häkimlikleriň we geňeşlikleriň garaşylmadyk çykdajylar gorlary",
+    "title_ru": "Фонды непредвиденных расходов хякимликов и генгешликов",
+    "is_active": true
+  },
+  {
+    "code": "1443",
+    "title_tm": "Telekeçiligi döwlet tarapyndan goldamak gory",
+    "title_ru": "Фонд государственной поддержки предпринимательства",
+    "is_active": true
+  },
+  {
+    "code": "1444",
+    "title_tm": "Adatdan daşary ýagdaýlar gory",
+    "title_ru": "Фонд чрезвычайных ситуаций",
+    "is_active": true
+  },
+  {
+    "code": "1445",
+    "title_tm": "Beýleki ätiýaçlyk gorlary",
+    "title_ru": "Другие резервные фонды",
+    "is_active": true
+  },
+  {
+    "code": "1450",
+    "title_tm": "Beýleki çykdajylar",
+    "title_ru": "Другие расходы",
+    "is_active": true
+  },
+  {
+    "code": "1451",
+    "title_tm": "Beýleki çykdajylar",
+    "title_ru": "Другие расходы",
+    "is_active": true
+  },
+  {
+    "code": "1452",
+    "title_tm": "Kiçi we orta telekeçiligi goldamak bilen baglanyşykly çykdajylar",
+    "title_ru": "Расходы, связанные с поддержкой малого и среднего предпринимательства",
+    "is_active": true
+  },
+  {
+    "code": "1453",
+    "title_tm": "Türkmenistanyň Prezidentiniň kararlary boýunça sylaglamak we baýrak bermek bilen baglanyşykly çykdajylar",
+    "title_ru": "Расходы связанные с награждением и премированием по решениям Президента Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "1454",
+    "title_tm": "Jemgyýetçilik guramalaryna maliýe kömegi üçin çykdajylar",
+    "title_ru": "Расходы на финансовую помощь общественным организациям",
+    "is_active": true
+  },
+  {
+    "code": "1500",
+    "title_tm": "Döwlet dolandyryşynyň beýleki derejelerine geçirmeler (transfertler)",
+    "title_ru": "Взаимные расчеты между другими уровнями государственного управления",
+    "is_active": true
+  },
+  {
+    "code": "1510",
+    "title_tm": "Döwlet dolandyryşynyň beýleki derejelerine geçirmeler (transfertler)",
+    "title_ru": "Трансферты другим уровням государственного управления",
+    "is_active": true
+  },
+  {
+    "code": "1511",
+    "title_tm": "Dotasiýalar (deňeçerlemek üçin aşakdaky býujetlere berilýän serişdeler)",
+    "title_ru": "Дотации (выделяемые средства для сбалансирования нижестоящих бюджетов)",
+    "is_active": true
+  },
+  {
+    "code": "1512",
+    "title_tm": "Deňeçerlemek üçin ýokardaky býujetlere berilýän serişdeler",
+    "title_ru": "Выделяемые средства для сбалансирования вышестоящих бюджетов",
+    "is_active": true
+  },
+  {
+    "code": "1513",
+    "title_tm": "Özara hasaplaşyk boýunça ýokardaky býujetlere berilýän serişdeler",
+    "title_ru": "Средства, передаваемые по взаимным расчетам в вышестоящие бюджеты",
+    "is_active": true
+  },
+  {
+    "code": "1514",
+    "title_tm": "Özara hasaplaşyklar boýunça aşakdaky býujetlere berilýän serişdeler",
+    "title_ru": "Средства, передаваемые по взаимным расчетам в нижестоящие бюджеты",
+    "is_active": true
+  },
+  {
+    "code": "1515",
+    "title_tm": "Beýleki geçirmeler (transfertler)",
+    "title_ru": "Другие трансферты",
+    "is_active": true
+  },
+  {
+    "code": "1516",
+    "title_tm": "Pensiýa gaznasyna döwlet durmuş ätiýaçlandyrmasyndan gelýän serişdeleriň geçirmeleri",
+    "title_ru": "Передача средств на государственное социальное страхование в Пенсионный фонд",
+    "is_active": true
+  },
+  {
+    "code": "1600",
+    "title_tm": "Döwlet bergilerini tölemek üçin çykdajylar",
+    "title_ru": "Расходы по уплате государственных долгов",
+    "is_active": true
+  },
+  {
+    "code": "1610",
+    "title_tm": "Bergileriň esasy möçberini tölemek",
+    "title_ru": "Выплаты основной суммы долга",
+    "is_active": true
+  },
+  {
+    "code": "1611",
+    "title_tm": "Içerki bergileriň esasy möçberini tölemek",
+    "title_ru": "Выплата основной суммы внутреннего долга",
+    "is_active": true
+  },
+  {
+    "code": "1612",
+    "title_tm": "Daşarky bergileriň esasy möçberini tölemek",
+    "title_ru": "Выплата основной суммы внешнего долга",
+    "is_active": true
+  },
+  {
+    "code": "1620",
+    "title_tm": "Karzlaryň göterimlerini tölemek boýunça çykdajylar we karzlara hyzmat etmek boýunça gaýry çykdajylar",
+    "title_ru": "Расходы по выплате процентов за кредит и другие расходы по обслуживанию кредитов",
+    "is_active": true
+  },
+  {
+    "code": "1621",
+    "title_tm": "Içerki bergileriň göterimlerini tölemek boýunça çykdajylar we karzlara hyzmat etmek boýunça gaýry çykdajylar",
+    "title_ru": "Расходы по выплате процентов по внутреннему долгу и другие расходы по обслуживанию кредитов",
+    "is_active": true
+  },
+  {
+    "code": "1623",
+    "title_tm": "Daşarky bergileriň göterimlerini tölemek boýunça çykdajylar we karzlara hyzmat etmek boýunça gaýry çykdajylar",
+    "title_ru": "Расходы по выплате процентов по внешнему долгу и другие расходы по обслуживанию кредитов",
+    "is_active": true
+  },
+  {
+    "code": "1700",
+    "title_tm": "Içerki we daşarky karz bermeler",
+    "title_ru": "Внутреннее и внешнее кредитование",
+    "is_active": true
+  },
+  {
+    "code": "1710",
+    "title_tm": "Içerki karz bermeler",
+    "title_ru": "Внутреннее кредитование",
+    "is_active": true
+  },
+  {
+    "code": "1711",
+    "title_tm": "Içerki karz bermek",
+    "title_ru": "Внутреннее кредитование",
+    "is_active": true
+  },
+  {
+    "code": "1720",
+    "title_tm": "Daşary ýurtlara karz bermeler",
+    "title_ru": "Кредитование зарубежных государств",
+    "is_active": true
+  },
+  {
+    "code": "1721",
+    "title_tm": "Daşary ýurtlara karz bermeler",
+    "title_ru": "Кредитование зарубежных государств",
+    "is_active": true
+  }
+]

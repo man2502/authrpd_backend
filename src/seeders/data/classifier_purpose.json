@@ -1,0 +1,266 @@
+[
+  {
+    "code": "01",
+    "title_tm": "Mejlisiň diwanyny saklamak",
+    "title_ru": "Содержание Аппарата Меджлиса",
+    "is_active": true
+  },
+  {
+    "code": "02",
+    "title_tm": "Türkmenistanyň Prezidentiniň we Ministrler Kabinetiniň diwanyny saklamak",
+    "title_ru": "Содержание аппарата Президента и Кабинета Министров Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "03",
+    "title_tm": "Häkimlikleri we geňeşlikleri saklamak",
+    "title_ru": "Содержание хякимликов и генгешликов",
+    "is_active": true
+  },
+  {
+    "code": "04",
+    "title_tm": "Ministrlikleriň we pudak edaralarynyň merkezi diwanyny saklamak",
+    "title_ru": "Содержание центрального аппарата министерств, ведомств",
+    "is_active": true
+  },
+  {
+    "code": "05",
+    "title_tm": "Ministrlikleriň we pudak edaralarynyň ýerli edaralaryny saklamak",
+    "title_ru": "Содержание местных органов министерств, ведомств",
+    "is_active": true
+  },
+  {
+    "code": "06",
+    "title_tm": "Raýat ýagdaýynyň namalarynyň ýazgylary (RÝNÝ) bölümlerini saklamak üçin çykdajylar",
+    "title_ru": "Расходы на содержание отделов ЗАГС",
+    "is_active": true
+  },
+  {
+    "code": "07",
+    "title_tm": "Hökümet çäreleri üçin çykdajylar",
+    "title_ru": "Расходы на правительственные мероприятия",
+    "is_active": true
+  },
+  {
+    "code": "08",
+    "title_tm": "Içeri işler edaralarynyň bölümleri",
+    "title_ru": "Подразделения органов внутренних дел",
+    "is_active": true
+  },
+  {
+    "code": "09",
+    "title_tm": "Içerki goşunlar",
+    "title_ru": "Внутренние войска",
+    "is_active": true
+  },
+  {
+    "code": "10",
+    "title_tm": "Sagdyn jemgyýet howpsuzlygyny goraýyş merkezi edarany saklamak",
+    "title_ru": "Содержание центрального аппарата по охране безопастности здорового общества",
+    "is_active": true
+  },
+  {
+    "code": "11",
+    "title_tm": "Sagdyn jemgyýet howpsuzlygyny goraýyş ýerli edarany saklamak",
+    "title_ru": "Содержание местных органов по охране безопастности здорового общества",
+    "is_active": true
+  },
+  {
+    "code": "15",
+    "title_tm": "Ýokary kazyýeti saklamak üçin çykdajylar",
+    "title_ru": "Расходы на содержание Верховного суда",
+    "is_active": true
+  },
+  {
+    "code": "16",
+    "title_tm": "Welaýat we şäher kazyýetlerini saklamak üçin çykdajylar",
+    "title_ru": "Расходы на содержание велаятских и городских судов",
+    "is_active": true
+  },
+  {
+    "code": "17",
+    "title_tm": "Etrap kazyýetlerini saklamak üçin çykdajylar",
+    "title_ru": "Расходы на содержание этрапских судов",
+    "is_active": true
+  },
+  {
+    "code": "18",
+    "title_tm": "Kepillendiriş (notarius) edaralary saklamak üçin çykdajylar",
+    "title_ru": "Расходы на содержание нотариальных контор",
+    "is_active": true
+  },
+  {
+    "code": "19",
+    "title_tm": "Kazyýet seljeriş gullugyny saklamak üçin çykdajylar",
+    "title_ru": "Расходы на содержание службы судебного разбирательства",
+    "is_active": true
+  },
+  {
+    "code": "20",
+    "title_tm": "Prokuraturany saklamak üçin çykdajylar",
+    "title_ru": "Расходы на содержание Прокуратуры",
+    "is_active": true
+  },
+  {
+    "code": "21",
+    "title_tm": "Prokuraturanyň ýerli edaralaryny saklamak üçin çykdajylar",
+    "title_ru": "Расходы на содержание местных органов Прокуратуры",
+    "is_active": true
+  },
+  {
+    "code": "25",
+    "title_tm": "Ýol gözegçilik (patrul) gullugynyň we ýol gözegçiliginiň (patrulynyň) bölümleri",
+    "title_ru": "Подразделения дорожно-патрульной службы и дорожного патруля",
+    "is_active": true
+  },
+  {
+    "code": "27",
+    "title_tm": "Salgy-sowal býurolaryny saklamak",
+    "title_ru": "Содержание адресно-справочных бюро",
+    "is_active": true
+  },
+  {
+    "code": "29",
+    "title_tm": "Kämillik ýaşyna ýetmedikleriň işleri baradaky inspeksiýa",
+    "title_ru": "Инспекция по делам несовершеннолетних",
+    "is_active": true
+  },
+  {
+    "code": "30",
+    "title_tm": "Kämillik ýaşyna ýetmedikler üçin kabul edijiler-bölüjiler",
+    "title_ru": "Приемники–распределители для несовершеннолетних",
+    "is_active": true
+  },
+  {
+    "code": "31",
+    "title_tm": "Kabul edijiler-bölüjiler",
+    "title_ru": "Приемники–распределители",
+    "is_active": true
+  },
+  {
+    "code": "32",
+    "title_tm": "Içeri işleriň beýleki edaralary",
+    "title_ru": "Другие учреждения органов внутренних дел",
+    "is_active": true
+  },
+  {
+    "code": "35",
+    "title_tm": "Başlangyç we orta mekdepler",
+    "title_ru": "Школы начальные и средние",
+    "is_active": true
+  },
+  {
+    "code": "36",
+    "title_tm": "Ýörite mekdepler",
+    "title_ru": "Специальные школы",
+    "is_active": true
+  },
+  {
+    "code": "37",
+    "title_tm": "Mekdep-internatlar",
+    "title_ru": "Школы-интернаты",
+    "is_active": true
+  },
+  {
+    "code": "38",
+    "title_tm": "Aýratyn düzgünli mekdep-internatlar",
+    "title_ru": "Школы-интернаты с особым режимом",
+    "is_active": true
+  },
+  {
+    "code": "39",
+    "title_tm": "Saglygy dikeldiş merkezi internat-mekdepleri",
+    "title_ru": "Школа-интернат с реабилитационным центром",
+    "is_active": true
+  },
+  {
+    "code": "42",
+    "title_tm": "Liseýler",
+    "title_ru": "Лицеи",
+    "is_active": true
+  },
+  {
+    "code": "43",
+    "title_tm": "Türkmenistanyň Bilim ministrliginiň ýörite orta okuw mekdepleri",
+    "title_ru": "Средние специальные учебные заведения Министерства образования Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "44",
+    "title_tm": "Türkmenistanyň Medeniýet we teleradioýaýlymlar ministrliginiň ýörite orta okuw mekdepleri",
+    "title_ru": "Средние специальные учебные заведения Министерства культуры и телерадиовещания Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "45",
+    "title_tm": "Türkmenistanyň Saglygy goraýyş we derman senagaty ministrliginiň ýörite orta okuw mekdepleri",
+    "title_ru": "Средние специальные учебные заведения Министерства здравоохранения и медицинской промышленности Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "46",
+    "title_tm": "Türkmenistanyň Bilim ministrliginiň mekdepden daşary edaralary",
+    "title_ru": "Внешкольные учреждения Министерства образования Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "47",
+    "title_tm": "Türkmenistanyň Medeniýet we teleradioýaýlymlar ministrliginiň çeperçelik mekdepleri",
+    "title_ru": "Художественные школы Министерства культуры и телерадиовещания Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "48",
+    "title_tm": "Türkmenistanyň Medeniýet we teleradioýaýlymlar ministrliginiň sungat mekdepleri",
+    "title_ru": "Школы искусств Министерства культуры и телерадиовещания Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "49",
+    "title_tm": "Garrylar we maýyplar üçin öý–internatlar",
+    "title_ru": "Дома-интернаты для престарелых и инвалидов",
+    "is_active": true
+  },
+  {
+    "code": "50",
+    "title_tm": "Kiçi ýaşly maýyplar üçin öý–internatlar",
+    "title_ru": "Дома-интернаты для малолетних инвалидов",
+    "is_active": true
+  },
+  {
+    "code": "51",
+    "title_tm": "Ýeke ýaşaýan urşa gatnaşan we uruş maýyplary üçin öý–internatlar",
+    "title_ru": "Дома-интернаты для одиноких участников и инвалидов войны",
+    "is_active": true
+  },
+  {
+    "code": "52",
+    "title_tm": "Türkmenistanyň Medeniýet ministrliginiň edaralarynyň diwanyny saklamak boýunça çykdajylar",
+    "title_ru": "Расходы на содержание аппарата учреждений Министерства культуры Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "53",
+    "title_tm": "Türkmenistanyň Sport we ýaşlar syýasaty ministrliginiň edaralarynyň diwanyny saklamak boýunça çykdajylar",
+    "title_ru": "Расходы на содержание аппарата учреждений Министерства спорта и молодежной политики Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "60",
+    "title_tm": "Weterinariýa gulluklary",
+    "title_ru": "Ветеринарных служб",
+    "is_active": true
+  },
+  {
+    "code": "61",
+    "title_tm": "Weterinariýa gulluklaryň barlaghanalary",
+    "title_ru": "Лаборатории ветеринарных служб",
+    "is_active": true
+  },
+  {
+    "code": "62",
+    "title_tm": "Epizootiýa garşy çäreler",
+    "title_ru": "Противоэпизоотические мероприятия",
+    "is_active": true
+  }
+]

@@ -21,6 +21,8 @@ module.exports = {
         ministry_id: 'M01',
         financing_type: 'LOCAL',
         tax_code: '123456789',
+        classifier_purpose_id: 'P001',
+        classifier_functional_id: 'F001',
         is_active: true,
       },
       {
@@ -29,7 +31,9 @@ module.exports = {
         title_ru: 'Балканская школа',
         region_id: '11',
         ministry_id: 'M02',
+        classifier_purpose_id: 'P002',
         financing_type: 'CENTRAL',
+        classifier_functional_id: 'F002',
         tax_code: '987654321',
         is_active: true,
       },

@@ -18,3 +18,4 @@ yarn-error.log
 yarn-debug.log*
 .vscode/
 data/
+!src/seeders/data/

@@ -64,38 +64,27 @@ module.exports = {
 
     // Role-Permission links - используем findOrCreate для идемпотентности
     // Примечание: таблица role_permission не имеет timestamps (created_at/updated_at)
-    await RolePermission.findOrCreate({
-      where: {
-        role_id: superAdminRole.id,
-        permission_id: catalogRead.id,
-      },
-      defaults: {
-        role_id: superAdminRole.id,
-        permission_id: catalogRead.id,
-      },
+    
+    // Assign all permissions to SUPERADMIN role
+    // Get all active permissions from database (including those from seed-permissions-all.js)
+    // This ensures superadmin has all permissions, even if new ones are added later
+    const allPermissions = await Permission.findAll({
+      where: { is_active: true },
     });
 
-    await RolePermission.findOrCreate({
-      where: {
-        role_id: superAdminRole.id,
-        permission_id: catalogWrite.id,
-      },
-      defaults: {
-        role_id: superAdminRole.id,
-        permission_id: catalogWrite.id,
-      },
-    });
-
-    await RolePermission.findOrCreate({
-      where: {
-        role_id: superAdminRole.id,
-        permission_id: rbacManage.id,
-      },
-      defaults: {
-        role_id: superAdminRole.id,
-        permission_id: rbacManage.id,
-      },
-    });
+    // Assign all permissions to superadmin
+    for (const permission of allPermissions) {
+      await RolePermission.findOrCreate({
+        where: {
+          role_id: superAdminRole.id,
+          permission_id: permission.id,
+        },
+        defaults: {
+          role_id: superAdminRole.id,
+          permission_id: permission.id,
+        },
+      });
+    }
   },
 
   async down(queryInterface, Sequelize) {
