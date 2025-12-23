@@ -40,7 +40,7 @@ const idValidator = Joi.number().integer().positive().required()
 const codeValidator = Joi.string()
   .trim()
   .uppercase()
-  .pattern(/^[A-Z0-9]+$/)
+  .pattern(/^[0-9]+$/)
   .min(1)
   .max(50)
   .required()
@@ -92,6 +92,7 @@ const paginationValidator = Joi.object({
  * Parameters:
  * - lang: Language code ('tm' or 'ru'), defaults to 'tm'
  * - localized: Boolean flag to control localization (true = single title field, false = both title_tm and title_ru)
+ * - is_active: Boolean flag to filter by active status (true = only active, false = only inactive, undefined = all)
  */
 const langQueryValidator = Joi.object({
   lang: Joi.string().valid('tm', 'ru').default('tm')
@@ -102,6 +103,10 @@ const langQueryValidator = Joi.object({
   localized: Joi.boolean().default(true)
     .messages({
       'boolean.base': 'localized must be a boolean',
+    }),
+  is_active: Joi.boolean().optional()
+    .messages({
+      'boolean.base': 'is_active must be a boolean',
     }),
 });
 

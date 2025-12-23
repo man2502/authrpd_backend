@@ -55,9 +55,14 @@ async function getCatalogVersions() {
 }
 
 // Regions
-async function getRegions() {
+async function getRegions(isActive = true) {
+  const whereClause = {};
+  if (isActive !== undefined) {
+    whereClause.is_active = isActive;
+  }
+  
   return await Region.findAll({
-    where: { is_active: true },
+    where: whereClause,
     order: [['code', 'ASC']],
     attributes: {
       include: [
@@ -100,9 +105,14 @@ async function updateRegion(code, data) {
   return region;
 }
 
-async function getRegionByCode(code) {
+async function getRegionByCode(code, isActive = true) {
+  const whereClause = { code };
+  if (isActive !== undefined) {
+    whereClause.is_active = isActive;
+  }
+  
   const region = await Region.findOne({
-    where: { code, is_active: true },
+    where: whereClause,
     attributes: {
       include: [
         [sequelize.col('parent.title_tm'), 'parent_tm'],
@@ -137,9 +147,14 @@ async function deleteRegion(code) {
 }
 
 // Ministries
-async function getMinistries() {
+async function getMinistries(isActive = true) {
+  const whereClause = {};
+  if (isActive !== undefined) {
+    whereClause.is_active = isActive;
+  }
+  
   return await Ministry.findAll({
-    where: { is_active: true },
+    where: whereClause,
     order: [['code', 'ASC']],
     raw: true,
   });
@@ -173,9 +188,14 @@ async function updateMinistry(code, data) {
   return ministry;
 }
 
-async function getMinistryByCode(code) {
+async function getMinistryByCode(code, isActive = true) {
+  const whereClause = { code };
+  if (isActive !== undefined) {
+    whereClause.is_active = isActive;
+  }
+  
   const ministry = await Ministry.findOne({
-    where: { code, is_active: true },
+    where: whereClause,
     raw: true,
   });
   if (!ministry) {
@@ -201,9 +221,14 @@ async function deleteMinistry(code) {
 }
 
 // Organizations
-async function getOrganizations() {
+async function getOrganizations(isActive = true) {
+  const whereClause = {};
+  if (isActive !== undefined) {
+    whereClause.is_active = isActive;
+  }
+  
   return await Organization.findAll({
-    where: { is_active: true },
+    where: whereClause,
     order: [['code', 'ASC']],
     attributes: {
       include: [
@@ -253,9 +278,14 @@ async function updateOrganization(code, data) {
   return organization;
 }
 
-async function getOrganizationByCode(code) {
+async function getOrganizationByCode(code, isActive = true) {
+  const whereClause = { code };
+  if (isActive !== undefined) {
+    whereClause.is_active = isActive;
+  }
+  
   const organization = await Organization.findOne({
-    where: { code, is_active: true },
+    where: whereClause,
     attributes: {
       include: [
         [sequelize.col('region.title_tm'), 'region_tm'],
@@ -302,9 +332,14 @@ async function deleteOrganization(code) {
 }
 
 // Classifier Economic
-async function getClassifierEconomic() {
+async function getClassifierEconomic(isActive = true) {
+  const whereClause = {};
+  if (isActive !== undefined) {
+    whereClause.is_active = isActive;
+  }
+  
   return await ClassifierEconomic.findAll({
-    where: { is_active: true },
+    where: whereClause,
     order: [['code', 'ASC']],
     raw: true,
   });
@@ -338,9 +373,14 @@ async function updateClassifierEconomic(code, data) {
   return item;
 }
 
-async function getClassifierEconomicByCode(code) {
+async function getClassifierEconomicByCode(code, isActive = true) {
+  const whereClause = { code };
+  if (isActive !== undefined) {
+    whereClause.is_active = isActive;
+  }
+  
   const item = await ClassifierEconomic.findOne({
-    where: { code, is_active: true },
+    where: whereClause,
     raw: true,
   });
   if (!item) {
@@ -366,9 +406,14 @@ async function deleteClassifierEconomic(code) {
 }
 
 // Classifier Purpose
-async function getClassifierPurpose() {
+async function getClassifierPurpose(isActive = true) {
+  const whereClause = {};
+  if (isActive !== undefined) {
+    whereClause.is_active = isActive;
+  }
+  
   return await ClassifierPurpose.findAll({
-    where: { is_active: true },
+    where: whereClause,
     order: [['code', 'ASC']],
     raw: true,
   });
@@ -402,9 +447,14 @@ async function updateClassifierPurpose(code, data) {
   return item;
 }
 
-async function getClassifierPurposeByCode(code) {
+async function getClassifierPurposeByCode(code, isActive = true) {
+  const whereClause = { code };
+  if (isActive !== undefined) {
+    whereClause.is_active = isActive;
+  }
+  
   const item = await ClassifierPurpose.findOne({
-    where: { code, is_active: true },
+    where: whereClause,
     raw: true,
   });
   if (!item) {
@@ -430,9 +480,14 @@ async function deleteClassifierPurpose(code) {
 }
 
 // Classifier Functional
-async function getClassifierFunctional() {
+async function getClassifierFunctional(isActive = true) {
+  const whereClause = {};
+  if (isActive !== undefined) {
+    whereClause.is_active = isActive;
+  }
+  
   return await ClassifierFunctional.findAll({
-    where: { is_active: true },
+    where: whereClause,
     order: [['code', 'ASC']],
     raw: true,
   });
@@ -466,9 +521,14 @@ async function updateClassifierFunctional(code, data) {
   return item;
 }
 
-async function getClassifierFunctionalByCode(code) {
+async function getClassifierFunctionalByCode(code, isActive = true) {
+  const whereClause = { code };
+  if (isActive !== undefined) {
+    whereClause.is_active = isActive;
+  }
+  
   const item = await ClassifierFunctional.findOne({
-    where: { code, is_active: true },
+    where: whereClause,
     raw: true,
   });
   if (!item) {
@@ -494,9 +554,14 @@ async function deleteClassifierFunctional(code) {
 }
 
 // Classifier Income
-async function getClassifierIncome() {
+async function getClassifierIncome(isActive = true) {
+  const whereClause = {};
+  if (isActive !== undefined) {
+    whereClause.is_active = isActive;
+  }
+  
   return await ClassifierIncome.findAll({
-    where: { is_active: true },
+    where: whereClause,
     order: [['code', 'ASC']],
     raw: true,
   });
@@ -530,9 +595,14 @@ async function updateClassifierIncome(code, data) {
   return item;
 }
 
-async function getClassifierIncomeByCode(code) {
+async function getClassifierIncomeByCode(code, isActive = true) {
+  const whereClause = { code };
+  if (isActive !== undefined) {
+    whereClause.is_active = isActive;
+  }
+  
   const item = await ClassifierIncome.findOne({
-    where: { code, is_active: true },
+    where: whereClause,
     raw: true,
   });
   if (!item) {
@@ -558,9 +628,14 @@ async function deleteClassifierIncome(code) {
 }
 
 // Banks
-async function getBanks() {
+async function getBanks(isActive = true) {
+  const whereClause = {};
+  if (isActive !== undefined) {
+    whereClause.is_active = isActive;
+  }
+  
   return await Bank.findAll({
-    where: { is_active: true },
+    where: whereClause,
     order: [['id', 'ASC']],
     attributes: {
       include: [
@@ -603,9 +678,14 @@ async function updateBank(id, data) {
   return item;
 }
 
-async function getBankById(id) {
+async function getBankById(id, isActive = true) {
+  const whereClause = { id };
+  if (isActive !== undefined) {
+    whereClause.is_active = isActive;
+  }
+  
   const item = await Bank.findOne({
-    where: { id, is_active: true },
+    where: whereClause,
     attributes: {
       include: [
         [sequelize.col('region.title_tm'), 'region_tm'],
@@ -640,9 +720,14 @@ async function deleteBank(id) {
 }
 
 // Bank Accounts
-async function getBankAccounts() {
+async function getBankAccounts(isActive = true) {
+  const whereClause = {};
+  if (isActive !== undefined) {
+    whereClause.is_active = isActive;
+  }
+  
   return await BankAccount.findAll({
-    where: { is_active: true },
+    where: whereClause,
     order: [['id', 'ASC']],
     attributes: {
       include: [
@@ -688,9 +773,14 @@ async function updateBankAccount(id, data) {
   return item;
 }
 
-async function getBankAccountById(id) {
+async function getBankAccountById(id, isActive = true) {
+  const whereClause = { id };
+  if (isActive !== undefined) {
+    whereClause.is_active = isActive;
+  }
+  
   const item = await BankAccount.findOne({
-    where: { id, is_active: true },
+    where: whereClause,
     attributes: {
       include: [
         [sequelize.col('bank.title_tm'), 'bank_tm'],
@@ -728,9 +818,14 @@ async function deleteBankAccount(id) {
 }
 
 // Fields
-async function getFields() {
+async function getFields(isActive = true) {
+  const whereClause = {};
+  if (isActive !== undefined) {
+    whereClause.is_active = isActive;
+  }
+  
   return await Field.findAll({
-    where: { is_active: true },
+    where: whereClause,
     order: [['id', 'ASC']],
     raw: true,
   });
@@ -764,9 +859,14 @@ async function updateField(id, data) {
   return item;
 }
 
-async function getFieldById(id) {
+async function getFieldById(id, isActive = true) {
+  const whereClause = { id };
+  if (isActive !== undefined) {
+    whereClause.is_active = isActive;
+  }
+  
   const item = await Field.findOne({
-    where: { id, is_active: true },
+    where: whereClause,
     raw: true,
   });
   if (!item) {
@@ -792,9 +892,14 @@ async function deleteField(id) {
 }
 
 // Documents
-async function getDocuments() {
+async function getDocuments(isActive = true) {
+  const whereClause = {};
+  if (isActive !== undefined) {
+    whereClause.is_active = isActive;
+  }
+  
   return await Document.findAll({
-    where: { is_active: true },
+    where: whereClause,
     order: [['id', 'ASC']],
     raw: true,
   });
@@ -828,9 +933,14 @@ async function updateDocument(id, data) {
   return item;
 }
 
-async function getDocumentById(id) {
+async function getDocumentById(id, isActive = true) {
+  const whereClause = { id };
+  if (isActive !== undefined) {
+    whereClause.is_active = isActive;
+  }
+  
   const item = await Document.findOne({
-    where: { id, is_active: true },
+    where: whereClause,
     raw: true,
   });
   if (!item) {

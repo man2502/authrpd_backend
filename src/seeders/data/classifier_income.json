@@ -1,0 +1,1160 @@
+[
+  {
+    "code": "100000",
+    "title_tm": "SALGYT GIRDEJILERI",
+    "title_ru": "НАЛОГОВЫЕ ДОХОДЫ",
+    "is_active": true
+  },
+  {
+    "code": "101000",
+    "title_tm": "Goşulan baha üçin salgyt",
+    "title_ru": "Налог на добавленную стоимость",
+    "is_active": true
+  },
+  {
+    "code": "101010",
+    "title_tm": "Hususy telekeçiler tarapyndan tölenilýän goşulan baha üçin salgyt",
+    "title_ru": "Налог на добавленную стоимость, уплачиваемый индивидуальными предпринимателями",
+    "is_active": true
+  },
+  {
+    "code": "101020",
+    "title_tm": "Gaz boýunça goşulan baha üçin salgyt",
+    "title_ru": "Налог на добавленную стоимость по газу",
+    "is_active": true
+  },
+  {
+    "code": "101030",
+    "title_tm": "Nebit we nebit önümleri boýunça goşulan baha üçin salgyt",
+    "title_ru": "Налог на добавленную стоимость по нефти и нефтепродуктам",
+    "is_active": true
+  },
+  {
+    "code": "101040",
+    "title_tm": "Pagta süýümi boýunça goşulan baha üçin salgyt",
+    "title_ru": "Налог на добавленную стоимость по хлопку-волокну",
+    "is_active": true
+  },
+  {
+    "code": "101050",
+    "title_tm": "Arak, çakyr önümleri boýunça goşulan baha üçin salgyt",
+    "title_ru": "Налог на добавленную стоимость по ликеро-водочной и винодельческой продукциям",
+    "is_active": true
+  },
+  {
+    "code": "101060",
+    "title_tm": "Beýleki harytlar, işler, hyzmatlar boýunça goşulan baha üçin salgyt",
+    "title_ru": "Налог на добавленную стоимость на другие товары, работы, услуги",
+    "is_active": true
+  },
+  {
+    "code": "102000",
+    "title_tm": "Goşmaça tölegler",
+    "title_ru": "Акцизы",
+    "is_active": true
+  },
+  {
+    "code": "102010",
+    "title_tm": "Humarly içgiler (piwodan başga) boýunça goşmaça tölegler",
+    "title_ru": "Акцизы по алкогольным напиткам (за исключением пива)",
+    "is_active": true
+  },
+  {
+    "code": "102020",
+    "title_tm": "Piwo boýunça goşmaça tölegler",
+    "title_ru": "Акцизы по пиву",
+    "is_active": true
+  },
+  {
+    "code": "102030",
+    "title_tm": "Benzin boýunça goşmaça tölegler",
+    "title_ru": "Акцизы по бензину",
+    "is_active": true
+  },
+  {
+    "code": "102040",
+    "title_tm": "Dizel ýangyjy boýunça goşmaça tölegler",
+    "title_ru": "Акцизы по дизельному топливу",
+    "is_active": true
+  },
+  {
+    "code": "102050",
+    "title_tm": "Ýurduň daşyndan getirilýän harytlar boýunça goşmaça tölegler",
+    "title_ru": "Акцизы по товарам, ввозимым из-за границы",
+    "is_active": true
+  },
+  {
+    "code": "102060",
+    "title_tm": "Ýurduň içinde öndürilýän beýleki harytlar boýunça goşmaça tölegler",
+    "title_ru": "Акцизы по другим товарам, производимым внутри страны",
+    "is_active": true
+  },
+  {
+    "code": "102070",
+    "title_tm": "Beýleki harytlar we önümler boýunça goşmaça tölegler",
+    "title_ru": "Акцизы по другим товарам и продукции",
+    "is_active": true
+  },
+  {
+    "code": "103000",
+    "title_tm": "Ýerasty baýlyklardan peýdalanmak üçin salgyt",
+    "title_ru": "Налог за пользование недрами",
+    "is_active": true
+  },
+  {
+    "code": "103010",
+    "title_tm": "Tebigy gaz boýunça ýerasty baýlyklardan peýdalanmak üçin salgyt",
+    "title_ru": "Налог за пользование недрами по природному газу",
+    "is_active": true
+  },
+  {
+    "code": "103020",
+    "title_tm": "Nebit boýunça ýerasty baýlyklardan peýdalanmak üçin salgyt",
+    "title_ru": "Налог за пользование недрами по нефти",
+    "is_active": true
+  },
+  {
+    "code": "103030",
+    "title_tm": "Gazylyp alynýan baýlyklaryň gaýry görnüşleri boýunça ýerasty baýlyklardan peýdalanmak üçin salgyt",
+    "title_ru": "Налог за пользование недрами по другим видам полезных ископаемых",
+    "is_active": true
+  },
+  {
+    "code": "104000",
+    "title_tm": "Emläk üçin salgyt",
+    "title_ru": "Налог на имущество",
+    "is_active": true
+  },
+  {
+    "code": "104010",
+    "title_tm": "Döwlet eýeçiligindäki edara görnüşli taraplardan alynýan emläk üçin salgyt",
+    "title_ru": "Налог на имущество юридических лиц государственной формы собственности",
+    "is_active": true
+  },
+  {
+    "code": "104020",
+    "title_tm": "Döwlet eýeçiligine degişli däl edara görnüşli taraplardan alynýan emläk üçin salgyt",
+    "title_ru": "Налог на имущество юридических лиц негосударственной формы собственности",
+    "is_active": true
+  },
+  {
+    "code": "104030",
+    "title_tm": "Beýleki töleýjilerden alynýan emläk üçin salgyt",
+    "title_ru": "Налог на имущество, взимаемый от других плательщиков",
+    "is_active": true
+  },
+  {
+    "code": "105000",
+    "title_tm": "Edara görnüşli tarapyň peýdasyndan (girdejisinden) alynýan salgyt",
+    "title_ru": "Налог на прибыль (доход) юридических лиц",
+    "is_active": true
+  },
+  {
+    "code": "105010",
+    "title_tm": "Hususy eýeçilikdäki edara görnüşli taraplardan alynýan girdeji salgydy",
+    "title_ru": "Налог на доход, взимаемый с юридических лиц частной формы собственности",
+    "is_active": true
+  },
+  {
+    "code": "105020",
+    "title_tm": "Esaslyk maýasy 100% döwlet eýeçiligine degişli edara görnüşli taraplaryň (ministrlikleriň, pudak edaralarynyň, merkezleşdirilen tabynlykdaky kärhanalaryň, guramalaryň we edaralaryň) peýdasyndan alynýan salgyt",
+    "title_ru": "Налог на прибыль, взимаемый с юридических лиц (министерств, ведомств, пред-приятий, организаций и учреждений централизованного подчинения), уставные фонды которых на 100% принадлежат государству",
+    "is_active": true
+  },
+  {
+    "code": "105030",
+    "title_tm": "Esaslandyryş maýasy 100% döwlet eýeçiligine degişli ýerli tabynlykdaky edara görnüşli taraplaryň, şol sanda alyjylar jemgyýetleriniň birleşikleriniň kärhanalarynyň peýdasyndan alynýan salgyt",
+    "title_ru": "Налог на прибыль, взимаемый с юридических лиц местного подчинения, уставные фонды которых на 100% принадлежат государству, в том числе с предприятий потребительской кооперации",
+    "is_active": true
+  },
+  {
+    "code": "105040",
+    "title_tm": "Daşary ýurt maýa goýumlary bilen döredilen bilelikdäki kärhanalaryň peýdasyndan (girdejisinden) alynýan salgyt",
+    "title_ru": "Налог на прибыль (доход), взимаемый с совместных предприятий, созданных с иностранными инвестициями",
+    "is_active": true
+  },
+  {
+    "code": "105050",
+    "title_tm": "Türkmenistanyň dahyllylary bolup durmaýan edara görnüşli taraplaryň peýdasyndan (girdejisinden) alynýan salgyt",
+    "title_ru": "Налог на прибыль (доход), взимаемый с юридических лиц - нерезидентов Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "105060",
+    "title_tm": "Türkmenistandaky çeşmelerden alnan girdejiler boýunça salgyt ýumuşçysy tarapyndan býujete geçirilýän girdeji salgydy",
+    "title_ru": "Налог на доход, перечисляемый в бюджет налоговым агентом по доходам, получаемым из источника в Туркменистане",
+    "is_active": true
+  },
+  {
+    "code": "105070",
+    "title_tm": "Düşewüntler we başga edara görnüşli taraplara paýçy bolup gatnaşmakdan alynýan beýleki serişdeler görnüşindäki girdejiler boýunça girdeji salgydy",
+    "title_ru": "Налог на доходы по доходам в виде дивидендов и других средств от долевого участия в других юридических лицах",
+    "is_active": true
+  },
+  {
+    "code": "105080",
+    "title_tm": "Oýun işinden alynýan girdejiler boýunça girdeji salgydy",
+    "title_ru": "Налог на доход от игорной деятельности",
+    "is_active": true
+  },
+  {
+    "code": "105090",
+    "title_tm": "Ýokardaky toparlara girmeýän kärhanalaryň peýdasyndan (girdejisinden) alynýan salgyt",
+    "title_ru": "Налог на прибыль (доход) предприятий, не входящих в вышеуказанные группы",
+    "is_active": true
+  },
+  {
+    "code": "106000",
+    "title_tm": "Şahsy adamlardan alynýan girdeji salgydy",
+    "title_ru": "Налог на доходы физических лиц",
+    "is_active": true
+  },
+  {
+    "code": "106010",
+    "title_tm": "Salgyt ýumuşçylary (kärhanalar, edaralar, guramalar we telekeçiler - Iş berijiler) tarapyndan şahsy adamlardan tutulyp alnyp, býujete geçirilýän girdeji salgydy",
+    "title_ru": "Налог на доходы физических лиц, удерживаемый и перечисляемый в бюджет налоговыми агентами (предприятия, организации, учреждения и индивидуальные предприниматели - работодатели)",
+    "is_active": true
+  },
+  {
+    "code": "106020",
+    "title_tm": "Patent tölegi bellenen işleriň sanawyna girmeýän iş bilen meşgullanýan şahsy adamlardan alynýan girdeji salgydy",
+    "title_ru": "Налог на доходы физических лиц, занимающихся деятельностью, не входящей в перечень видов деятельностей, на которые установлена патентная плата",
+    "is_active": true
+  },
+  {
+    "code": "106030",
+    "title_tm": "Salgyt müdiriýeti tarapyndan alynýan patent tölegi",
+    "title_ru": "Патентная плата, взимаемая налоговой службой",
+    "is_active": true
+  },
+  {
+    "code": "106040",
+    "title_tm": "Salgyt müdiriýeti tarapyndan alynýan goşmaça patent tölegi",
+    "title_ru": "Дополнительная патентная плата, взимаемая налоговой службой",
+    "is_active": true
+  },
+  {
+    "code": "107000",
+    "title_tm": "Ýerli ýygymlar",
+    "title_ru": "Местные сборы",
+    "is_active": true
+  },
+  {
+    "code": "107010",
+    "title_tm": "Mahabatlandyrma üçin ýygym",
+    "title_ru": "Сбор за рекламу",
+    "is_active": true
+  },
+  {
+    "code": "107020",
+    "title_tm": "Şäherleriň, şäherçeleriň we oba ýerleriniň çäklerini abadanlaşdyrmak üçin belli bir maksada gönükdirilen ýygym",
+    "title_ru": "Целевой сбор на обустройство территории городов, поселков и сельских населенных пунктов",
+    "is_active": true
+  },
+  {
+    "code": "107030",
+    "title_tm": "Awtoduralgalaryň eýelerinden alynýan ýygym",
+    "title_ru": "Сбор с владельцев автостоянок",
+    "is_active": true
+  },
+  {
+    "code": "107040",
+    "title_tm": "Awtomobilleriň ýerlenilmegi üçin ýygym",
+    "title_ru": "Сбор с реализации автомобилей",
+    "is_active": true
+  },
+  {
+    "code": "107050",
+    "title_tm": "Itleriň eýelerinden alynýan ýygym",
+    "title_ru": "Сбор с владельцев собак",
+    "is_active": true
+  },
+  {
+    "code": "107060",
+    "title_tm": "Awtoulag serişdeleriniň eýelerinden alynýan ýygym",
+    "title_ru": "Сбор с владельцев автотранспортных средств",
+    "is_active": true
+  },
+  {
+    "code": "108000",
+    "title_tm": "Hökmany döwlet pensiýa ätiýaçlandyrmasyna pensiýa gatançlary",
+    "title_ru": "Пенсионные взносы на обязательное государственное пенсионное страхование",
+    "is_active": true
+  },
+  {
+    "code": "108080",
+    "title_tm": "Hökmany döwlet pensiýa ätiýaçlandyrmasyna pensiýa gatançlary",
+    "title_ru": "Пенсионные взносы на обязательное государственное пенсионное страхование",
+    "is_active": true
+  },
+  {
+    "code": "108081",
+    "title_tm": "Býujetden maliýeleşdirlýän guramalar we kärhanalar tarapyndan tölenýän hökmany pensiýa ätiýaçlandyrmasy üçin pensiýa gatançlary",
+    "title_ru": "Пенсионные взносы  на обязательное  пенсионное страхование, уплачиваемые организациями и учреждениями, финансируемыми из бюджета",
+    "is_active": true
+  },
+  {
+    "code": "108082",
+    "title_tm": "Döwlet eýeçiligindäki hojalyk-hasaplaşygyndaky kärhanalar tarapyndan tölenýän hökmany pensiýa ätiýaçlandyrmasy üçin pensiýa gatançlary",
+    "title_ru": "Пенсионные взносы  на обязательное  пенсионное страхование, уплачиваемые хозрасчетными предприятиями государственной формы собственности",
+    "is_active": true
+  },
+  {
+    "code": "108083",
+    "title_tm": "Döwlet eýeçiligine degişli bolmadyk we kärhanalar tarapyndan tölenýän hökmany pensiýa ätiýaçlandyrmasy üçin pensiýa gatançlary",
+    "title_ru": "Пенсионные взносы  на обязательное  пенсионное страхование, уплачиваемые предприятиями негосударственной формы собственности",
+    "is_active": true
+  },
+  {
+    "code": "108084",
+    "title_tm": "Daşary ýurt kärhanalary (wekilhanalar, şahamçalar) tarapyndan tölenýän hökmany pensiýa ätiýaçlandyrmasy üçin pensiýa gatançlary",
+    "title_ru": "Пенсионные взносы  на обязательное  пенсионное страхование, уплачиваемые иностранными предприятиями (представительствами, филиалами)",
+    "is_active": true
+  },
+  {
+    "code": "108085",
+    "title_tm": "Daýhan birleşikleri bilen içki hojalyk kärende şertnamasynyň esasynda oba hojalyk önümlerini öndüriji adamlar tarapyndan tölenýän hökmany pensiýa ätiýaçlandyrmasy üçin pensiýa gatançlary",
+    "title_ru": "Пенсионные взносы  на обязательное  пенсионное страхование, уплачиваемые  лицами, лица,  производящие сельскохозяйственную продукцию на основе внутрихозяйственного арендного договора с дайханскими объединениями (арендаторами)",
+    "is_active": true
+  },
+  {
+    "code": "108086",
+    "title_tm": "Şahsy telekeçiler tarapyndan tölenýän hökmany pensiýa ätiýaçlandyrmasy üçin pensiýa gatançlary",
+    "title_ru": "Пенсионные взносы  на обязательное  пенсионное страхование, уплачиваемые  индивидуальными предпринимателями",
+    "is_active": true
+  },
+  {
+    "code": "108087",
+    "title_tm": "Beýleki ätiýaçlandyrylan adamlar tarapyndan tölenýän hökmany pensiýa ätiýaçlandyrmasy üçin pensiýa gatançlary",
+    "title_ru": "Пенсионные взносы  на обязательное  пенсионное страхование, уплачиваемые другими застрахованными лицами",
+    "is_active": true
+  },
+  {
+    "code": "108090",
+    "title_tm": "Hökmany hünär pensiýa ätiýaçlandyrmasy üçin pensiýa gatançlary",
+    "title_ru": "Пенсионные взносы  на обязательное профессиональное пенсионное страхование",
+    "is_active": true
+  },
+  {
+    "code": "108091",
+    "title_tm": "Býujetden maliýeleşdirlýän guramalar we kärhanalar tarapyndan tölenýän hökmany hünär pensiýa ätiýaçlandyrmasy üçin pensiýa gatançlary",
+    "title_ru": "Пенсионные взносы  на обязательное  профессиональное  пенсионное страхование, уплачиваемые организациями и учреждениями, финансируемыми из бюджета",
+    "is_active": true
+  },
+  {
+    "code": "108092",
+    "title_tm": "Döwlet eýeçiligindäki hojalyk-hasaplaşygyndaky kärhanalar tarapyndan tölenýän hökmany hünär pensiýa ätiýaçlandyrmasy üçin pensiýa gatançlary",
+    "title_ru": "Пенсионные взносы  на обязательное  профессиональное  пенсионное страхование, уплачиваемые хозрасчетными предприятиями государственной формы собственности",
+    "is_active": true
+  },
+  {
+    "code": "108093",
+    "title_tm": "Döwlet eýeçiligine degişli bolmadyk we kärhanalar tarapyndan tölenýän hökmany hünär pensiýa ätiýaçlandyrmasy üçin pensiýa gatançlary",
+    "title_ru": "Пенсионные взносы  на обязательное   профессиональное пенсионное страхование, уплачиваемые предприятиями негосударственной формы собственности",
+    "is_active": true
+  },
+  {
+    "code": "108094",
+    "title_tm": "Daşary ýurt kärhanalary (wekilhanalar, şahamçalar) tarapyndan tölenýän hökmany hünär pensiýa ätiýaçlandyrmasy üçin pensiýa gatançlary",
+    "title_ru": "Пенсионные взносы  на обязательное  профессиональное  пенсионное страхование, уплачиваемые иностранными предприятиями (представительствами, филиалами)",
+    "is_active": true
+  },
+  {
+    "code": "108095",
+    "title_tm": "Beýleki ätiýaçlandyrylan adamlar tarapyndan tölenýän hökmany hünär pensiýa ätiýaçlandyrmasy üçin pensiýa gatançlary",
+    "title_ru": "Пенсионные взносы  на обязательное  профессиональное  пенсионное страхование, уплачиваемые  лицами, лица,  производящие сельскохозяйственную продукцию на основе внутрихозяйственного арендного договора с дайханскими объединениями (арендаторами)",
+    "is_active": true
+  },
+  {
+    "code": "108096",
+    "title_tm": "Hökmany hünär pensiýa ätiýaçlandyrmasy üçin pensiýa gatançlary, hususy telekeçiler tarapyndan tölenýän",
+    "title_ru": "Пенсионные взносы  на обязательное   профессиональное пенсионное страхование, уплачиваемые  индивидуальными предпринимателями",
+    "is_active": true
+  },
+  {
+    "code": "108097",
+    "title_tm": "Beýleki ätiýaçlandyrylan adamlar tarapyndan tölenýän hökmany pensiýa ätiýaçlandyrmasy üçin pensiýa gatançlary",
+    "title_ru": "Пенсионные взносы  на обязательное  пенсионное страхование, уплачиваемые другими застрахованными лицами",
+    "is_active": true
+  },
+  {
+    "code": "109000",
+    "title_tm": "Gümrük paçlary",
+    "title_ru": "Таможенные пошлины",
+    "is_active": true
+  },
+  {
+    "code": "109010",
+    "title_tm": "Daşary ýurtlardan harytlaryň getirilmegi üçin gümrük paçlary",
+    "title_ru": "Таможенные пошлины на ввоз товаров из зарубежных стран",
+    "is_active": true
+  },
+  {
+    "code": "109020",
+    "title_tm": "Daşary ýurtlara harytlaryň iberilmegi üçin gümrük paçlary",
+    "title_ru": "Таможенные пошлины на вывоз товаров в зарубежные страны",
+    "is_active": true
+  },
+  {
+    "code": "110000",
+    "title_tm": "Salgyt kanunçylygynyň bozulandygy üçin jerimeler",
+    "title_ru": "Штрафы за нарушение налогового законодательства",
+    "is_active": true
+  },
+  {
+    "code": "110010",
+    "title_tm": "Salgyt kanunçylygynyň bozulandygy üçin tölenilýän jerimeler",
+    "title_ru": "Штрафы за нарушение налогового законодательства",
+    "is_active": true
+  },
+  {
+    "code": "110020",
+    "title_tm": "Salgyt kanunçylygynyň bozulandygy üçin tölenilýän puşman tölegleri",
+    "title_ru": "Пени за нарушение налогового законодательства",
+    "is_active": true
+  },
+  {
+    "code": "110030",
+    "title_tm": "Salgyt kanunçylygynyň bozulandygy üçin tölenilýän edara ediş jerimeleri",
+    "title_ru": "Административные штрафы за нарушение налогового законодательства",
+    "is_active": true
+  },
+  {
+    "code": "200000",
+    "title_tm": "SALGYT DÄL GIRDEJILER",
+    "title_ru": "НЕНАЛОГОВЫЕ ДОХОДЫ",
+    "is_active": true
+  },
+  {
+    "code": "201000",
+    "title_tm": "Döwlet eýeçiliginden gelýän girdejiler",
+    "title_ru": "Доходы от государственного имущества",
+    "is_active": true
+  },
+  {
+    "code": "201010",
+    "title_tm": "Döwlet emlägine ygtyýar etmekden gelýän girdejiler",
+    "title_ru": "Доходы от распоряжения государственным имуществом",
+    "is_active": true
+  },
+  {
+    "code": "201011",
+    "title_tm": "Döwlet emlägini kärendä (kireýine) bermekden gelýän girdejiler, şertnamalaýyn borçlaryň bozulandygy üçin jerimeleri we puşman töleglerini hem goşmak bilen",
+    "title_ru": "Доходы от сдачи государственного имущества в аренду (наем), включая пени и штрафы за нарушение договорных обязательств",
+    "is_active": true
+  },
+  {
+    "code": "201012",
+    "title_tm": "Döwlet emläginiň satylmagyndan gelýän girdejiler (önümçilik serişdelerinden, ulag serişdelerinden, enjamlardan başgalary), şertnamalaýyn borçlaryň bozulandygy üçin jerimeleri we puşman töleglerini hem goşmak bilen",
+    "title_ru": "Доходы от продажи государственного имущества (кроме производственных фондов, транспортных средств, иного оборудования), включая пени и штрафы за нарушение договорных обязательств",
+    "is_active": true
+  },
+  {
+    "code": "201013",
+    "title_tm": "Beýleki girdejiler, şol sanda, aksiýalar boýunça diwidentler, obligasiýalar boýunça göterimler we döwlet emlägi bilen geçirilýän beýleki geleşiklerden gelýän girdejiler",
+    "title_ru": "Другие доходы, в том числе дивиденды по акциям, проценты по облигациям, доходы от иных сделок с государственным имуществом",
+    "is_active": true
+  },
+  {
+    "code": "201020",
+    "title_tm": "Suwdan peýdalanmak üçin tölegler",
+    "title_ru": "Платежи за водопользование",
+    "is_active": true
+  },
+  {
+    "code": "201021",
+    "title_tm": "Suwdan ýörite peýdalanmak üçin tölegler",
+    "title_ru": "Платежи за специальное водопользование",
+    "is_active": true
+  },
+  {
+    "code": "201022",
+    "title_tm": "Oba hojalyk paýdarlar jemgyetiniň suw üçin tölegi",
+    "title_ru": "Платежи акционерного общества сельского хозяйства за воду",
+    "is_active": true
+  },
+  {
+    "code": "201023",
+    "title_tm": "Beýleki taraplaryň suw üçin tölegi",
+    "title_ru": "Платежи за воду других лиц",
+    "is_active": true
+  },
+  {
+    "code": "201030",
+    "title_tm": "Ýer üçin we ýerden peýdalanmak üçin tölegler",
+    "title_ru": "Платежи за землю и землепользование",
+    "is_active": true
+  },
+  {
+    "code": "201031",
+    "title_tm": "Türkmenistanyň raýatlarynyň eýeçiligindäki ýer üçin töleg",
+    "title_ru": "Плата за землю, находящуюся в собственности граждан Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "201032",
+    "title_tm": "Türkmenistanyň raýatlarynyň peýdalanýan ýeri üçin töleg",
+    "title_ru": "Плата за землю, находящуюся в пользовании граждан Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "201033",
+    "title_tm": "Türkmenistanyň edara görnüşli taraplarynyň peýdalanýan ýeri üçin töleg",
+    "title_ru": "Плата за землю, находящуюся в пользовании юридических лиц Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "201034",
+    "title_tm": "Şahsy adamlara kärendä berlen ýer üçin töleg",
+    "title_ru": "Плата за землю, переданную в аренду физическим лицам",
+    "is_active": true
+  },
+  {
+    "code": "201035",
+    "title_tm": "Türkmenistanyň edara görnüşli taraplaryna kärendä berlen ýer üçin töleg",
+    "title_ru": "Плата за землю, переданную в аренду юридическим лицам Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "201036",
+    "title_tm": "Daşary ýurtlaryň edara görnüşli taraplaryna kärendä berlen ýer üçin töleg",
+    "title_ru": "Плата за землю, переданную в аренду иностранным юридическим лицам",
+    "is_active": true
+  },
+  {
+    "code": "201037",
+    "title_tm": "Öri meýdanlarynyň peýdalanylandygy üçin töleg",
+    "title_ru": "Плата за землю, переданную в аренду иностранным государствам и международным организациям",
+    "is_active": true
+  },
+  {
+    "code": "201038",
+    "title_tm": "Oba hojalyk paýdarlar jemgyetiniň ýer üçin we ýeriň kärendesi üçin tölegleri",
+    "title_ru": "Платежи акционерного общества сельского хозяйства за землю и за аренду земли",
+    "is_active": true
+  },
+  {
+    "code": "201039",
+    "title_tm": "Beýleki taraplaryň ýer üçin we ýeriň kärendesi üçin tölegleri",
+    "title_ru": "Платежи других лиц за землю и аренду земли",
+    "is_active": true
+  },
+  {
+    "code": "202000",
+    "title_tm": "Ýörite hyzmatlar üçin tölegler we ýygymlar",
+    "title_ru": "Платежи и сборы за специальные услуги",
+    "is_active": true
+  },
+  {
+    "code": "202010",
+    "title_tm": "Döwlet paçlary (ygtyýarnamanyň berilmegi üçin döwlet pajy muňa girmeýär)",
+    "title_ru": "Государственные пошлины (кроме государственной пошлины за выдачу лицензии и её переоформление)",
+    "is_active": true
+  },
+  {
+    "code": "202030",
+    "title_tm": "Gümrük gözegçilik işleriniň geçirilmeginden gelýän girdejiler",
+    "title_ru": "Доходы от проведения таможенного контроля",
+    "is_active": true
+  },
+  {
+    "code": "202040",
+    "title_tm": "Oýlap tapyşlaryň hem-de haryt nyşanlarynyň ekspertizasy we olaryň bellige alynmagy üçin tölenilýän paçlar",
+    "title_ru": "Пошлины, уплачиваемые за проведение экспертизы и регистрацию изобретений и товарных знаков",
+    "is_active": true
+  },
+  {
+    "code": "202050",
+    "title_tm": "Ýörite hyzmatlar üçin beýleki girdejiler",
+    "title_ru": "Другие доходы за специальные услуги",
+    "is_active": true
+  },
+  {
+    "code": "202060",
+    "title_tm": "Türkmenistanyň Gümrük gullugy tarapyndan alynýan ýygymlar",
+    "title_ru": "Сборы, взимаемые Государственной таможенной службой Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "202070",
+    "title_tm": "Hususylaşdyrylan ýaşaýyş jaýyna eýeçilik hukugy hakynda resminamalaryň resmileşdirilmegi boýunça hyzmatlar üçin tölegler",
+    "title_ru": "Плата за услуги по оформлению документов о праве собственности за приватизированное жилое помещение",
+    "is_active": true
+  },
+  {
+    "code": "202080",
+    "title_tm": "Döwlet ýangyn howpsuzlygy gullugynyň işi bilen baglanyşykly tölegli hyzmatlar",
+    "title_ru": "Платные услуги, связанные с работой Государственной противопожарной службы",
+    "is_active": true
+  },
+  {
+    "code": "203000",
+    "title_tm": "Harytlaryň peýdalanylandygy ýa-da harytlary peýdalanmaga, işleri amala aşyrmaga rugsat berlendigi üçin tölegler",
+    "title_ru": "Платежи за использование товаров или за выдачу разрешений на использование товаров, за разрешение на  осуществление деятельности",
+    "is_active": true
+  },
+  {
+    "code": "203010",
+    "title_tm": "Ygtyýarnamanyň berilmegi we onuň gaýtadan resmileşdirilmegi üçin döwlet pajy",
+    "title_ru": "Государственная пошлина за выдачу лицензии и её переоформление",
+    "is_active": true
+  },
+  {
+    "code": "203020",
+    "title_tm": "Harytlaryň peýdalanylmagy, işleri amala aşyrmaga rugsat berilmegi bilen bagly beýleki tölegler",
+    "title_ru": "Другие платежи, связанные с использованием товаров, разрешением на осуществление деятельности",
+    "is_active": true
+  },
+  {
+    "code": "204000",
+    "title_tm": "Daşary ýurt pullary bilen geçirilýän amallar boýunça salgyt däl (gaýry) girdejiler",
+    "title_ru": "Неналоговые (прочие) поступления по операциям с иностранной валютой",
+    "is_active": true
+  },
+  {
+    "code": "205000",
+    "title_tm": "Jerimeler we edara ediş jerimeleri (salgyt kanunçylygynyň bozulandygy üçin jerimelerden başgalary)",
+    "title_ru": "Штрафы и административные штрафы (кроме штрафов за нарушение налогового законодательства)",
+    "is_active": true
+  },
+  {
+    "code": "205010",
+    "title_tm": "Nyrhlaryň bellenilen düzgün-nyzamynyň bozulandygy üçin jerimeler we edara ediş jerimeleri",
+    "title_ru": "Штрафы и административные штрафы за нарушение установленного порядка применения цен",
+    "is_active": true
+  },
+  {
+    "code": "205020",
+    "title_tm": "Ygtyýarnama bolmazdan iş alnyp barlandygy üçin jerimeler we edara ediş jerimeleri",
+    "title_ru": "Штрафы и административные штрафы за осуществление деятельности без лицензии",
+    "is_active": true
+  },
+  {
+    "code": "205030",
+    "title_tm": "Ýol hereketiniň düzgünleriniň bozulandygy üçin edara ediş jerimeleri",
+    "title_ru": "Административные штрафы за нарушение правил дорожного движения",
+    "is_active": true
+  },
+  {
+    "code": "205040",
+    "title_tm": "Türkmenistanyň Döwlet serhedinden geçmegiň ýeňilleşdirilen tertibiniň bozulandygy üçin edara ediş jerimeleri",
+    "title_ru": "Административные штрафы за нарушение упрощенного порядка пересечения Государственной границы Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "205050",
+    "title_tm": "Ätiýaçlandyryş kanunçylygynyň bozulandygy üçin jerimeler we edara ediş jerimeleri",
+    "title_ru": "Штрафы и административные штрафы за нарушение страхового законодательства",
+    "is_active": true
+  },
+  {
+    "code": "205060",
+    "title_tm": "Beýleki toparlarda görkezilmedik beýleki jerimeler we edara ediş jerimeleri",
+    "title_ru": "Другие штрафы и административные штрафы, не указанные в других группах",
+    "is_active": true
+  },
+  {
+    "code": "205061",
+    "title_tm": "Jemgyýetçilik tertip-düzgünleriniň bozulandygy üçin adminstratiw jerimeleri",
+    "title_ru": "Административные штрафы за нарушение общественного порядка",
+    "is_active": true
+  },
+  {
+    "code": "205062",
+    "title_tm": "Pasport düzgünleriniň bozulandygy üçin adminstratiw jerimeleri",
+    "title_ru": "Административные штрафы за паспортные нарушения",
+    "is_active": true
+  },
+  {
+    "code": "205063",
+    "title_tm": "Ýangyn howpsuzlygynyň talaplarynyň bozulandygy üçin adminstratiw jerimeleri",
+    "title_ru": "Административные штрафы за нарушение требований пожарной безопасности",
+    "is_active": true
+  },
+  {
+    "code": "205070",
+    "title_tm": "Gumrük kanunçylygynyň bozulandygy üçin puşman tölegleri",
+    "title_ru": "Пени за нарушение таможенного законодательства",
+    "is_active": true
+  },
+  {
+    "code": "206000",
+    "title_tm": "Maliýe däl döwlet kärhanalarynyň we döwlet maliýe edaralarynyň tölegleri, olaryň telekeçilik işlerinden gelýän salgyt däl girdejiler",
+    "title_ru": "Платежи нефинансовых государственных предприятий и государственных финансовых учреждений, неналоговые поступления от их предпринимательской деятельности",
+    "is_active": true
+  },
+  {
+    "code": "206010",
+    "title_tm": "Türkmenistanyň Merkezi bankynyň arassa girdejisiniň geçirilmegi",
+    "title_ru": "Перечисление чистой прибыли Центрального банка Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "206020",
+    "title_tm": "Pul-zat lotereýasy boýunça girdejiler",
+    "title_ru": "Поступления по денежно-вещевым лотереям",
+    "is_active": true
+  },
+  {
+    "code": "206030",
+    "title_tm": "Uzak möhletli goýumlardan düşewüntler",
+    "title_ru": "Дивиденды от долгосрочных вложений",
+    "is_active": true
+  },
+  {
+    "code": "206040",
+    "title_tm": "Ýurduň içinde berlen karzlar boýunça göterimler",
+    "title_ru": "Проценты по кредитам, предоставленным внутри страны",
+    "is_active": true
+  },
+  {
+    "code": "206050",
+    "title_tm": "Daşary ýurtlaryň hökümetlerine berlen karzlar boýunça göterimler",
+    "title_ru": "Проценты по кредитам, предоставленным Правительствам зарубежных стран",
+    "is_active": true
+  },
+  {
+    "code": "206060",
+    "title_tm": "Möhleti gaýra goýlan bergileriň göterimlerini, esasy berginiň wagtynda üzlüşilmändigi üçin jerimeleri we göterimleri üzmegiň hasabyna harytlaryň gelip gowuşmalary we hyzmatlaryň edilmegi",
+    "title_ru": "Поступление товаров и оказание услуг в счет погашения процентов по реструктурированным долгам, штрафов и процентов за несвоевременное погашение основного долга",
+    "is_active": true
+  },
+  {
+    "code": "206070",
+    "title_tm": "Karzlar we möhleti gaýra goýlan bergiler boýunça beýleki tölegler",
+    "title_ru": "Другие платежи по кредитам и реструктурированным долгам",
+    "is_active": true
+  },
+  {
+    "code": "207000",
+    "title_tm": "Hyzmatlaryň dürli görnüşleriniň edilendigi üçin tölegler",
+    "title_ru": "Платежи за оказание разных видов услуг",
+    "is_active": true
+  },
+  {
+    "code": "207010",
+    "title_tm": "Mekdebe çenli edaralardan çagalaryň iýmiti üçin ene-atalar töleginiň girdejileri",
+    "title_ru": "Доходы от дошкольных учреждений в виде родительской платы за питание детей",
+    "is_active": true
+  },
+  {
+    "code": "207020",
+    "title_tm": "Bilim boýunça hyzmatlary etmekden gelýän girdejiler",
+    "title_ru": "Поступления от предоставления услуг по образованию",
+    "is_active": true
+  },
+  {
+    "code": "207030",
+    "title_tm": "Hyzmatlaryň dürli görnüşleri boýunça beýleki girdejiler",
+    "title_ru": "Другие поступления по разным видам услуг",
+    "is_active": true
+  },
+  {
+    "code": "208000",
+    "title_tm": "Beýleki salgyt däl girdejiler we döwletiň haýryna alnan serişdeler",
+    "title_ru": "Другие неналоговые поступления и изъятые в пользу государства средства",
+    "is_active": true
+  },
+  {
+    "code": "208010",
+    "title_tm": "Maddy gymmatlyklaryň ogurlanmagy we ýetmezçiligi üçin günäkär adamlardan tutulýan pul möçberleri",
+    "title_ru": "Суммы, взыскиваемые с лиц, виновных в хищении и недостаче материальных ценностей",
+    "is_active": true
+  },
+  {
+    "code": "208020",
+    "title_tm": "Döwletiň haýryna alnan eýesiz emlägi, miraslyk hukugy boýunça döwlete geçýän emlägi we hazynalary satmakdan gelýän girdejiler",
+    "title_ru": "Доходы от реализации конфискованного, бесхозного имущества, имущества, переходящего по праву наследования к государству, и кладов",
+    "is_active": true
+  },
+  {
+    "code": "208030",
+    "title_tm": "Gümrükhanada döwletiň haýryna alnan emlägi satmakdan gelýän girdejiler",
+    "title_ru": "Поступления от реализации конфискованного на таможне имущества",
+    "is_active": true
+  },
+  {
+    "code": "208040",
+    "title_tm": "Döwlet emlägini satmakdan girdejiler (önümçilik we ulag serişdelerinden, enjamlardan we gozgalmaýan emläkden başga)",
+    "title_ru": "Доходы от реализации государственного имущества (кроме производственных фондов, транспортных средств, оборудования и недвижимости)",
+    "is_active": true
+  },
+  {
+    "code": "208050",
+    "title_tm": "Peýdalanylan harytlary, demir böleklerini we galyndylary satmakdan gelip gowşan serişdeler",
+    "title_ru": "Поступления средств от продажи использованных товаров, лома и отходов",
+    "is_active": true
+  },
+  {
+    "code": "208060",
+    "title_tm": "Beýleki salgyt däl girdejiler",
+    "title_ru": "Другие неналоговые поступления",
+    "is_active": true
+  },
+  {
+    "code": "208070",
+    "title_tm": "Türkmenistanyň „Uglewodorod serişdeleri hakyndaky“ Kanunyna laýyklykda girdejiden Döwlet býujetine 20% geçirilýän serişdeler",
+    "title_ru": "Отчисления от доходов Государственного агентства по управлению и использованию углеводородных ресурсов при Президенте Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "300000",
+    "title_tm": "MAÝA BILEN AMALLARDAN GIRDEJILER",
+    "title_ru": "ДОХОДЫ ОТ ОПЕРАЦИЙ С КАПИТАЛОМ",
+    "is_active": true
+  },
+  {
+    "code": "301000",
+    "title_tm": "Esasy maýanyň satylmagy",
+    "title_ru": "Продажа основного капитала",
+    "is_active": true
+  },
+  {
+    "code": "301010",
+    "title_tm": "Esasy maýanyň Türkmenistanyň dahyllylaryna (rezidentlerine) satylmagy",
+    "title_ru": "Продажа основного капитала резидентам Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "301011",
+    "title_tm": "Döwlet kärhanalaryny hususylaşdyrmakdan gelýän girdejiler",
+    "title_ru": "Доходы от приватизации государственных предприятий",
+    "is_active": true
+  },
+  {
+    "code": "301012",
+    "title_tm": "Raýatlara jaýlary satmakdan gelip gowuşýan girdejiler",
+    "title_ru": "Поступления от продажи гражданам квартир",
+    "is_active": true
+  },
+  {
+    "code": "301013",
+    "title_tm": "Döwlete degişli önümçilik serişdelerini, ulag serişdelerini, enjamlary, gozgalmaýan emlägi satmakdan gelip gowuşýan girdejiler",
+    "title_ru": "Поступления от продажи принадлежащих государству производственных фондов, транспортных средств, оборудования, недвижимости",
+    "is_active": true
+  },
+  {
+    "code": "301014",
+    "title_tm": "Esasy maýanyň beýleki satuwlaryndan gelip gowuşýan girdejiler",
+    "title_ru": "Поступления от других продаж основного капитала",
+    "is_active": true
+  },
+  {
+    "code": "301020",
+    "title_tm": "Esasy maýanyň Türkmenistanyň dahylsyzlaryna (rezident dällerine) satylmagy",
+    "title_ru": "Продажа основного капитала нерезидентам Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "301021",
+    "title_tm": "Döwlet kärhanalaryny hususylaşdyrmakdan gelýän girdejiler",
+    "title_ru": "Доходы от приватизации государственных предприятий",
+    "is_active": true
+  },
+  {
+    "code": "301022",
+    "title_tm": "Döwlete degişli önümçilik serişdelerini, ulag serişdelerini, enjamlary, gozgalmaýan emlägi satmakdan gelýän girdejiler",
+    "title_ru": "Поступления от продажи принадлежащих государству производственных фондов, транспортных средств, оборудования, недвижимости",
+    "is_active": true
+  },
+  {
+    "code": "301023",
+    "title_tm": "Esasy maýanyň beýleki satuwlaryndan gelip gowuşýan girdejiler",
+    "title_ru": "Поступления от других продаж основного капитала",
+    "is_active": true
+  },
+  {
+    "code": "302000",
+    "title_tm": "Harytlaryň döwlet gorlarynyň satylmagy",
+    "title_ru": "Продажа государственных запасов товаров",
+    "is_active": true
+  },
+  {
+    "code": "302010",
+    "title_tm": "Harytlaryň döwlet gorlarynyň Türkmenistanyň dahyllylaryna (rezidentlerine) satylmagy",
+    "title_ru": "Продажа государственных запасов товаров резидентам Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "302020",
+    "title_tm": "Harytlaryň döwlet gorlarynyň Türkmenistanyň dahylsyzlaryna (rezident dällerine) satylmagy",
+    "title_ru": "Продажа государственных запасов товаров нерезидентам Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "303000",
+    "title_tm": "Maddy däl aktiwleriň satylmagy",
+    "title_ru": "Продажа нематериальных активов",
+    "is_active": true
+  },
+  {
+    "code": "303010",
+    "title_tm": "Maddy däl aktiwleriň Türkmenistanyň dahyllylaryna (rezidentlerine) satylmagy",
+    "title_ru": "Продажа нематериальных активов резидентам Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "303020",
+    "title_tm": "Maddy däl aktiwleriň Türkmenistanyň dahylsyzlaryna (rezident dällerine) satylmagy",
+    "title_ru": "Продажа нематериальных активов нерезидентам Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "400000",
+    "title_tm": "DÖWLET BÝUJETINDEN KARZ BERLEN SERIŞDELERIŇ GAÝTARYLMAGY",
+    "title_ru": "ВОЗВРАТ СРЕДСТВ, ВЫДАННЫХ В КРЕДИТ ИЗ ГОСУДАРСТВЕННОГО БЮДЖЕТА",
+    "is_active": true
+  },
+  {
+    "code": "401000",
+    "title_tm": "Ýurduň içinde berlen karzlaryň gaýtarylyp berilmegi",
+    "title_ru": "Возврат внутренних кредитов",
+    "is_active": true
+  },
+  {
+    "code": "401010",
+    "title_tm": "Býujete degişli däl döwlet gaznalary, döwlet dolandyryşynyň beýleki derejeleri tarapyndan karzlaryň esasy böleginiň gaýtarylmagy",
+    "title_ru": "Погашения основной суммы кредитов государственными внебюджетными фондами, другими уровнями государственного управления",
+    "is_active": true
+  },
+  {
+    "code": "401020",
+    "title_tm": "Döwletiň maliýe däl kärhanalary tarapyndan karzlaryň esasy böleginiň üzlüşilmegi",
+    "title_ru": "Погашения основной суммы кредитов государственными нефинансовыми предприятиями",
+    "is_active": true
+  },
+  {
+    "code": "401030",
+    "title_tm": "Maliýe edaralary tarapyndan karzlaryň esasy böleginiň üzlüşilmegi",
+    "title_ru": "Погашения основной суммы кредитов финансовыми учреждениями",
+    "is_active": true
+  },
+  {
+    "code": "401040",
+    "title_tm": "Karzlaryň beýleki görnüşleriniň esasy böleginiň üzlüşilmegi",
+    "title_ru": "Погашения основной суммы других видов кредитов",
+    "is_active": true
+  },
+  {
+    "code": "402000",
+    "title_tm": "Daşary döwletleriň hökümetlerine berlen karzlaryň gaýtarylyp berilmegi",
+    "title_ru": "Возврат кредитов, выданных Правительствам зарубежных стран",
+    "is_active": true
+  },
+  {
+    "code": "402010",
+    "title_tm": "Daşary döwletlere berlen karzyň esasy böleginiň üzlüşilmegi",
+    "title_ru": "Погашения основной суммы кредитов, выданных Правительствам зарубежных стран",
+    "is_active": true
+  },
+  {
+    "code": "402020",
+    "title_tm": "Möhleti gaýra goýlan bergiler boýunça gelip gowuşýan girdejiler",
+    "title_ru": "Поступления по реструктурированным долгам",
+    "is_active": true
+  },
+  {
+    "code": "500000",
+    "title_tm": "ALNAN RESMI GEÇIRMELER (TRANSFERTLER)",
+    "title_ru": "ПОЛУЧЕННЫЕ ОФИЦИАЛЬНЫЕ ТРАНСФЕРТЫ",
+    "is_active": true
+  },
+  {
+    "code": "501000",
+    "title_tm": "Içerki geçirmeler",
+    "title_ru": "Внутренние трансферты",
+    "is_active": true
+  },
+  {
+    "code": "501010",
+    "title_tm": "Döwlet dolandyrylyşynyň beýleki derejelerinden geçirmeler",
+    "title_ru": "Трансферты от других уровней государственного управления",
+    "is_active": true
+  },
+  {
+    "code": "501011",
+    "title_tm": "Deňeçerlemek üçin aşakda durýan býujetlere berilýän serişdeler",
+    "title_ru": "Дотации нижестоящим бюджетам для сбалансирования",
+    "is_active": true
+  },
+  {
+    "code": "501012",
+    "title_tm": "Deňeçerlemek üçin ýokarda durýan býujetlere berilýän serişdeler",
+    "title_ru": "Дотации вышестоящим бюджетам для сбалансирования",
+    "is_active": true
+  },
+  {
+    "code": "501013",
+    "title_tm": "Aşakda durýan býujetlerden özara hasaplaşyklar boýunça alynan serişdeler",
+    "title_ru": "Средства, полученные по взаимным расчетам от нижестоящих бюджетов",
+    "is_active": true
+  },
+  {
+    "code": "501014",
+    "title_tm": "Ýokarda durýan býujetlerden özara hasaplaşyklar boýunça alynan serişdeler",
+    "title_ru": "Средства, полученные по взаимным расчетам от вышестоящих бюджетов",
+    "is_active": true
+  },
+  {
+    "code": "501015",
+    "title_tm": "Merkezleşdirilen býujete geçirilýän esasy salgytlardan ýerli býujetlere geçirmeler",
+    "title_ru": "Отчисления местным бюджетам от перечисляемых в централизованный бюджет основных налогов",
+    "is_active": true
+  },
+  {
+    "code": "501020",
+    "title_tm": "Türkmenistanyň dahyllylarynyň (rezidentleriniň) döwlete pul serişdelerini meýletin geçirmeleri, sowgatlary we peşgeşleri",
+    "title_ru": "Добровольные перечисления денежных средств, пожертвования и подарки государству резидентов Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "501030",
+    "title_tm": "Gündelik geçirmeler boýunça beýleki girdejiler",
+    "title_ru": "Другие доходы по текущим трансфертам",
+    "is_active": true
+  },
+  {
+    "code": "501040",
+    "title_tm": "Düýpli geçirmeler boýunça girdejiler",
+    "title_ru": "Доходы по капитальным трансфертам",
+    "is_active": true
+  },
+  {
+    "code": "501050",
+    "title_tm": "Türkmenistanyň Durnuklaşdyryş gaznasyndan geçirmeler (transfertler)",
+    "title_ru": "Трансферты из Стабилизационного фонда Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "501051",
+    "title_tm": "Türkmenistanyň Durnuklaşdyryş gaznasyndan maksatlaýyn geçirimler (transfertler)",
+    "title_ru": "Целевые трансферты из Стабилизационного фонда Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "502000",
+    "title_tm": "Daşary ýurtlardan geçirmeler",
+    "title_ru": "Трансферты из-за границы",
+    "is_active": true
+  },
+  {
+    "code": "502010",
+    "title_tm": "Gündelik geçirmeler",
+    "title_ru": "Текущие трансферты",
+    "is_active": true
+  },
+  {
+    "code": "502011",
+    "title_tm": "Türkmenistanyň dahylsyzlaryunyň (rezident dälleriniň) döwlete pul serişdelerini meýletin geçirmeleri, sowgatlary we peşgeşleri",
+    "title_ru": "Добровольные перечисления денежных средств, пожертвования и подарки государству нерезидентов Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "502012",
+    "title_tm": "Peşgeş hökmünde iberilen harytlary satmakdan girdejiler",
+    "title_ru": "Поступления от продажи товаров, присланных в качестве дара",
+    "is_active": true
+  },
+  {
+    "code": "502013",
+    "title_tm": "Gündelik geçirmeler boýunça beýleki girdejiler",
+    "title_ru": "Другие доходы по текущим трансфертам",
+    "is_active": true
+  },
+  {
+    "code": "502020",
+    "title_tm": "Düýpli geçirmeler",
+    "title_ru": "Капитальные трансферты",
+    "is_active": true
+  },
+  {
+    "code": "502021",
+    "title_tm": "Düýpli taslamalar üçin geçirmeler",
+    "title_ru": "Трансферты на капитальные проекты",
+    "is_active": true
+  },
+  {
+    "code": "502022",
+    "title_tm": "Düýpli geçirmeler boýunça beýleki girdejiler",
+    "title_ru": "Другие доходы по капитальным трансфертам",
+    "is_active": true
+  },
+  {
+    "code": "600000",
+    "title_tm": "KARZ ALNAN SERIŞDELER",
+    "title_ru": "СРЕДСТВА, ПОЛУЧЕННЫЕ В КРЕДИТ",
+    "is_active": true
+  },
+  {
+    "code": "601000",
+    "title_tm": "Içerki karzlar",
+    "title_ru": "Внутренние кредиты",
+    "is_active": true
+  },
+  {
+    "code": "601010",
+    "title_tm": "Gysga we orta möhletli içerki karzlar",
+    "title_ru": "Кратко- и среднесрочные внутренние кредиты",
+    "is_active": true
+  },
+  {
+    "code": "601011",
+    "title_tm": "Döwletiň gaznaçylyk borçnamalary",
+    "title_ru": "Государственные казначейские обязательства",
+    "is_active": true
+  },
+  {
+    "code": "601012",
+    "title_tm": "Türkmenistanyň Merkezi bankyndan alnan karzlar",
+    "title_ru": "Кредиты Центрального банка Туркменистана",
+    "is_active": true
+  },
+  {
+    "code": "601013",
+    "title_tm": "Beýleki gysga we orta möhletli karzlar",
+    "title_ru": "Другие кратко- и среднесрочные кредиты",
+    "is_active": true
+  },
+  {
+    "code": "601014",
+    "title_tm": "Döwlet gazna obligasiýalaryny ýerlemekden gelýän girdejiler",
+    "title_ru": "Доходы от реализации Государственных казначейских облигаций",
+    "is_active": true
+  },
+  {
+    "code": "601020",
+    "title_tm": "Uzak möhletli içerki karzlar",
+    "title_ru": "Долгосрочные внутренние кредиты",
+    "is_active": true
+  },
+  {
+    "code": "602000",
+    "title_tm": "Daşarky karzlar",
+    "title_ru": "Внешние кредиты",
+    "is_active": true
+  },
+  {
+    "code": "602010",
+    "title_tm": "Halkara maliýe guramalarynyň karzlary",
+    "title_ru": "Кредиты Международных финансовых организаций",
+    "is_active": true
+  },
+  {
+    "code": "602020",
+    "title_tm": "Daşary döwletleriň hökümetleriniň karzlary",
+    "title_ru": "Кредиты Правительств зарубежных стран",
+    "is_active": true
+  },
+  {
+    "code": "602030",
+    "title_tm": "Üpjün edijiler tarapyndan harytlar üçin berlen karzlar",
+    "title_ru": "Кредиты, выданные поставщиками под товары",
+    "is_active": true
+  },
+  {
+    "code": "602040",
+    "title_tm": "Beýleki daşarky karzlar",
+    "title_ru": "Другие внешние кредиты",
+    "is_active": true
+  }
+]
