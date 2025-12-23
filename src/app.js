@@ -55,13 +55,13 @@ app.use(cors());
 
 // 5. Body Parsers with Size Limits
 // Prevents DoS attacks via large request bodies
-app.use(express.json({ 
+app.use(express.json({
   limit: config.security.bodyParser.jsonLimit,
   // Strict JSON parsing - reject malformed JSON
   strict: true,
 }));
-app.use(express.urlencoded({ 
-  extended: true, 
+app.use(express.urlencoded({
+  extended: true,
   limit: config.security.bodyParser.urlencodedLimit,
   // Limit parameter nesting depth
   parameterLimit: 100,
@@ -86,8 +86,8 @@ initializeSwagger(app);
 
 // Health check endpoint (bypasses some middleware for fast response)
 app.get('/health', (req, res) => {
-  res.json({ 
-    status: 'ok', 
+  res.json({
+    status: 'ok',
     timestamp: new Date().toISOString(),
     service: config.logging.serviceName,
   });
@@ -173,7 +173,7 @@ app.use('/admin', rbacRoutes);
 app.use('/rbac', rbacRoutes);
 
 // Catalog routes
-app.use('/catalogs', catalogRoutes);
+app.use('/catalogs', validateLangQuery(), catalogRoutes);
 
 // Sync routes (public catalog sync endpoint)
 app.use('/catalog-sync', syncRoutes);
