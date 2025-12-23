@@ -32,8 +32,7 @@ const initializeSwagger = require('./docs/swagger.init');
 
 const app = express();
 
-
-
+const { validate_lang_query } = require('./helpers/validators');
 // 1. Trust Proxy Configuration
 // Required when behind reverse proxy (nginx, load balancer) to get correct client IPs
 if (config.security.trustProxy) {
@@ -173,7 +172,7 @@ app.use('/admin', rbacRoutes);
 app.use('/rbac', rbacRoutes);
 
 // Catalog routes
-app.use('/catalogs', validateLangQuery(), catalogRoutes);
+app.use('/catalogs', validate_lang_query(), catalogRoutes);
 
 // Sync routes (public catalog sync endpoint)
 app.use('/catalog-sync', syncRoutes);
