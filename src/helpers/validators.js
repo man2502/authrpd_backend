@@ -46,7 +46,7 @@ const codeValidator = Joi.string()
   .required()
   .messages({
     'string.base': 'Code must be a string',
-    'string.pattern.base': 'Code must contain only uppercase letters and numbers',
+    'string.pattern.base': 'Code must contain only numbers',
     'string.min': 'Code must be at least 1 character',
     'string.max': 'Code must not exceed 50 characters',
     'any.required': 'Code is required',
