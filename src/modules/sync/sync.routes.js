@@ -59,9 +59,13 @@ const allowedCatalogs = [
  *       - in: query
  *         name: lang
  *         schema: { type: string, enum: [tm, ru], default: tm }
+ *       - in: query
+ *         name: include_deleted
+ *         schema: { type: boolean, default: false }
+ *         description: Include soft-deleted records (deleted_at IS NOT NULL)
  *     responses:
  *       200:
- *         description: Catalog data (or empty if up to date)
+ *         description: Catalog data (or empty if up to date). Response includes deleted_items array if include_deleted=false.
  */
 router.get(
   '/:name',

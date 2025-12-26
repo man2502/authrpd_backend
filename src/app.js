@@ -171,11 +171,8 @@ app.use('/auth', authRoutes);
 app.use('/admin', rbacRoutes);
 app.use('/rbac', rbacRoutes);
 
-// Catalog routes
+// Catalog routes (includes public sync endpoint at /catalogs/:name)
 app.use('/catalogs', validate_lang_query(), catalogRoutes);
-
-// Sync routes (public catalog sync endpoint)
-app.use('/catalog-sync', syncRoutes);
 
 // Admin routes for members and clients management
 app.use('/', membersRoutes); // Routes defined as /admin/members

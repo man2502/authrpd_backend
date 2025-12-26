@@ -59,9 +59,10 @@ async function loginMemberRpd(username, password, metadata = {}) {
     const accessToken = await issueAccessToken(
       {
         id: member.id,
-        role_id: member.role_id,
+        role: member.role?.name || null,
         region_id: member.region_id,
-        department_id: member.department_id,
+        organization_id: member.organization_id,
+        fullname: member.fullname,
       },
       'MEMBER'
     );

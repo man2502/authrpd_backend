@@ -814,5 +814,91 @@ router.post('/documents', authGuard, require_permissions('CATALOG_WRITE'), schem
 router.put('/documents/:id', authGuard, validate_id_param(), require_permissions('CATALOG_WRITE'), schemaValidator(updateDocumentSchema), catalogController.updateDocument);
 router.delete('/documents/:id', authGuard, validate_id_param(), require_permissions('CATALOG_WRITE'), catalogController.deleteDocument);
 
+// Public sync endpoint: GET /catalogs/:name?version=X&lang=tm&include_deleted=false
+// This endpoint is public (no auth required) for RPD systems to sync catalogs
+// Must be placed AFTER all specific catalog routes to avoid conflicts
+const syncController = require('../sync/sync.controller');
+const { validate_sync_query } = require('../../helpers/validators');
+const { paramsValidator } = require('../../middlewares/schema.validator');
+const Joi = require('joi');
+
+const allowedCatalogs = [
+  'regions',
+  'ministries',
+  'organizations',
+  'receiver_organizations',
+  'classifier_economic',
+  'classifier_purpose',
+  'classifier_functional',
+  'classifier_income',
+  'banks',
+  'bank_accounts',
+  'fields',
+  'documents',
+  'classifier_fields',
+  'classifier_documents',
+];
+
+/**
+ * @swagger
+ * /catalogs/{name}:
+ *   get:
+ *     tags: [Sync]
+ *     summary: Get catalog data by version (public sync endpoint)
+ *     description: |
+ *       Public endpoint for RPD systems to sync catalog data.
+ *       Returns items if client's version is behind, or empty items with up_to_date=true when no updates.
+ *       Supports include_deleted parameter to include soft-deleted records.
+ *       Note: This endpoint is only used when query parameter 'version' is present.
+ *     security: []
+ *     parameters:
+ *       - in: path
+ *         name: name
+ *         required: true
+ *         schema:
+ *           type: string
+ *           enum: [regions, ministries, organizations, receiver_organizations, classifier_economic, classifier_purpose, classifier_functional, classifier_income, banks, bank_accounts, fields, documents, classifier_fields, classifier_documents]
+ *       - in: query
+ *         name: version
+ *         schema: { type: integer, minimum: 0 }
+ *         description: Client's current catalog version (optional, returns all data if not provided)
+ *       - in: query
+ *         name: lang
+ *         schema: { type: string, enum: [tm, ru], default: tm }
+ *         description: Language for localization (tm or ru)
+ *       - in: query
+ *         name: include_deleted
+ *         schema: { type: boolean, default: false }
+ *         description: Include soft-deleted records (deleted_at IS NOT NULL)
+ *     responses:
+ *       200:
+ *         description: Catalog data (or empty if up to date). Response includes deleted_items array if include_deleted=false.
+ */
+// Sync endpoint - placed at the end to avoid conflicts with specific catalog routes
+// Only processes sync requests (when name is in allowedCatalogs AND it's a sync request)
+// Sync requests are identified by: name in allowedCatalogs AND (version param exists OR explicit sync intent)
+router.get(
+  '/:name',
+  (req, res, next) => {
+    // Only process if this is a sync request:
+    // 1. name must be in allowedCatalogs
+    // 2. version param should be present (or it's explicitly a sync request)
+    const isSyncRequest = allowedCatalogs.includes(req.params.name) && 
+                         (req.query.version !== undefined || req.query.include_deleted !== undefined);
+    
+    if (isSyncRequest) {
+      next();
+    } else {
+      // Not a sync request, pass to next handler (will eventually 404 if no match)
+      next('route');
+    }
+  },
+  paramsValidator(Joi.object({
+    name: Joi.string().valid(...allowedCatalogs).required(),
+  })),
+  validate_sync_query(),
+  syncController.getCatalogByVersion
+);
+
 module.exports = router;
 

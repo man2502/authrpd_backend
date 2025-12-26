@@ -1,4 +1,4 @@
-Техническое задание (v2.1)
+Техническое задание (v2.2)
 AuthRPD — Central Auth + Master Catalog + RBAC + Sync
 0) Изменения в этой версии ТЗ (по твоим пунктам)
 
@@ -558,7 +558,7 @@ Pull со стороны RPD.
 GET /catalogs/versions
 Получение версий всех каталогов (публичный endpoint, без аутентификации).
 
-GET /catalog-sync/:name?version=X&lang=tm
+GET /catalogs/:name?version=X&lang=tm&include_deleted=false
 Получение данных каталога по версии для синхронизации (публичный endpoint).
 
 Параметры:
@@ -798,7 +798,7 @@ EC ключи kid=YYYY-MM создаются через crypto (кривая P-2
 
 /.well-known/jwks.json доступен (публичный endpoint), кэшируется, возвращает EC ключи в формате JWK.
 
-GET /catalogs/versions + GET /catalog-sync/:name?version=X работают,
+GET /catalogs/versions + GET /catalogs/:name?version=X работают,
 и включают все master-каталоги.
 
 Реализовано партиционирование таблицы auth_audit_log для оптимизации.

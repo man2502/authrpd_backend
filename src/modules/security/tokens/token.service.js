@@ -169,6 +169,7 @@ async function issueAccessToken(user, userType = 'MEMBER', options = {}) {
 
     // Build claims
     // Always use array format for audience (JWT spec supports both string and array)
+    // Canonical JWT structure according to TZ v2.2 specification
     const payload = {
       iss: config.security.issuer,
       sub: `${userType}:${user.id}`,
@@ -178,10 +179,12 @@ async function issueAccessToken(user, userType = 'MEMBER', options = {}) {
       jti: uuidv4(),
       data: {
         id: user.id,
-        role: user.role || null,
-        region_id: topRegionId, // Top region ID (parent for sub-regions)
-        // permissions: user.permissions,
-        fullname: user.fullname
+        user_type: userType, // "MEMBER" or "CLIENT"
+        role: user.role || null, // role.name for members, null for clients
+        region_id: topRegionId, // Top region ID (resolved through hierarchy, STRING code)
+        organization_id: user.organization_id || null, // organizations.code (STRING)
+        fullname: user.fullname || null,
+        // permissions: user.permissions, // Optional - can be omitted to reduce token size
       },
     };
 

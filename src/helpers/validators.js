@@ -113,7 +113,7 @@ const langQueryValidator = Joi.object({
 /**
  * Sync Query Validator Schema
  *
- * Validates sync query parameters: optional version and lang.
+ * Validates sync query parameters: optional version, lang, and include_deleted.
  */
 const syncQueryValidator = Joi.object({
   version: Joi.number().integer().min(0).optional()
@@ -126,6 +126,10 @@ const syncQueryValidator = Joi.object({
     .messages({
       'any.only': 'lang must be either tm or ru',
       'string.base': 'lang must be a string',
+    }),
+  include_deleted: Joi.boolean().default(false)
+    .messages({
+      'boolean.base': 'include_deleted must be a boolean',
     }),
 });
 
