@@ -13,10 +13,11 @@ const {
   Document,
   CatalogVersion,
 } = require('../../models');
-const { invalidateCache, invalidateCachePattern } = require('../../helpers/cache.helper');
+const { invalidateCache, invalidateCachePattern, cacheData } = require('../../helpers/cache.helper');
 const { logEvent, auditActions } = require('../audit/audit.service');
 const ApiError = require('../../helpers/api.error');
 const sequelize = require('../../config/db');
+
 /**
  * Инкрементирует версию каталога
  * @param {string} catalogName - имя каталога
